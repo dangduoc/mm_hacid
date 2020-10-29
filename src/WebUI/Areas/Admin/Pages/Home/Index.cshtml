@@ -1,0 +1,42 @@
+﻿@page
+@model HomePageModel
+@section Styles{
+    <link rel="stylesheet" href="~/lib/jquery-confirm/jquery-confirm.min.css" />
+    <link rel="stylesheet" href="~/lib/slick/slick.css" />
+    <link rel="stylesheet" href="~/lib/slick/slick-theme.css" />
+  
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thông tin trang chủ</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+                    <li class="breadcrumb-item active">Trang chủ</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <button type="button" id="save_btn" class="btn btn-success"><i class="far fa-save"></i> Lưu lại</button>
+            <small>(Đừng quên lưu lại sau khi hoàn tất)</small>
+        </div>
+        <div class="card-body">
+            
+        </div>
+    </div>
+    <form method="post"></form>
+</section>
+<input type="file" accept="image/*" hidden id="input_files" multiple />
+@section Scripts{
+    <script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
+    <script src="~/lib/slick/slick.min.js"></script>
+}

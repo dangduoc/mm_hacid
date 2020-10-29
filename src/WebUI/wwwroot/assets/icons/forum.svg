@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32.389" height="27.086" viewBox="0 0 32.389 27.086">
+  <g id="forum" transform="translate(18525 -1229)">
+    <g id="Group_2058" data-name="Group 2058">
+      <g id="chat-bubble" transform="translate(-18525 1229)">
+        <path id="Path_1300" data-name="Path 1300" d="M0,0V23.29H4.428v3.8h.949a4.753,4.753,0,0,0,4.649-3.8H32.389V0ZM30.421,21.265l-22.2-.015v1.091a2.852,2.852,0,0,1-1.9,2.684V21.25l-4.311.015V2.069H30.421Z" fill="#fff"/>
+        <path id="Path_1301" data-name="Path 1301" d="M241,211h2.454v2.454H241Z" transform="translate(-226.032 -200.93)" fill="#fff"/>
+        <path id="Path_1302" data-name="Path 1302" d="M301,211h2.454v2.454H301Z" transform="translate(-281.125 -200.93)" fill="#fff"/>
+        <path id="Path_1303" data-name="Path 1303" d="M181,211h2.454v2.454H181Z" transform="translate(-170.94 -200.93)" fill="#fff"/>
+      </g>
+      <g id="chat-bubble-2" data-name="chat-bubble" transform="translate(-18525 1229)">
+        <path id="Path_1300-2" data-name="Path 1300" d="M0,0V23.29H4.428v3.8h.949a4.753,4.753,0,0,0,4.649-3.8H32.389V0ZM30.421,21.265l-22.2-.015v1.091a2.852,2.852,0,0,1-1.9,2.684V21.25l-4.311.015V2.069H30.421Z" fill="#fff"/>
+        <path id="Path_1301-2" data-name="Path 1301" d="M241,211h2.454v2.454H241Z" transform="translate(-226.032 -200.93)" fill="#fff"/>
+        <path id="Path_1302-2" data-name="Path 1302" d="M301,211h2.454v2.454H301Z" transform="translate(-281.125 -200.93)" fill="#fff"/>
+        <path id="Path_1303-2" data-name="Path 1303" d="M181,211h2.454v2.454H181Z" transform="translate(-170.94 -200.93)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>
