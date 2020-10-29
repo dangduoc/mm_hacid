@@ -605,6 +605,13 @@ footer {
         padding-left: 100px;
         padding-right: 100px;
     }
+    nav#menu .sub-menu .wrap .column {
+
+        width: 20%;
+    }
+    nav#menu .sub-menu{
+        height:auto;
+    }
 }
 
 @media all and (max-width: 600px) {

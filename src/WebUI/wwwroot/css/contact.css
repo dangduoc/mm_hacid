@@ -1,0 +1,95 @@
+.contact-page .intro {
+  margin: 100px 0;
+}
+
+.contact-page .intro .heading_area {
+  margin-bottom: 25px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.contact-page .intro .heading_area .heading {
+  color: #1a4a8d;
+  text-transform: uppercase;
+  font-family: saira_semi_bold;
+  font-size: 24px;
+}
+
+.contact-page .intro .heading_area .share {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  color: #89a3a3;
+  font-size: 12px;
+}
+
+.contact-page .intro .heading_area .share span {
+  line-height: 13px;
+}
+
+.contact-page .intro .heading_area .share a {
+  margin-left: 10px;
+  display: block;
+}
+
+.contact-page .intro .heading_area .share svg {
+  height: 13px;
+}
+
+.contact-page .intro .info .title {
+  font-family: saira_semi_bold;
+  text-transform: uppercase;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.contact-page .intro .info .line_info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.contact-page .intro .info .line_info .label {
+  width: 70px;
+  font-family: saira_semi_bold;
+}
+
+.contact-page .intro .info .line_info .text {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.contact-page .title_card {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-transform: uppercase;
+  font-size: 24px;
+  font-family: saira_thin;
+}
+
+.contact-page .map iframe {
+  width: 100%;
+  height: 500px;
+}
+
+@media all and (max-width: 600px) {
+  .contact-page .intro {
+    margin: 50px 0;
+  }
+  .contact-page .intro .heading_area .share {
+    display: none;
+  }
+}
+/*# sourceMappingURL=contact.css.map */

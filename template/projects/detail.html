@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacid</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/ck-editor.css">
+    <link rel="stylesheet" href="/scss/styles.css">
+    <link rel="stylesheet" href="/scss/projects/projects.css">
+
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+</head>
+
+<body>
+    <nav id="menu" class="menu padding bg_color_1">
+        <a class="logo" href="/">
+            <img class="logo-white" src="/assets/images/logo_white.png">
+            <img class="logo-dark" src="/assets/images/logo.png">
+        </a>
+        <ul class="menu-items">
+            <li><a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="23" viewBox="0 0 32 23">
+                        <g transform="translate(18587 -1229)">
+                            <g data-name="Group 2057">
+                                <g transform="translate(-20127 1180)">
+                                    <g class="stroke" transform="translate(1540 49)" fill="none" stroke-width="2">
+                                        <rect width="32" height="23" stroke="none" />
+                                        <rect x="1" y="1" width="30" height="21" fill="none" />
+                                    </g>
+                                    <text class="fill" transform="translate(1565 65)" font-size="14"
+                                        font-family="Saira-Medium, Saira" font-weight="500">
+                                        <tspan x="-18.704" y="0">EN</tspan>
+                                    </text>
+                                </g>
+
+                            </g>
+                        </g>
+                    </svg>
+                </a></li>
+            <li><a href="#">
+                    <svg style="margin-top:2px" xmlns="http://www.w3.org/2000/svg" width="32.389" height="27.086"
+                        viewBox="0 0 32.389 27.086">
+                        <g transform="translate(18525 -1229)">
+                            <g>
+                                <g transform="translate(-18525 1229)">
+                                    <path class="fill"
+                                        d="M0,0V23.29H4.428v3.8h.949a4.753,4.753,0,0,0,4.649-3.8H32.389V0ZM30.421,21.265l-22.2-.015v1.091a2.852,2.852,0,0,1-1.9,2.684V21.25l-4.311.015V2.069H30.421Z" />
+                                    <path class="fill" d="M241,211h2.454v2.454H241Z"
+                                        transform="translate(-226.032 -200.93)" />
+                                    <path class="fill" d="M301,211h2.454v2.454H301Z"
+                                        transform="translate(-281.125 -200.93)" />
+                                    <path class="fill" d="M181,211h2.454v2.454H181Z"
+                                        transform="translate(-170.94 -200.93)" />
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+
+
+                </a></li>
+            <li><a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32.395" height="23.173" viewBox="0 0 32.395 23.173">
+                        <g transform="translate(18463 -1228.992)">
+                            <g>
+                                <g transform="translate(-18462.994 1160.73)">
+                                    <g transform="translate(0 68.267)">
+                                        <path class="fill"
+                                            d="M32.389,68.262H0c-.012.661,0,.523,0,1.162V91.375l32.389.06V68.262ZM29.335,70.58,16.195,80.688,3.054,70.58Zm.74,18.508H2.313V72.93L15.49,83.065a1.157,1.157,0,0,0,1.409,0L30.076,72.93Z"
+                                            transform="translate(0 -68.267)" />
+                                    </g>
+                                </g>
+
+                            </g>
+                        </g>
+                    </svg>
+
+
+                </a></li>
+            <li><a href="#" class="open_sub_menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="33.611" height="22.092" viewBox="0 0 33.611 22.092">
+                        <g transform="translate(18401 -1229)">
+                            <g transform="translate(-18401 1229)">
+                                <g transform="translate(0 0.092)">
+                                    <g transform="translate(0 -0.092)">
+                                        <g>
+
+                                            <g>
+                                                <g>
+                                                    <rect width="33.611" height="2.985" class="fill" />
+                                                </g>
+                                            </g>
+                                            <g transform="translate(9.775 9.553)">
+                                                <g transform="translate(0 0)">
+                                                    <rect width="23.836" height="2.985" class="fill" />
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                            <g transform="translate(-18401 1229.092)">
+                                <g transform="translate(0 -0.092)">
+                                    <g>
+                                        <g transform="translate(3.368 19.106)">
+                                            <g transform="translate(0 0)">
+                                                <rect data-name="Rectangle 1239" width="30.242" height="2.985"
+                                                    class="fill" />
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+
+                </a></li>
+        </ul>
+        <div class="brd"></div>
+        <div class="animate__animated animate__fadeIn sub-menu padding">
+            <div class="wrap">
+                <div class="column">
+                    <a class="title" href="#">
+                        Hacid
+                        <div class="number">1</div>
+                    </a>
+                    <ul class="list">
+                        <li>
+                            <a href="#">Giới thiệu chung</a>
+                        </li>
+                        <li>
+                            <a href="#">Kinh nghiệm chuyên môn</a>
+                        </li>
+                        <li>
+                            <a href="#">Năng lực hiện tại</a>
+                        </li>
+                        <li>
+                            <a href="#">Khách hàng - đối tác</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <a class="title" href="#">
+                        Dự án
+                        <div class="number">2</div>
+                    </a>
+                    <ul class="list">
+                        <li>
+                            <a href="#">Tư vấn xây dựng</a>
+                        </li>
+                        <li>
+                            <a href="#">Tư vấn đầu tư</a>
+                        </li>
+                        <li>
+                            <a href="#">Dự án đầu tư</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <a class="title" href="#">
+                        Bim
+                        <div class="number">3</div>
+                    </a>
+                    <ul class="list">
+                        <li>
+                            <a href="#">Công nghệ bim</a>
+                        </li>
+                        <li>
+                            <a href="#">Công trình áp dụng revit</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <a class="title" href="#">
+                        Tin tức
+                        <div class="number">4</div>
+                    </a>
+                    <ul class="list">
+                        <li>
+                            <a href="#">Đào tạo</a>
+                        </li>
+                        <li>
+                            <a href="#">Tin chuyên ngành</a>
+                        </li>
+                        <li>
+                            <a href="#">Tin hoạt động</a>
+                        </li>
+                        <li>
+                            <a href="#">Tuyển dụng</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <a class="title" href="#">
+                        Liên hệ
+                        <div class="number">5</div>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+    <nav id="menu_mobile" class="menu bg_color_1 padding">
+        <a class="logo" href="/">
+            <img class="logo-white" src="/assets/images/logo_white.png">
+        </a>
+        <a href="#" class="open_sub_menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="33.611" height="22.092" viewBox="0 0 33.611 22.092">
+                <g transform="translate(18401 -1229)">
+                    <g transform="translate(-18401 1229)">
+                        <g transform="translate(0 0.092)">
+                            <g transform="translate(0 -0.092)">
+                                <g>
+
+                                    <g>
+                                        <g>
+                                            <rect width="33.611" height="2.985" class="fill" />
+                                        </g>
+                                    </g>
+                                    <g transform="translate(9.775 9.553)">
+                                        <g transform="translate(0 0)">
+                                            <rect width="23.836" height="2.985" class="fill" />
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                    <g transform="translate(-18401 1229.092)">
+                        <g transform="translate(0 -0.092)">
+                            <g>
+                                <g transform="translate(3.368 19.106)">
+                                    <g transform="translate(0 0)">
+                                        <rect data-name="Rectangle 1239" width="30.242" height="2.985" class="fill" />
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </svg>
+
+        </a>
+        <div class="animate__animated animate__fadeIn sub-menu padding">
+            <div class="wrap">
+                <div class="columns">
+                    <div class="column">
+                        <a class="title" data-toggle="collapse" data-target="#menu_item_1">
+                            Hacid
+                            <div class="number">1</div>
+                        </a>
+                        <ul class="list collapse" id="menu_item_1">
+                            <li>
+                                <a href="#">Giới thiệu chung</a>
+                            </li>
+                            <li>
+                                <a href="#">Kinh nghiệm chuyên môn</a>
+                            </li>
+                            <li>
+                                <a href="#">Năng lực hiện tại</a>
+                            </li>
+                            <li>
+                                <a href="#">Khách hàng - đối tác</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <a class="title" data-toggle="collapse" data-target="#menu_item_2">
+                            Dự án
+                            <div class="number">2</div>
+                        </a>
+                        <ul class="list collapse" id="menu_item_2">
+                            <li>
+                                <a href="#">Tư vấn xây dựng</a>
+                            </li>
+                            <li>
+                                <a href="#">Tư vấn đầu tư</a>
+                            </li>
+                            <li>
+                                <a href="#">Dự án đầu tư</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <a class="title" data-toggle="collapse" data-target="#menu_item_3">
+                            Bim
+                            <div class="number">3</div>
+                        </a>
+                        <ul class="list collapse" id="menu_item_3">
+                            <li>
+                                <a href="#">Công nghệ bim</a>
+                            </li>
+                            <li>
+                                <a href="#">Công trình áp dụng revit</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <a class="title" data-toggle="collapse" data-target="#menu_item_4">
+                            Tin tức
+                            <div class="number">4</div>
+                        </a>
+                        <ul class="list collapse" id="menu_item_4">
+                            <li>
+                                <a href="#">Đào tạo</a>
+                            </li>
+                            <li>
+                                <a href="#">Tin chuyên ngành</a>
+                            </li>
+                            <li>
+                                <a href="#">Tin hoạt động</a>
+                            </li>
+                            <li>
+                                <a href="#">Tuyển dụng</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <a class="title">
+                            Liên hệ
+                            <div class="number">5</div>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div class="bottom">
+                    <ul class="menu-items">
+                        <li><a href="#">
+                                <img src="/assets/icons/en.svg">
+                            </a></li>
+                        <li><a href="#">
+                                <img src="/assets/icons/forum.svg" style="margin-top: 1px;">
+
+
+                            </a></li>
+                        <li><a href="#">
+                                <img src="/assets/icons/email.svg">
+
+
+                            </a></li>
+                    </ul>
+                    <div class="name">© 2020 HACID., JSC</div>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div id="main-body" class="project-detail-page">
+        <div class="banner">
+
+            <img src="/assets/images/projects/project_banner.jpg">
+        </div>
+        <div class="wrap_project_detail padding">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="info">
+                        <div class="heading_area">
+                            <h3 class="heading">
+                               Thông tin dự án
+
+                            </h3>
+                        </div>
+                        <div class="list-info">
+                            <div class="line">
+                                <div class="label">Tên công trình</div>
+                                <div class="text">Đài tưởng niệm liệt sĩ Tuyên Quang</div>
+                            </div>
+                            <div class="line">
+                                <div class="label">Địa điểm</div>
+                                <div class="text">Tuyên Quang</div>
+                            </div>
+                            <div class="line">
+                                <div class="label">Chủ đầu tư</div>
+                                <div class="text">??????????????????</div>
+                            </div>
+                            <div class="line">
+                                <div class="label">Thể loại</div>
+                                <div class="text">Cộng đồng</div>
+                            </div>
+                            <div class="line">
+                                <div class="label">Lĩnh vực</div>
+                                <div class="text">Tư vấn Thiết kế, Dự án Đầu tư</div>
+                            </div>
+                            <div class="line">
+                                <div class="label">Thời gian</div>
+                                <div class="text">1995</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 brd">
+                    <div class="article">
+                        <div class="heading_area">
+                            <h3 class="heading">
+                               Đài tưởng niệm liệt sĩ
+
+                            </h3>
+                            <div class="share">
+                                <span>CHIA SẺ :</span>
+                                <a href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12.76" height="23.598"
+                                        viewBox="0 0 12.76 23.598">
+                                        <g id="fb" transform="translate(18755 -1229)">
+                                            <g transform="translate(-18755 1229)">
+                                                <g transform="translate(0 0)">
+                                                    <path
+                                                        d="M34.355,0l-3.06,0c-3.438,0-5.66,2.279-5.66,5.807V8.485H22.558a.481.481,0,0,0-.481.481v3.88a.481.481,0,0,0,.481.481h3.077v9.789a.481.481,0,0,0,.481.481h4.014a.481.481,0,0,0,.481-.481V13.327h3.6a.481.481,0,0,0,.481-.481V8.967a.482.482,0,0,0-.481-.481h-3.6V6.215c0-1.091.26-1.645,1.681-1.645h2.061a.481.481,0,0,0,.481-.481V.486A.481.481,0,0,0,34.355,0Z"
+                                                        transform="translate(-22.077)" fill="#89a3a3" />
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </svg>
+
+                                </a>
+                                <a href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22.836" height="22.551"
+                                        viewBox="0 0 22.836 22.551">
+                                        <g transform="translate(18705.822 -1229)">
+                                            <g transform="translate(-18705.822 1229)">
+                                                <g transform="translate(0 0)">
+                                                    <g transform="translate(0 6.851)">
+                                                        <g>
+                                                            <rect width="5.107" height="15.7" fill="#89a3a3" />
+                                                        </g>
+                                                    </g>
+                                                    <g transform="translate(7.136 6.851)">
+                                                        <g>
+                                                            <path id="Path_8" data-name="Path 8"
+                                                                d="M171.881,160.184c-.054-.017-.106-.036-.163-.051s-.137-.029-.207-.04a4.575,4.575,0,0,0-.916-.093,7.1,7.1,0,0,0-5.488,3v-3H160v15.7h5.107v-8.564s3.859-5.375,5.488-1.427V175.7H175.7V165.105A5.092,5.092,0,0,0,171.881,160.184Z"
+                                                                transform="translate(-160 -160)" fill="#89a3a3" />
+                                                        </g>
+                                                    </g>
+                                                    <g transform="translate(0.269)">
+                                                        <g>
+                                                            <ellipse cx="2.394" cy="2.394" rx="2.394" ry="2.394"
+                                                                fill="#89a3a3" />
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </svg>
+
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ck-content">
+                            <p>
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit veniam ullam
+                                veritatis animi deleniti beatae dolor? Mollitia sapiente, tempora nesciunt modi est quam
+                                tempore ab nemo vel voluptate libero commodi.
+                            </p>
+                            <p>
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit veniam ullam
+                                veritatis animi deleniti beatae dolor? Mollitia sapiente, tempora nesciunt modi est quam
+                                tempore ab nemo vel voluptate libero commodi.
+                            </p>
+                            <p>
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit veniam ullam
+                                veritatis animi deleniti beatae dolor? Mollitia sapiente, tempora nesciunt modi est quam
+                                tempore ab nemo vel voluptate libero commodi.
+                            </p>
+                            <p>
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit veniam ullam
+                                veritatis animi deleniti beatae dolor? Mollitia sapiente, tempora nesciunt modi est quam
+                                tempore ab nemo vel voluptate libero commodi.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="title_card bg_color_2">
+            <a href="/projects/index.html" class="back_to_list">[ Quay trở lại danh sách dự án ]</a>
+        </div>
+    </div>
+    <footer>
+        <div class="map padding" style="background-image: url('/assets/images/footer.jpg');">
+            <div class="text">
+                <div>
+                    69 Quán Thánh, Quận Ba Đình, Hà Nội, Việt Nam
+                </div>
+                <div>
+                    <a href="#">[HACID in GoogleMap.]</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="footer-info padding">
+            <div class="copyright">© Copyright 2015 HACID.,<br />JSC, All right reserved</div>
+            <ul class="footer-menu">
+                <li>
+                    <a href="/">Trang chủ.</a>
+                </li>
+                <li>
+                    <a href="/">Hacid.</a>
+                </li>
+                <li>
+                    <a href="/">Dự án.</a>
+                </li>
+                <li>
+                    <a href="/">Bim.</a>
+                </li>
+                <li>
+                    <a href="/">Tin tức.</a>
+                </li>
+                <li>
+                    <a href="/">Liên hệ.</a>
+                </li>
+            </ul>
+            <div class="socials">
+                <ul>
+                    <li>
+                        <a href="#"><img src="/assets/icons/fb.svg"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="/assets/icons/in.svg"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img class="yt" src="/assets/icons/you.svg"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

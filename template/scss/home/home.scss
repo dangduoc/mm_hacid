@@ -1,0 +1,312 @@
+@import "../colors";
+#banner {
+    position: relative;
+
+    .item {
+        height: 100vh;
+        height: calc(100vh - 80px);
+        width: 100%;
+        .bg_item {
+            height: 100%;
+            width: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            position: relative;
+            &::after{
+                background-image: url(/assets/images/home/slides/shadow.png);
+                background-position: center top;
+                background-repeat: no-repeat;
+                background-size: cover;
+                width: 100%;
+                height: 40%;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                z-index: 0;
+                content: '';
+            }
+        }
+        .indicators {
+            position: absolute;
+            bottom: 60px;
+            left: 100px;
+            z-index: 1;
+            color: #fff;
+            font-size: 14px;
+            font-family: saira_thin;
+            display: flex;
+            align-items: center;
+            .line {
+                position: relative;
+                width: 100px;
+                margin: 0 15px;
+                overflow-x: hidden;
+                height: 2px;
+                .placehoder {
+                    background-color: #3e3a3a;
+                    width: 100%;
+                    height: 1px;
+                }
+                .progress_line {
+                    display: none;
+                }
+            }
+        }
+        &.slick-active {
+            .indicators {
+                .line {
+                    .progress_line {
+                        display: block;
+                        background-color: $color_2_light;
+                        height: 2px;
+                        width: 100%;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        z-index: 2;
+                        animation-name: example;
+                        animation-duration: 6s;
+                        animation-timing-function: linear;
+                    }
+                }
+            }
+            .bg_item {
+                animation: scale_animation linear 8s;
+            }
+        }
+        .title_card_banner {
+            position: absolute;
+            bottom: 100px;
+            left: 100px;
+            z-index: 2;
+            height: auto;
+            .wrap_text {
+                border-left: 2px solid #fff;
+                border-right: 2px solid #fff;
+                padding: 3px 15px;
+                .text {
+                    color: #fff;
+                    text-transform: uppercase;
+                    font-family: saira;
+                    font-size: 28px;
+                }
+            }
+        }
+        .view_more{
+            z-index: 2;
+            position: absolute;
+            right: 100px;
+            bottom: 60px;
+            color: #ddd;
+            font-family: saira_thin;
+            font-size: 14px;
+            display: block;
+            span{
+                color: $color_2_light;
+                font-size: 35px;
+                position: absolute;
+                right: -25px;
+                top: 50%;
+                -webkit-transform: translateY(-50%);
+                transform: translateY(-50%);
+                line-height: 1;
+                display: block;
+                font-family: roboto;
+                font-weight: 200;
+            }
+        }
+        .info_card{
+            position: absolute;
+            z-index: 2;
+            top: 100px;
+            right: 100px;
+            font-family: saira_thin;
+            font-size: 14px;
+           
+            text-align: right;
+            &:not(.text_dark){
+                color: #ddd;
+            }
+            .project_name{
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                margin-bottom: 5px;
+                text-transform: uppercase;
+                img{
+                    width: 13px;
+                    margin-left: 5px;
+                }
+            }
+            .project_location{
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                img{
+                    width: 13px;
+                    margin-left: 5px;
+                }
+            }
+        }
+    }
+}
+.about_us{
+    margin: 100px 0;
+    .heading{
+        text-transform: uppercase;
+        color: $color_1;
+        margin-bottom: 25px;
+    }
+    .ck-content{
+        table{
+            td{
+                text-align: justify;
+            }
+        }
+    }
+    .view_more{
+        text-align: right;
+        a{
+            display: block;
+            color: $color_1;
+            text-transform: uppercase;
+            
+            span{
+                padding: 0 5px;
+                &:last-child{
+                    padding-right: 0;
+                }
+            }
+        }
+    }
+}
+.project_cards{
+    position: relative;
+    .project_card{
+        position: relative;
+        .title{
+            color: #fff;
+            display: block;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            &.bg_color_1{
+                background-color: $color_1;
+                background-image:linear-gradient(to right, $color_1, $color_1_light);
+            }
+            &.bg_color_2{
+                background-color: $color_2;
+                background-image:linear-gradient(to right, $color_2, $color_2_light);
+            }
+            .text{
+                text-transform: uppercase;
+                font-size: 24px;
+            }
+            .plus_sign{
+                height: 80px;
+                width: 80px;
+                background-color: $color_2_light;
+                font-family: roboto;
+                font-weight: 200;
+                color: $color_1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 40px;
+            }
+        }
+        .img{
+            img{
+                width: 100%;
+            }
+        }
+    }
+}
+@keyframes example {
+    from {
+        left: -100px;
+    }
+    to {
+        left: 0;
+    }
+}
+@keyframes scale_animation {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.3);
+    }
+}
+@media all and (max-width:600px){
+    #banner {
+        .item {
+            .info_card{
+                top: 30px;
+                right: 25px;
+            }
+            .title_card_banner{
+                left: 0;
+                bottom: 70px;
+                margin: 0 25px;
+            }
+            .indicators{
+                bottom: 25px;
+                left: 15px;
+            }
+            .view_more{
+                right: 35px;
+                bottom: 25px;
+            }
+        }
+    }
+    .about_us .view_more{
+        text-align: left;
+    }
+    .project_cards .project_card .img img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        object-position: left;
+    }
+    .project_cards .project_card .title{
+        padding-right: 0;
+    }
+}
+@media all and (max-width:900px){
+    #banner {
+        .item {
+            height: 100vh;
+            height: calc(100vh - 80px);
+            .info_card{
+                top: 30px;
+                right: 25px;
+            }
+            .title_card_banner{
+                left: 0;
+                bottom: 70px;
+                margin: 0 25px;
+            }
+            .indicators{
+                bottom: 25px;
+                left: 15px;
+            }
+            .view_more{
+                right: 35px;
+                bottom: 25px;
+            }
+        }
+    }
+    .about_us .view_more{
+        text-align: left;
+    }
+    .project_cards .project_card .img img {
+        height: 250px;
+        object-fit: cover;
+        object-position: left;
+        width: 100%;
+    }
+}

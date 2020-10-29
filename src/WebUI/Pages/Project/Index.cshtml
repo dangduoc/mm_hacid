@@ -1,0 +1,233 @@
+﻿@page
+@model BaseProjectWebRazor.Pages.Project.IndexModel
+@{
+    ViewData["Title"] = "Danh sách dự án";
+}
+<div class="projects-page">
+    <div class="banner">
+        <h2 class="title padding">Dự án</h2>
+        <img src="/assets/images/banner_project.jpg">
+    </div>
+    <div class="wrapper">
+        <div class="top-filter-list padding">
+            <div class="left">
+                <div class="label">Bộ lọc dự án: </div>
+                <div class="options animate__animated animate__fadeIn">
+                    <div class="option">
+                        <select>
+                            <option selected value="0">Tất cả loại hình +</option>
+                            <option value="1">Văn Phòng - thương mại</option>
+                            <option value="2">Nhà ở</option>
+                            <option value="3">Hỗn hợp</option>
+                            <option value="4">Văn hóa - thể thao</option>
+                        </select>
+                    </div>
+                    <div class="option">
+                        <select>
+                            <option selected value="0">Tất cả lĩnh vực +</option>
+                            <option value="1">Tư vấn đầu tư</option>
+                            <option value="2">Tư vấn xây dựng</option>
+                            <option value="3">Hỗn hợp</option>
+                            <option value="4">Văn hóa - thể thao</option>
+                        </select>
+                    </div>
+                    <div class="option">
+                        <select>
+                            <option selected value="0">Tất cả khu vực +</option>
+                            <option value="1">Hà Nội</option>
+                            <option value="2">Hồ chí minh</option>
+                            <option value="3">Hỗn hợp</option>
+                            <option value="4">Văn hóa - thể thao</option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+            <button><span>+</span></button>
+        </div>
+
+        <div class="padding">
+            <div class="filters">
+                <div class="left">
+                    <div class="option">
+                        <div class="label">Tìm kiếm dự án</div>
+                        <form class="search_form">
+                            <input type="text" class="search" placeholder="Nhập từ khóa tìm kiếm...">
+                            <img src="/assets/icons/search.svg" class="input_icon">
+                        </form>
+                    </div>
+
+
+                </div>
+                <div class="right">
+                    <div class="option">
+                        <div class="label">Sắp xếp</div>
+                        <div>
+                            <select>
+                                <option value="1">A - Z</option>
+                                <option value="2">Z - A</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="option" id="type_views">
+                        <div class="label">Hiển thị</div>
+                        <div class="buttons">
+                            <button class="view_grid active">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28"
+                                     height="28" viewBox="0 0 28 28">
+                                    <g transform="translate(18469 -1284.908)">
+                                        <g>
+                                            <g transform="translate(-18469 1284.908)">
+                                                <g>
+                                                    <g transform="translate(25.143)">
+                                                        <rect width="5" height="5" transform="translate(-2.143)" />
+                                                        <rect width="5" height="5"
+                                                              transform="translate(-2.143 12)" />
+                                                        <rect width="5" height="5"
+                                                              transform="translate(-2.143 23)" />
+                                                    </g>
+                                                    <g transform="translate(13.571)">
+                                                        <rect width="5" height="5" transform="translate(-1.571)" />
+                                                        <rect width="5" height="5"
+                                                              transform="translate(-1.571 12)" />
+                                                        <rect width="5" height="5"
+                                                              transform="translate(-1.571 23)" />
+                                                    </g>
+                                                    <g>
+                                                        <rect width="5" height="5" transform="translate(0)" />
+                                                        <rect width="5" height="5" transform="translate(0 12)" />
+                                                        <rect width="5" height="5" transform="translate(0 23)" />
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </button>
+                            <button class="view_list">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+                                    <g transform="translate(18395 -1284.908)">
+                                        <g transform="translate(-18395 1284.908)">
+                                            <g>
+                                                <g>
+                                                    <rect width="28" height="5" />
+                                                    <rect width="28" height="5" transform="translate(0 12)" />
+                                                    <rect width="28" height="5" transform="translate(0 23)" />
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list_projects">
+                <div class="project_box">
+                    <div class="img" style="background-image: url('/assets/images/projects/1.jpg');">
+                        <div class="info">
+                            <div class="cate">Tư vấn xây dựng</div>
+                            <a class="title" href="/project/detail">
+                                Đài tưởng niệm liệt sỹ móng cái
+                            </a>
+                            <div class="location">
+                                <img>
+                                Quảng Ninh
+                            </div>
+                            <a href="#" class="egde"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project_box">
+                    <div class="img" style="background-image: url('/assets/images/projects/2.jpg');">
+                        <div class="info">
+                            <div class="cate">Tư vấn xây dựng</div>
+                            <a class="title" href="/project/detail">
+                                Đài tưởng niệm liệt sỹ móng cái
+                            </a>
+                            <div class="location">
+                                <img>
+                                Quảng Ninh
+                            </div>
+                            <a href="#" class="egde"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project_box">
+                    <div class="img" style="background-image: url('/assets/images/projects/3.jpg');">
+                        <div class="info">
+                            <div class="cate">Tư vấn xây dựng</div>
+                            <a class="title" href="/project/detail">
+                                Đài tưởng niệm liệt sỹ móng cái
+                            </a>
+                            <div class="location">
+                                <img>
+                                Quảng Ninh
+                            </div>
+                            <a href="#" class="egde"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project_box">
+                    <div class="img" style="background-image: url('/assets/images/projects/4.jpg');">
+                        <div class="info">
+                            <div class="cate">Tư vấn xây dựng</div>
+                            <a class="title" href="/project/detail">
+                                Đài tưởng niệm liệt sỹ móng cái
+                            </a>
+                            <div class="location">
+                                <img>
+                                Quảng Ninh
+                            </div>
+                            <a href="#" class="egde"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project_box">
+                    <div class="img" style="background-image: url('/assets/images/projects/5.jpg');">
+                        <div class="info">
+                            <div class="cate">Tư vấn xây dựng</div>
+                            <a class="title" href="/project/detail">
+                                Đài tưởng niệm liệt sỹ móng cái
+                            </a>
+                            <div class="location">
+                                <img>
+                                Quảng Ninh
+                            </div>
+                            <a href="#" class="egde"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project_box">
+                    <div class="img" style="background-image: url('/assets/images/projects/6.jpg');">
+                        <div class="info">
+                            <div class="cate">Tư vấn xây dựng</div>
+                            <a class="title" href="/project/detail">
+                                Đài tưởng niệm liệt sỹ móng cái
+                            </a>
+                            <div class="location">
+                                <img>
+                                Quảng Ninh
+                            </div>
+                            <a href="#" class="egde"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="paginations">
+                <ul>
+                    <li><a href="#" class="active">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles{
+    <link href="~/css/filter-list.css" rel="stylesheet" />
+    <link href="~/css/projects.css" rel="stylesheet" />
+}

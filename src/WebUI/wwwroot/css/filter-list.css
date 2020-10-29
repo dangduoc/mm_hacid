@@ -1,0 +1,211 @@
+.top-filter-list {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: 65px;
+  background-color: #1a4a8d;
+  border-top: 1px solid #6a6a6e;
+  -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+          box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+}
+
+.top-filter-list .left {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.top-filter-list .left .label {
+  text-transform: uppercase;
+  color: #2e9c93;
+}
+
+.top-filter-list .left .options {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.top-filter-list .left .options select {
+  background-color: transparent;
+  border: none;
+  color: #ecc43b;
+  text-transform: uppercase;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  cursor: pointer;
+  padding: 3px 10px;
+  width: 250px;
+}
+
+.top-filter-list .left .options select:focus {
+  outline: none;
+}
+
+.top-filter-list .left .options select option {
+  color: #fff;
+  text-transform: uppercase;
+  background: #1a4a8d;
+}
+
+.top-filter-list .left .options a {
+  display: block;
+  background-color: transparent;
+  border: none;
+  text-transform: uppercase;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  cursor: pointer;
+  padding: 3px 10px;
+  min-width: 100px;
+  margin-left: 15px;
+  margin-right: 15px;
+  text-align: center;
+  color: #fff;
+  -webkit-transition: color 0.5s;
+  transition: color 0.5s;
+}
+
+.top-filter-list .left .options a:hover {
+  text-decoration: none;
+  color: #ecc43b;
+}
+
+.top-filter-list .left .options a.active {
+  color: #ecc43b;
+}
+
+.top-filter-list button {
+  border: 0;
+  height: 65px;
+  width: 65px;
+  color: #fff;
+  font-size: 35px;
+  font-family: roboto;
+  font-weight: 200;
+  background-color: #ecc43b;
+}
+
+@media all and (max-width: 600px) {
+  .top-filter-list {
+    display: block;
+    position: relative;
+  }
+  .top-filter-list.open .left .options {
+    display: block;
+  }
+  .top-filter-list.open .left button span {
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+    display: block;
+  }
+  .top-filter-list.new {
+    padding-top: 0;
+  }
+  .top-filter-list .left {
+    width: 100%;
+    height: 100%;
+    padding-right: 100px;
+  }
+  .top-filter-list .left .label {
+    width: 100%;
+    color: #fff;
+  }
+  .top-filter-list .left .options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #1a4a8d;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #6a6a6e;
+    border-top: 1px solid #6a6a6e;
+    z-index: 2;
+  }
+  .top-filter-list .left .options select {
+    padding: 10px;
+    width: 100%;
+  }
+  .top-filter-list .left .options a {
+    text-align: left;
+    padding-left: 0;
+  }
+  .top-filter-list button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+  }
+  .top-filter-list button span {
+    display: block;
+    -webkit-transition: -webkit-transform 0.5s;
+    transition: -webkit-transform 0.5s;
+    transition: transform 0.5s;
+    transition: transform 0.5s, -webkit-transform 0.5s;
+  }
+}
+
+@media all and (max-width: 992px) {
+  .top-filter-list {
+    position: relative;
+  }
+  .top-filter-list .left .options {
+    font-size: 14px;
+  }
+  .top-filter-list .left .options a {
+    min-width: 0;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 25px;
+  }
+  .top-filter-list button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+  }
+  .top-filter-list button span {
+    display: block;
+    -webkit-transition: -webkit-transform 0.5s;
+    transition: -webkit-transform 0.5s;
+    transition: transform 0.5s;
+    transition: transform 0.5s, -webkit-transform 0.5s;
+  }
+}
+
+@media all and (min-width: 768px) {
+  .top-filter-list .left .label {
+    display: none;
+  }
+  .top-filter-list .left .options select {
+    padding-left: 0;
+  }
+}
+
+@media all and (min-width: 992px) {
+  .top-filter-list .left .label {
+    display: block;
+  }
+    .top-filter-list .left .options select {
+        padding-left: 10px;
+    }
+}

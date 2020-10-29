@@ -1,0 +1,404 @@
+
+#banner {
+  position: relative;
+}
+
+#banner .item {
+  height: 100vh;
+  width: 100%;
+}
+
+#banner .item .bg_item {
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  position: relative;
+}
+
+#banner .item .bg_item::after {
+  background-image: url(/assets/images/home/slides/shadow.png);
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 40%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  content: '';
+}
+
+#banner .item .indicators {
+  position: absolute;
+  bottom: 60px;
+  left: 100px;
+  z-index: 1;
+  color: #fff;
+  font-size: 14px;
+  font-family: saira_thin;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#banner .item .indicators .line {
+  position: relative;
+  width: 100px;
+  margin: 0 15px;
+  overflow-x: hidden;
+  height: 2px;
+}
+
+#banner .item .indicators .line .placehoder {
+  background-color: #3e3a3a;
+  width: 100%;
+  height: 1px;
+}
+
+#banner .item .indicators .line .progress_line {
+  display: none;
+}
+
+#banner .item.slick-active .indicators .line .progress_line {
+  display: block;
+  background-color: #ecc43b;
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  -webkit-animation-name: example;
+          animation-name: example;
+  -webkit-animation-duration: 6s;
+          animation-duration: 6s;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+
+#banner .item.slick-active .bg_item {
+  -webkit-animation: scale_animation linear 8s;
+          animation: scale_animation linear 8s;
+}
+
+#banner .item .title_card_banner {
+  position: absolute;
+  bottom: 100px;
+  left: 100px;
+  z-index: 2;
+  height: auto;
+}
+
+#banner .item .title_card_banner .wrap_text {
+  border-left: 2px solid #fff;
+  border-right: 2px solid #fff;
+  padding: 3px 15px;
+}
+
+#banner .item .title_card_banner .wrap_text .text {
+  color: #fff;
+  text-transform: uppercase;
+  font-family: saira;
+  font-size: 28px;
+}
+
+#banner .item .view_more {
+  z-index: 2;
+  position: absolute;
+  right: 100px;
+  bottom: 60px;
+  color: #ddd;
+  font-family: saira_thin;
+  font-size: 14px;
+  display: block;
+}
+
+#banner .item .view_more span {
+  color: #ecc43b;
+  font-size: 35px;
+  position: absolute;
+  right: -25px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  line-height: 1;
+  display: block;
+  font-family: roboto;
+  font-weight: 200;
+}
+
+#banner .item .info_card {
+  position: absolute;
+  z-index: 2;
+  top: 100px;
+  right: 100px;
+  font-family: saira_thin;
+  font-size: 14px;
+  text-align: right;
+}
+
+#banner .item .info_card:not(.text_dark) {
+  color: #ddd;
+}
+
+#banner .item .info_card .project_name {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+#banner .item .info_card .project_name img {
+  width: 13px;
+  margin-left: 5px;
+}
+
+#banner .item .info_card .project_location {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+#banner .item .info_card .project_location img {
+  width: 13px;
+  margin-left: 5px;
+}
+
+.about_us {
+  margin: 100px 0;
+}
+
+.about_us .heading {
+  text-transform: uppercase;
+  color: #1a4a8d;
+  margin-bottom: 25px;
+}
+
+.about_us .ck-content table td {
+  text-align: justify;
+}
+
+.about_us .view_more {
+  text-align: right;
+}
+
+.about_us .view_more a {
+  display: block;
+  color: #1a4a8d;
+  text-transform: uppercase;
+}
+
+.about_us .view_more a span {
+  padding: 0 5px;
+}
+
+.about_us .view_more a span:last-child {
+  padding-right: 0;
+}
+
+.project_cards {
+  position: relative;
+}
+
+.project_cards .project_card {
+  position: relative;
+}
+
+.project_cards .project_card .title {
+  color: #fff;
+  display: block;
+  height: 80px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.project_cards .project_card .title.bg_color_1 {
+  background-color: #1a4a8d;
+  background-image: -webkit-gradient(linear, left top, right top, from(#1a4a8d), to(#1d75cc));
+  background-image: linear-gradient(to right, #1a4a8d, #1d75cc);
+}
+
+.project_cards .project_card .title.bg_color_2 {
+  background-color: #d8911b;
+  background-image: -webkit-gradient(linear, left top, right top, from(#d8911b), to(#ecc43b));
+  background-image: linear-gradient(to right, #d8911b, #ecc43b);
+}
+
+.project_cards .project_card .title .text {
+  text-transform: uppercase;
+  font-size: 24px;
+}
+
+.project_cards .project_card .title .plus_sign {
+  height: 80px;
+  width: 80px;
+  background-color: #ecc43b;
+  font-family: roboto;
+  font-weight: 200;
+  color: #1a4a8d;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 40px;
+}
+
+.project_cards .project_card .img img {
+  width: 100%;
+}
+
+@-webkit-keyframes example {
+  from {
+    left: -100px;
+  }
+  to {
+    left: 0;
+  }
+}
+
+@keyframes example {
+  from {
+    left: -100px;
+  }
+  to {
+    left: 0;
+  }
+}
+
+@-webkit-keyframes scale_animation {
+  from {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  to {
+    -webkit-transform: scale(1.3);
+            transform: scale(1.3);
+  }
+}
+
+@keyframes scale_animation {
+  from {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  to {
+    -webkit-transform: scale(1.3);
+            transform: scale(1.3);
+  }
+}
+
+@media all and (max-width: 600px) {
+  #banner .item .info_card {
+    top: 30px;
+    right: 25px;
+  }
+  #banner .item .title_card_banner {
+    left: 0;
+    bottom: 70px;
+    margin: 0 25px;
+  }
+  #banner .item .indicators {
+    bottom: 25px;
+    left: 15px;
+  }
+  #banner .item .view_more {
+    right: 35px;
+    bottom: 25px;
+  }
+  .about_us .view_more {
+    text-align: left;
+  }
+  .project_cards .project_card .img img {
+    width: 100%;
+    height: 200px;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -o-object-position: left;
+       object-position: left;
+  }
+  .project_cards .project_card .title {
+    padding-right: 0;
+  }
+}
+
+@media all and (max-width: 900px) {
+  #banner .item {
+    height: 100vh;
+    height: calc(100vh - 80px);
+  }
+  #banner .item .info_card {
+    top: 30px;
+    right: 25px;
+  }
+  #banner .item .title_card_banner {
+    left: 0;
+    bottom: 70px;
+    margin: 0 25px;
+  }
+  #banner .item .indicators {
+    bottom: 25px;
+    left: 15px;
+  }
+  #banner .item .view_more {
+    right: 35px;
+    bottom: 25px;
+  }
+  .about_us .view_more {
+    text-align: left;
+  }
+  .project_cards .project_card .img img {
+    height: 250px;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -o-object-position: left;
+       object-position: left;
+    width: 100%;
+  }
+    #banner .item {
+        height: 100vh;
+        height:calc(100vh - 80px);
+    }
+}
+@media all and (min-width: 992px) {
+    nav#menu {
+        position: absolute;
+        width: 100%;
+        z-index: 99;
+    }
+    nav#menu.bg_color_1:not(.open):not(.fixed) {
+        background: transparent;
+        top: 0 !important;
+    }
+}
