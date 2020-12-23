@@ -1,18 +1,20 @@
 .projects-page .wrapper {
   margin-bottom: 50px;
 }
-
+.popover-body img{
+    max-width:180px;
+}
 .projects-page .wrapper .filters {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  margin: 25px 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin: 25px 0;
 }
 
 .projects-page .wrapper .filters .left {
@@ -80,6 +82,9 @@
 .projects-page .wrapper .filters .option select {
   border: 0;
   font-size: 14px;
+  line-height:1;
+  text-transform:uppercase;
+  margin-bottom:2px;
 }
 
 .projects-page .wrapper .filters .option .label {
@@ -101,24 +106,67 @@
 .projects-page .wrapper .filters .option button.active svg {
   fill: #24a095;
 }
+.projects-page .wrapper .filters .option a {
+  border: 0;
+  background-color: transparent;
+  display:inline-block;
+  vertical-align:middle;
+  padding:0 5px;
+}
 
+.projects-page .wrapper .filters .option a svg {
+  width: 18px;
+}
+
+.projects-page .wrapper .filters .option a.active svg {
+  fill: #24a095;
+}
 .projects-page .wrapper .filters #type_views {
   margin-left: 25px;
 }
+.projects-page .wrapper .list_table_projects table{
 
+}
+.projects-page .wrapper .list_table_projects table tr{
+    text-transform:uppercase;
+    border:0;
+    cursor:pointer;
+    transition:.5s;
+}
+.projects-page .wrapper .list_table_projects table tr:nth-child(odd){
+    background-color:#fafafa;
+}
+.projects-page .wrapper .list_table_projects table tr:hover{
+    background-color:#1a4a8d;
+    color:#fff !important;
+}
+
+.projects-page .wrapper .list_table_projects table tr td {
+    text-transform: uppercase;
+    border-top: 1px solid #fafafa;
+    padding: 25px 0;
+}
+.projects-page .wrapper .list_table_projects table tr td.padding_left{
+    padding-left:100px;
+}
+.projects-page .wrapper .list_table_projects table tr td.padding_right{
+    padding-right:100px;
+}
 .projects-page .wrapper .list_projects {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-left: -10px;
+    margin-right: -10px;
 }
 
 .projects-page .wrapper .list_projects .project_box {
   position: relative;
   padding-top: 100%;
   width: 50%;
-  padding: 10px 5px;
+  padding: 10px;
 }
 
 .projects-page .wrapper .list_projects .project_box:hover .info {
@@ -175,7 +223,9 @@
   color: #ddd;
   opacity: 0.6;
 }
-
+.projects-page .wrapper .list_projects .project_box .info .location img{
+    width:14px;
+}
 .projects-page .wrapper .list_projects .project_box .info .egde {
   display: block;
   width: 40px;
@@ -342,6 +392,18 @@
         -ms-flex-pack: center;
             justify-content: center;
   }
+  .projects-page .wrapper .list_projects .project_box .info .egde{
+      width:20px;
+      height:20px;
+  }
+    .projects-page .wrapper .list_projects .project_box .info .title {
+        font-size: 14px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+    }
 }
 
 @media all and (max-width: 992px) {

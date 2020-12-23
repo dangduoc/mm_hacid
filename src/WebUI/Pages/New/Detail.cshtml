@@ -1,139 +1,58 @@
-﻿@page
+﻿@page "{Id}"
 @model BaseProjectWebRazor.Pages.New.DetailModel
+@inject CommonLocalizationService localizer
 @{
-    ViewData["Title"] = "Chi tiết tin tức";
+    ViewData["Title"] = Model.Detail.Title;
 }
 <div class="new-page">
     <div id="banner_slides">
-        <div class="item" style="background-image: url('/assets/images/news/detail/1.jpg');"></div>
-        <div class="item" style="background-image: url('/assets/images/news/detail/2.jpg');"></div>
-        <div class="item" style="background-image: url('/assets/images/news/detail/3.jpg');"></div>
-        <div class="item" style="background-image: url('/assets/images/news/detail/4.jpg');"></div>
+
+        @foreach (var item in Model.Detail.Banners.Split(","))
+        {
+            <div class="item" style="background-image: url('@item');"></div>
+        }
     </div>
     <div class="wrap_new_detai padding">
         <div class="heading_area">
             <h3 class="heading">
-                Lam gỗ trong kiến trúc hiện đại mang đến vẻ đẹp thanh thoát
+                @Model.Detail.Title
             </h3>
             <div class="share">
-                <span>CHIA SẺ :</span>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12.76" height="23.598"
-                         viewBox="0 0 12.76 23.598">
-                        <g id="fb" transform="translate(18755 -1229)">
-                            <g transform="translate(-18755 1229)">
-                                <g transform="translate(0 0)">
-                                    <path d="M34.355,0l-3.06,0c-3.438,0-5.66,2.279-5.66,5.807V8.485H22.558a.481.481,0,0,0-.481.481v3.88a.481.481,0,0,0,.481.481h3.077v9.789a.481.481,0,0,0,.481.481h4.014a.481.481,0,0,0,.481-.481V13.327h3.6a.481.481,0,0,0,.481-.481V8.967a.482.482,0,0,0-.481-.481h-3.6V6.215c0-1.091.26-1.645,1.681-1.645h2.061a.481.481,0,0,0,.481-.481V.486A.481.481,0,0,0,34.355,0Z"
-                                          transform="translate(-22.077)" fill="#89a3a3" />
-                                </g>
-                            </g>
-                        </g>
-                    </svg>
+                <div class="fb-share-button" data-href="https://hacid.vn/new/detail/@Model.Detail.Id" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-                </a>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22.836" height="22.551"
-                         viewBox="0 0 22.836 22.551">
-                        <g transform="translate(18705.822 -1229)">
-                            <g transform="translate(-18705.822 1229)">
-                                <g transform="translate(0 0)">
-                                    <g transform="translate(0 6.851)">
-                                        <g>
-                                            <rect width="5.107" height="15.7" fill="#89a3a3" />
-                                        </g>
-                                    </g>
-                                    <g transform="translate(7.136 6.851)">
-                                        <g>
-                                            <path id="Path_8" data-name="Path 8"
-                                                  d="M171.881,160.184c-.054-.017-.106-.036-.163-.051s-.137-.029-.207-.04a4.575,4.575,0,0,0-.916-.093,7.1,7.1,0,0,0-5.488,3v-3H160v15.7h5.107v-8.564s3.859-5.375,5.488-1.427V175.7H175.7V165.105A5.092,5.092,0,0,0,171.881,160.184Z"
-                                                  transform="translate(-160 -160)" fill="#89a3a3" />
-                                        </g>
-                                    </g>
-                                    <g transform="translate(0.269)">
-                                        <g>
-                                            <ellipse cx="2.394" cy="2.394" rx="2.394" ry="2.394" fill="#89a3a3" />
-                                        </g>
-                                    </g>
-                                </g>
-                            </g>
+                @*<span style="text-transform:uppercase">@localizer.Get("Chia sẻ") :</span>
+        <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12.76" height="23.598"
+                 viewBox="0 0 12.76 23.598">
+                <g id="fb" transform="translate(18755 -1229)">
+                    <g transform="translate(-18755 1229)">
+                        <g transform="translate(0 0)">
+                            <path d="M34.355,0l-3.06,0c-3.438,0-5.66,2.279-5.66,5.807V8.485H22.558a.481.481,0,0,0-.481.481v3.88a.481.481,0,0,0,.481.481h3.077v9.789a.481.481,0,0,0,.481.481h4.014a.481.481,0,0,0,.481-.481V13.327h3.6a.481.481,0,0,0,.481-.481V8.967a.482.482,0,0,0-.481-.481h-3.6V6.215c0-1.091.26-1.645,1.681-1.645h2.061a.481.481,0,0,0,.481-.481V.486A.481.481,0,0,0,34.355,0Z"
+                                  transform="translate(-22.077)" fill="#89a3a3" />
                         </g>
-                    </svg>
+                    </g>
+                </g>
+            </svg>
 
-                </a>
+        </a>*@
             </div>
         </div>
         <div class="sub_info">
             <div>
-                <span class="color_1 cate">Công nghệ bim </span> <span class="color_4">
+                <span class="color_1 cate">@Model.Detail.Category </span> <span class="color_4">
                     -
-                    17.05.2019
+                    @Model.Detail.PublishedOnDate
                 </span>
             </div>
-            <div class="color_4 view">
-                <img src="/assets/icons/xem.svg" class="icon">
-                <span>102</span>
-            </div>
+            @*<div class="color_4 view">
+                    <img src="/assets/icons/xem.svg" class="icon">
+                    <span>@Model.Detail.TotalViews</span>
+                </div>*@
         </div>
         <div class="ck-content">
-            <figure class="table">
-                <table>
-                    <td style="width:33.33%;padding-right: 20px;">
-                        <p>
-                            <strong>
-                                LOREM IPSUM DOLOR SIT, AMET CONSECTETUR ADIPISICING ELIT.CONSEQUATUR
-                                QUASI SINT, QUAE
-                                MAGNI
-                                EXCEPTURI EUM ALIQUID PARIATUR QUAERAT EOS REPREHENDERIT CORRUPTI ISTE AD MAGNAM
-                                SIMILIQUE
-                                DOLORIBUS FACERE PROVIDENT EA FUGIAT.
-                            </strong>
-                        </p>
-                    </td>
-                    <td style="width:33.33%;padding-right: 10px;padding-left:10px">
-                        <p>
-                            <strong>
-                                LOREM IPSUM DOLOR SIT, AMET CONSECTETUR ADIPISICING ELIT.CONSEQUATUR QUASI SINT,
-                                QUAE MAGNI
-                            </strong>
-                        </p>
-                        <br />
-                        <p>
-
-
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur quasi sint, quae
-                            magni
-                            excepturi eum aliquid pariatur quaerat eos reprehenderit corrupti iste ad magnam
-                            similique
-                            doloribus facere provident ea fugiat.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste soluta tempore quo?
-                            Cumque, nisi quos tempora voluptate veniam voluptatum. Placeat voluptates distinctio
-                            quibusdam sint inventore ex minima ipsa laudantium recusandae.
-                        </p>
-                    </td>
-                    <td style="width:33.33%;padding-left:20px">
-                        <p><strong>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</strong></p>
-                        <br />
-                        <p>
-                            Consequatur quasi sint, quae magni
-                            excepturi eum aliquid pariatur quaerat eos reprehenderit corrupti iste ad magnam
-                            similique
-                            doloribus facere provident ea fugiat.
-                        </p>
-                        <br />
-                        <p><strong>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</strong></p>
-                        <br />
-                        <p>
-                            Consequatur quasi sint, quae magni
-                            excepturi eum aliquid pariatur quaerat eos reprehenderit corrupti iste ad magnam
-                            similique
-                            doloribus facere provident ea fugiat.
-                        </p>
-                    </td>
-                </table>
-            </figure>
-
+            @Html.Raw(Model.Detail.HtmlContent)
         </div>
 
     </div>
@@ -143,48 +62,8 @@
     <div class="bottom_detail padding">
 
         <div class="left share bottom_share">
-            <span>Chia sẻ :</span>
-            <a href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12.76" height="23.598" viewBox="0 0 12.76 23.598">
-                    <g id="fb" transform="translate(18755 -1229)">
-                        <g transform="translate(-18755 1229)">
-                            <g transform="translate(0 0)">
-                                <path d="M34.355,0l-3.06,0c-3.438,0-5.66,2.279-5.66,5.807V8.485H22.558a.481.481,0,0,0-.481.481v3.88a.481.481,0,0,0,.481.481h3.077v9.789a.481.481,0,0,0,.481.481h4.014a.481.481,0,0,0,.481-.481V13.327h3.6a.481.481,0,0,0,.481-.481V8.967a.482.482,0,0,0-.481-.481h-3.6V6.215c0-1.091.26-1.645,1.681-1.645h2.061a.481.481,0,0,0,.481-.481V.486A.481.481,0,0,0,34.355,0Z"
-                                      transform="translate(-22.077)" fill="#bbb" />
-                            </g>
-                        </g>
-                    </g>
-                </svg>
-
-            </a>
-            <a href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22.836" height="22.551" viewBox="0 0 22.836 22.551">
-                    <g transform="translate(18705.822 -1229)">
-                        <g transform="translate(-18705.822 1229)">
-                            <g transform="translate(0 0)">
-                                <g transform="translate(0 6.851)">
-                                    <g>
-                                        <rect width="5.107" height="15.7" fill="#bbb" />
-                                    </g>
-                                </g>
-                                <g transform="translate(7.136 6.851)">
-                                    <g>
-                                        <path id="Path_8" data-name="Path 8"
-                                              d="M171.881,160.184c-.054-.017-.106-.036-.163-.051s-.137-.029-.207-.04a4.575,4.575,0,0,0-.916-.093,7.1,7.1,0,0,0-5.488,3v-3H160v15.7h5.107v-8.564s3.859-5.375,5.488-1.427V175.7H175.7V165.105A5.092,5.092,0,0,0,171.881,160.184Z"
-                                              transform="translate(-160 -160)" fill="#bbb" />
-                                    </g>
-                                </g>
-                                <g transform="translate(0.269)">
-                                    <g>
-                                        <ellipse cx="2.394" cy="2.394" rx="2.394" ry="2.394" fill="#bbb" />
-                                    </g>
-                                </g>
-                            </g>
-                        </g>
-                    </g>
-                </svg>
-
-            </a>
+            <div class="fb-share-button" data-href="https://hacid.vn/new/detail/@Model.Detail.Id" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+          
         </div>
 
     </div>
@@ -199,174 +78,36 @@
             </div>
         </div>
         <div class="list_projects" id="related_news_slide">
-            <div class="item">
-                <div class="project_box">
-                    <div class="inside">
-                        <div class="img" style="background-image: url('/assets/images/news/tintuc-mh-1.jpg');">
+            @foreach (var item in Model.RelatedNews)
+            {
+                <div class="item">
+                    <a class="project_box"  href="/new/detail/@item.Id" title="@item.Title">
+                        <div class="inside">
+                            <div class="img" style="background-image: url('@item.Thumbnail');">
 
-                        </div>
-                        <div class="info">
-                            <div class="des">
-                                <div>
-                                    <span class="color_1 cate">Công nghệ bim </span> <span class="color_4">
-                                        -
-                                        17.05.2019
-                                    </span>
-                                </div>
-                                <div class="color_4">
-                                    <img src="/assets/icons/xem.svg" class="icon">
-                                    <span>102</span>
-                                </div>
                             </div>
-                            <a class="title" href="#">
-                                Bim và Revit trong ngành xây dựng hiện nay
-                            </a>
-                            <a href="#" class="view_more">[ Xem thêm ]</a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="item">
-                <div class="project_box">
-                    <div class="inside">
-                        <div class="img" style="background-image: url('/assets/images/news/tintuc-mh-2.jpg');">
-
-                        </div>
-                        <div class="info">
-                            <div class="des">
-                                <div>
-                                    <span class="color_1 cate">Công nghệ bim </span> <span class="color_4">
-                                        -
-                                        17.05.2019
-                                    </span>
+                            <div class="info">
+                                <div class="des">
+                                    <div>
+                                        <span class="color_1 cate">@item.Category </span> <span class="color_4">
+                                            -
+                                            @item.PublishedDate
+                                        </span>
+                                    </div>
+                                   
                                 </div>
-                                <div class="color_4">
-                                    <img src="/assets/icons/xem.svg" class="icon">
-                                    <span>102</span>
+                                <div class="title color_4" >
+                                    @item.Title
                                 </div>
+                                <div class="view_more">[ Xem thêm ]</div>
                             </div>
-                            <a class="title" href="#">
-                                Bim và Revit trong ngành xây dựng hiện nay
-                            </a>
-                            <a href="#" class="view_more">[ Xem thêm ]</a>
                         </div>
-                    </div>
 
+                    </a>
                 </div>
-            </div>
-            <div class="item">
-                <div class="project_box">
-                    <div class="inside">
-                        <div class="img" style="background-image: url('/assets/images/news/tintuc-mh-3.jpg');">
+            }
 
-                        </div>
-                        <div class="info">
-                            <div class="des">
-                                <div>
-                                    <span class="color_1 cate">Công nghệ bim </span> <span class="color_4">
-                                        -
-                                        17.05.2019
-                                    </span>
-                                </div>
-                                <div class="color_4">
-                                    <img src="/assets/icons/xem.svg" class="icon">
-                                    <span>102</span>
-                                </div>
-                            </div>
-                            <a class="title" href="#">
-                                Bim và Revit trong ngành xây dựng hiện nay
-                            </a>
-                            <a href="#" class="view_more">[ Xem thêm ]</a>
-                        </div>
-                    </div>
 
-                </div>
-            </div>
-            <div class="item">
-                <div class="project_box">
-                    <div class="inside">
-                        <div class="img" style="background-image: url('/assets/images/news/tintuc-mh-4.jpg');">
-
-                        </div>
-                        <div class="info">
-                            <div class="des">
-                                <div>
-                                    <span class="color_1 cate">Công nghệ bim </span> <span class="color_4">
-                                        -
-                                        17.05.2019
-                                    </span>
-                                </div>
-                                <div class="color_4">
-                                    <img src="/assets/icons/xem.svg" class="icon">
-                                    <span>102</span>
-                                </div>
-                            </div>
-                            <a class="title" href="#">
-                                Bim và Revit trong ngành xây dựng hiện nay
-                            </a>
-                            <a href="#" class="view_more">[ Xem thêm ]</a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="item">
-                <div class="project_box">
-                    <div class="inside">
-                        <div class="img" style="background-image: url('/assets/images/news/tintuc-mh-5.jpg');">
-
-                        </div>
-                        <div class="info">
-                            <div class="des">
-                                <div>
-                                    <span class="color_1 cate">Công nghệ bim </span> <span class="color_4">
-                                        -
-                                        17.05.2019
-                                    </span>
-                                </div>
-                                <div class="color_4">
-                                    <img src="/assets/icons/xem.svg" class="icon">
-                                    <span>102</span>
-                                </div>
-                            </div>
-                            <a class="title" href="#">
-                                Bim và Revit trong ngành xây dựng hiện nay
-                            </a>
-                            <a href="#" class="view_more">[ Xem thêm ]</a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="item">
-                <div class="project_box">
-                    <div class="inside">
-                        <div class="img" style="background-image: url('/assets/images/news/tintuc-mh-6.jpg');">
-
-                        </div>
-                        <div class="info">
-                            <div class="des">
-                                <div>
-                                    <span class="color_1 cate">Công nghệ bim </span> <span class="color_4">
-                                        -
-                                        17.05.2019
-                                    </span>
-                                </div>
-                                <div class="color_4">
-                                    <img src="/assets/icons/xem.svg" class="icon">
-                                    <span>102</span>
-                                </div>
-                            </div>
-                            <a class="title" href="#">
-                                Bim và Revit trong ngành xây dựng hiện nay
-                            </a>
-                            <a href="#" class="view_more">[ Xem thêm ]</a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
 
         </div>
     </div>
@@ -403,7 +144,7 @@
                 autoplay: true,
                 speed: 1000,
                 cssEase: 'linear',
-                autoplaySpeed: 5000,
+                autoplaySpeed: 6000,
                 infinite: false,
                 nextArrow: $('.related_news_area .slide_arrows .next'),
                 prevArrow: $('.related_news_area .slide_arrows .prev'),

@@ -1,4 +1,5 @@
-﻿using BaseProjectWebRazor.Resources;
+﻿
+using BaseProjectWebRazor.Resources;
 using Microsoft.Extensions.Localization;
 using System.Reflection;
 namespace BaseProjectWebRazor.Services
@@ -16,5 +17,6 @@ namespace BaseProjectWebRazor.Services
         {
             return localizer[key];
         }
+       
     }
 }

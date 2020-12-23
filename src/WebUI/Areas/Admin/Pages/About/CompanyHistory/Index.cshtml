@@ -1,0 +1,161 @@
+﻿@page
+@model About.CompanyHistory.IndexModel
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Lịch sử công ty</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-page="/Index">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Thông tin chung</li>
+                    <li class="breadcrumb-item active">Lịch sử công ty</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="card">
+        <div class="card-body">
+            <form id="create_form" method="post">
+                <div class="form-group row">
+                    <div class="col-lg-2">
+                        <input type="number"  placeholder="Năm" class="form-control" name="year" required>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">vi</span>
+                            </div>
+                            <input type="text"  placeholder="Tiêu đề tiếng Việt" class="form-control" name="title" required>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">en</span>
+                            </div>
+                            <input type="text" placeholder="Tiêu đề tiếng Anh" class="form-control" name="title_en" required>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-plus-circle"></i> Thêm</button>
+                </div>
+
+            </form>
+        </div>
+       
+        </div>
+        <div class="card">
+            <div class="card-header actions_card_header">
+                Danh sách lịch sử
+                <div id="filter_search"></div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-12 col-xl-6">
+                        <table class="table table-bordered table-hover" id="table">
+                            <thead>
+                                <tr>
+
+                                    <th style="width:80px">
+                                        Id
+                                    </th>
+                                    <th style="width:80px">Năm</th>
+                                    <th style="width:auto">Tiêu đề</th>
+                                    <th style="width:80px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Items)
+                                {
+                                    <tr>
+
+                                        <td>@item.Id</td>
+                                        <td class="year">@item.Year</td>
+                                        <td class="title">@item.Title</td>
+                                        <td>
+                                        
+                                            <a data-id="@item.Id" class="row_delete btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="col-12 col-xl-6">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+</section>
+@section Scripts{ 
+<script>
+    $(function () {
+        $('#create_form').on('submit', function (e) {
+            e.preventDefault();
+            let formData = new FormData(document.querySelector('#create_form'));
+            $.ajax({
+                type: 'POST',
+                data: formData,
+                url: '/admin/about/companyhistory',
+                processData: false,
+                contentType: false,
+                beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); }
+            }).done(function (res) {
+                if (res.status) {
+
+                    location.reload();
+                  
+                }
+                else {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Thêm không thành công',
+                        icon: 'error',
+                        position: 'bottom-right'
+                    });
+                }
+            }).fail(function () {
+                $.toast({
+                    heading: 'Error',
+                    text: 'Thêm không thành công',
+                    icon: 'error',
+                    position: 'bottom-right'
+                });
+            });
+        })
+        $('#table').on('click', '.row_delete', function (e) {
+            e.preventDefault();
+            let id = parseInt($(this).attr('data-id'));
+            let row = $(this).closest('tr');
+            if (confirm('Bạn chắc chắn muốn xóa dòng này chứ?')) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/admin/about/companyhistory?Id=' + id,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                }).done(function (res) {
+                    $(row).remove();
+                   
+                }).fail(function () {
+                    alert('Xóa không thành công');
+                });
+            }
+
+        });
+    })
+</script>
+   
+}

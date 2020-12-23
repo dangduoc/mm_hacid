@@ -16,6 +16,11 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Options;
 using Infrastructure;
 using SixLabors.ImageSharp.Web.DependencyInjection;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using AutoMapper;
+using BaseProjectWebRazor.Areas.Admin.Profiles;
+using BaseProjectWebRazor.Services;
 
 namespace BaseProjectWebRazor
 {
@@ -36,9 +41,12 @@ namespace BaseProjectWebRazor
             services.SetupLocalization();
             services.AddInfrastructure(Configuration);
             services.InjectApplicationServices();
+
+            services.AddScoped<CompanySettings>();
+
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
-          //  services.InjectAppConfig(Configuration);
-       
+            //  services.InjectAppConfig(Configuration);
+            services.AddAutoMapper(typeof(AdminAutoMapperProfiles));
             services.AddRazorPages().AddRazorPagesOptions(options =>
             {
                 options.Conventions.AuthorizeAreaFolder("Admin", "/Product");
@@ -56,7 +64,19 @@ namespace BaseProjectWebRazor
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));
             });
-            services.AddImageSharpWeb();
+            //services.AddImageSharpWeb();
+
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookieOptions =>
+            {
+                cookieOptions.LoginPath = "/admin/login";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,7 +91,7 @@ namespace BaseProjectWebRazor
                 // app.UseExceptionHandler("/Error");
                 app.UseDeveloperExceptionPage();
             }
-            app.UseImageSharp();
+           // app.UseImageSharp();
 
             app.UseStaticFiles();
 
@@ -80,7 +100,7 @@ namespace BaseProjectWebRazor
             app.UseRouting();
             var localizationOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value;
             app.UseRequestLocalization(localizationOptions);
-           // app.UseAuthorization();
+            app.UseAuthorization();
             app.UseStaticFiles();
             app.UseEndpoints(endpoints =>
             {
@@ -88,7 +108,7 @@ namespace BaseProjectWebRazor
                 endpoints.MapControllers();
     
                 //  endpoints.
-                // endpoints.MapAreaControllerRoute(name: "Admin", "Admin", pattern: "{area:exists}/{controller=Default}/{action=Index}/{id?}");
+                endpoints.MapAreaControllerRoute(name: "Admin", "Admin", pattern: "{area:exists}/{controller=Default}/{action=Index}/{id?}");
             });
         }
     }

@@ -17,7 +17,8 @@ namespace Application.Common.Interfaces
         Task<Response<LocalFileUploadResponse>>  UploadImage(IFormFile file, string folder, string fileName, int? width = null, int? height = null);
         Task<Response<LocalFileUploadResponse>> UploadDocument(IFormFile file, string folder, bool keepFileName = false);
         void DeleteFile(string filePath);
+        Task<object> UploadForCkEditor(IFormFile fileToUpload, string folder, string host);
 
-        
+
     }
 }

@@ -1,105 +1,70 @@
 ﻿@page
+@inject CommonLocalizationService localizer
 @model IndexModel
 @{
-    ViewData["Title"] = "Trang chủ";
+    ViewData["Title"] = localizer.Get("Trang chủ");
+    var banners = await setting.GetBannerHome();
 }
+@inject Services.CompanySettings setting
 
 <div id="banner">
     <div class="slide-banner">
-        <div class="item">
-            <div class="bg_item" style="background-image: url('/assets/images/home/slides/1.jpg');">
-            </div>
-            <div class="title_card_banner">
-                <div class="wrap_text">
-                    <div class="text">
-                        Sáng tạo - Khoa học <br />
-                        Chuẩn xác - Chuyên nghiệp
+        @for (int i = 0; i < Model.Slides.Count; i++)
+        {
+            var item = Model.Slides[i];
+            <div class="item @(i==0?"animated":"")" data-id="@Model.Slides[i].Theme" >
+                <div class="bg_item" style="background-image: url('/upload/images/@item.Image');"></div>
+                <div class="title_card_banner">
+                    <div class="wrap_text">
+                        <div class="text">
+                            @Html.Raw(item.Title)
+                        </div>
                     </div>
-                </div>
 
-            </div>
-            <div class="indicators">
-                <div>1</div>
-                <div class="line">
-                    <div class="placehoder"></div>
-                    <div class="progress_line"></div>
                 </div>
-                <div>2</div>
-            </div>
-            <div class="info_card">
-                <div class="project_name">
-                    Khu vui chơi quốc té Booyoung vina <img src="/assets/icons/the-loai.svg">
-                </div>
-                <div class="project_location">
-                    Hà nội - Việt Nam <img src="/assets/icons/dia-chi.svg">
-                </div>
-            </div>
-            <a class="view_more" href="/project/detail">
-                Xem chi tiết <span>+</span>
-            </a>
-        </div>
-        <div class="item">
-            <div class="bg_item" style="background-image: url('/assets/images/home/slides/2.jpg');"></div>
-            <div class="title_card_banner">
-                <div class="wrap_text">
-                    <div class="text">
-                        Sáng tạo - Khoa học <br />
-                        Chuẩn xác - Chuyên nghiệp
+                @if (Model.Slides.Count > 1)
+                {
+                    <div class="indicators">
+                        <div>@(i+1)</div>
+                        <div class="line">
+                            <div class="placehoder"></div>
+                            <div class="progress_line"></div>
+                        </div>
+                        @if (i == Model.Slides.Count - 1)
+                        {
+                            <div>1</div>
+                        }
+                        else
+                        {
+                            <div>@(i+2)</div>
+                        }
+
                     </div>
-                </div>
+                }
 
+                <div class="info_card">
+                    @if (!string.IsNullOrEmpty(item.ProjectTitle))
+                    {
+                        <div class="project_name">
+                            @item.ProjectTitle <img src="/assets/icons/the-loai.svg">
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(item.Location))
+                    {
+                        <div class="project_location">
+                            @item.Location <img src="/assets/icons/dia-chi.svg">
+                        </div>
+                    }
+                </div>
+                <a class="view_more" href="@item.Link">
+                    @localizer.Get("Xem chi tiết") <span>+</span>
+                </a>
             </div>
-            <div class="indicators">
-                <div>2</div>
-                <div class="line">
-                    <div class="placehoder"></div>
-                    <div class="progress_line"></div>
-                </div>
-                <div>3</div>
-            </div>
-            <div class="info_card">
-                <div class="project_name">
-                    Khu vui chơi quốc té Booyoung vina <img src="/assets/icons/the-loai.svg">
-                </div>
-                <div class="project_location">
-                    Hà nội - Việt Nam <img src="/assets/icons/dia-chi.svg">
-                </div>
-            </div>
-            <a class="view_more" href="/project/detail">
-                Xem chi tiết <span>+</span>
-            </a>
-        </div>
-        <div class="item">
-            <div class="bg_item" style="background-image: url('/assets/images/home/slides/3.jpg');"></div>
-            <div class="title_card_banner">
-                <div class="wrap_text">
-                    <div class="text">
-                        Sáng tạo - Khoa học <br />
-                        Chuẩn xác - Chuyên nghiệp
-                    </div>
-                </div>
 
-            </div>
-            <div class="indicators">
-                <div>3</div>
-                <div class="line">
-                    <div class="placehoder"></div>
-                    <div class="progress_line"></div>
-                </div>
-                <div>4</div>
-            </div>
-            <div class="info_card">
-                <div class="project_name">
-                    Khu vui chơi quốc té Booyoung vina <img src="/assets/icons/the-loai.svg">
-                </div>
-                <div class="project_location">
-                    Hà nội - Việt Nam <img src="/assets/icons/dia-chi.svg">
-                </div>
-            </div>
-            <a class="view_more" href="/project/detail">
-                Xem chi tiết <span>+</span>
-            </a>
-        </div>
+        }
+
+
+
     </div>
     <div class="shadow_bottom">
 
@@ -107,74 +72,42 @@
 </div>
 <div class="about_us padding">
     <h3 class="heading">
-        Về chúng tôi
+        @localizer.Get("Về chúng tôi")
     </h3>
     <div class="ck-content">
-        <figure class="table">
-            <table>
-                <td style="width:33.33%;padding-right: 20px;">
-                    <p>
-                        <strong>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</strong> Consequatur
-                        quasi sint, quae
-                        magni
-                        excepturi eum aliquid pariatur quaerat eos reprehenderit corrupti iste ad magnam
-                        similique
-                        doloribus facere provident ea fugiat.
-                    </p>
-                </td>
-                <td style="width:33.33%;padding-right: 10px;padding-left:10px">
-                    <p>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur quasi sint, quae
-                        magni
-                        excepturi eum aliquid pariatur quaerat eos reprehenderit corrupti iste ad magnam
-                        similique
-                        doloribus facere provident ea fugiat.
-                    </p>
-                </td>
-                <td style="width:33.33%;padding-left:20px">
-                    <p>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur quasi sint, quae
-                        magni
-                        excepturi eum aliquid pariatur quaerat eos reprehenderit corrupti iste ad magnam
-                        similique
-                        doloribus facere provident ea fugiat.
-                    </p>
-                </td>
-            </table>
-        </figure>
-
+        @Html.Raw(Model.AboutArticle)
     </div>
     <div class="view_more">
-        <a href="/about"><span>[</span> Xem thêm <span>]</span></a>
+        <a href="/about"><span>[</span> @localizer.Get("Xem thêm") <span>]</span></a>
     </div>
 </div>
 <div class="project_cards">
     <div class="project_card">
         <a class="title bg_color_2 padding" href="/project">
-            <div class="text">Dự án</div>
+            <div class="text">@localizer.Get("Dự án")</div>
         </a>
-        <div class="img"><img src="/assets/images/home/banner_2.jpg"></div>
+        <a class="img" href="/project"><img src="@banners.FirstOrDefault(c=>c.BannerId==(int)BannerType.Home1).Banner"></a>
     </div>
     <div class="project_card">
-        <a class="title bg_color_1 padding" href="/project">
-            <div class="text">Tư vấn xây dựng</div>
+        <a class="title bg_color_1 padding" href="/project?field=5">
+            <div class="text">@localizer.Get("Tư vấn xây dựng")</div>
             <div class="plus_sign">+</div>
         </a>
-        <div class="img"><img src="/assets/images/home/banner_4.jpg"></div>
+        <a class="img" href="/project?field=5"><img src="@banners.FirstOrDefault(c=>c.BannerId==(int)BannerType.Home2).Banner"></a>
     </div>
     <div class="project_card">
-        <a class="title bg_color_1 padding" href="/project">
-            <div class="text">Tư vấn đầu tư</div>
+        <a class="title bg_color_1 padding" href="/project?field=6">
+            <div class="text">@localizer.Get("Tư vấn đầu tư")</div>
             <div class="plus_sign">+</div>
         </a>
-        <div class="img"><img src="/assets/images/home/banner_1.jpg"></div>
+        <a class="img" href="/project?field=6"><img src="@banners.FirstOrDefault(c=>c.BannerId==(int)BannerType.Home3).Banner"></a>
     </div>
     <div class="project_card">
-        <a class="title bg_color_1 padding" href="/project">
-            <div class="text">Dự án đầu tư</div>
+        <a class="title bg_color_1 padding" href="/project?field=7">
+            <div class="text">@localizer.Get("Dự án đầu tư")</div>
             <div class="plus_sign">+</div>
         </a>
-        <div class="img"><img src="/assets/images/home/banner_3.jpg"></div>
+        <a class="img" href="/project?field=7"><img src="@banners.FirstOrDefault(c=>c.BannerId==(int)BannerType.Home4).Banner"></a>
     </div>
 </div>
 
@@ -183,7 +116,7 @@
     <link href="~/lib/slick/slick.css" rel="stylesheet" />
     <link href="~/lib/slick/slick-theme.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/home.css" />
-   
+
 }
 
 @section Scripts {
@@ -191,17 +124,37 @@
     <script>
         $(function () {
             $('#banner .slide-banner').on('init', function (event, slick) {
-                $('#banner .indicators .line').addClass('active');
-            });
-            $('#banner .slide-banner').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
-                if (nextSlide == 1) {
+                let theme = $(slick.$slides[0]).attr('data-id');
+
+                if (theme == 1) {
                     $('#banner .item .info_card').addClass('text_dark');
-                    $("#menu").addClass('dark');
+                    $("nav.menu").addClass('dark');
                 }
                 else {
                     $('#banner .item .info_card').removeClass('text_dark');
-                    $('#menu').removeClass('dark');
+                    $('nav.menu').removeClass('dark');
                 }
+                $('#banner .indicators .line').addClass('active');
+
+            });
+            $('#banner .slide-banner').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+                let theme = $(slick.$slides[nextSlide]).attr('data-id');
+
+                if (theme == 1) {
+                    $('#banner .item .info_card').addClass('text_dark');
+                    $("nav.menu").addClass('dark');
+                }
+                else {
+                    $('#banner .item .info_card').removeClass('text_dark');
+                    $('nav.menu').removeClass('dark');
+                }
+                
+                setTimeout(function () {
+                    $(slick.$slides[nextSlide]).addClass('animated');
+                }, 500);
+                setTimeout(function () {
+                    $(slick.$slides[currentSlide]).removeClass('animated');
+                }, 1000);
             });
             $('#banner .slide-banner').slick({
                 slidesToShow: 1,
@@ -212,11 +165,11 @@
                 autoplay: true,
                 speed: 1000,
                 cssEase: 'linear',
-                autoplaySpeed: 5000,
+                autoplaySpeed: 6000,
                 infinite: true,
                 waitForAnimate: false,
-                pauseOnHover: false
-
+                pauseOnHover: false,
+                pauseOnFocus: false
             });
         })
     </script>

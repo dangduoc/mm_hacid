@@ -1,0 +1,308 @@
+﻿@page
+@model IndexModel
+@section Styles{
+    <link rel="stylesheet" href="~/lib/jquery-confirm/jquery-confirm.min.css" />
+    <style>
+        a {
+            cursor: pointer;
+        }
+
+        .modal .modal-content {
+            padding: 15px;
+        }
+
+        .modal .modal-title {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #d9d9d9;
+            padding-bottom: 10px;
+        }
+
+        .modal .modal_footer {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        input:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        .modal .btn-blue {
+            background-color: #3498db;
+            color: #fff;
+            transition: .5s;
+        }
+
+            .modal .btn-blue:hover {
+                background-color: #3479a7;
+            }
+
+        .jconfirm.jconfirm-light .jconfirm-bg {
+            background-color: #000;
+            opacity: .5;
+        }
+
+        .jconfirm .jconfirm-box div.jconfirm-content-pane .jconfirm-content {
+            overflow-x: hidden;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .table td, .table th {
+            vertical-align: middle;
+        }
+    </style>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Trang chủ</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal animated zoomIn faster" id="modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <h5 class="modal-title">Thay đổi thông tin</h5>
+
+            <form id="create_form" method="put">
+                <input type="number" hidden class="form-control id" name="id" required>
+                <div class="form-group">
+                    <label>Thứ tự ưu tiên <span class="red">(*)</span></label>
+                    <input type="number" class="form-control index" name="index" required>
+
+                </div>
+                <div class="form-group">
+                    <label>Theme <span class="red">(*)</span></label>
+                    <select class="form-control theme" name="theme">
+                        <option value="0">
+                            Sáng
+                        </option>
+                        <option value="1">
+                            Tối
+                        </option>
+                    </select>
+
+                </div>
+
+            </form>
+            <div class="modal_footer">
+                <button type="submit" class="btn btn-blue" id="submit_create">Lưu lại</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header actions_card_header">
+
+                        <a class="create_btn btn btn-success" asp-page="/Home/Slide/Create"><i class="fas fa-plus-circle"></i> Thêm slide</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-12 col-xl-12">
+                                <table class="table table-bordered table-hover" id="table">
+                                    <thead>
+                                        <tr>
+
+                                            <th style="width:80px">
+                                                Id
+                                            </th>
+                                            <th style="width:auto">Tiêu đề</th>
+                                            <th style="width:150px">Ảnh slide</th>
+                                            <th style="width:150px">Theme</th>
+                                            <th style="width:150px">Trạng thái</th>
+                                            <th style="width:200px"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Slides)
+                                        {
+                                            <tr>
+
+                                                <td>@item.Id</td>
+                                                <td class="title">@item.Title</td>
+                                                <td class="banner"><a target="_blank" href="/upload/images/@item.Image">Click để xem</a></td>
+                                                <td class="theme" data-id="@item.Theme">@(item.Theme==0?"Sáng":"Tối")</td>
+                                                <td class="index" >
+                                                    @if (item.Status == 1)
+                                                    {
+                                                        <button data-id="@item.Id" title="Click để đổi trạng thái" class="row_status btn btn-success"><i class="far fa-eye"></i> Hiển thị</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button data-id="@item.Id" title="Click để đổi trạng thái" class="row_status btn btn-secondary"><i class="far fa-eye-slash"></i> Đang ẩn</button>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <a data-id="@item.Id" class="row_down btn btn-success"><i class="fas fa-arrow-down"></i></a>
+                                                    <a data-id="@item.Id" class="row_up btn btn-success"><i class="fas fa-arrow-up"></i></a>
+                                                    <a href="/admin/home/slide/detail/@item.Id" class="row_edit btn btn-warning"><i class="fas fa-edit"></i></a>
+                                                    <a data-id="@item.Id" class="row_delete btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="col-12 col-xl-6">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form method="post"></form>
+</section>
+@section Scripts{
+    <script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
+    <script>
+        $(function () {
+       
+            $('#table').on('click', '.row_delete', function (e) {
+                e.preventDefault();
+                let id = parseInt($(this).attr('data-id'));
+                let row = $(this).closest('tr');
+                $.confirm({
+                    title: 'Loại bỏ khỏi slide',
+                    content: 'Bạn chắc chắn muốn bỏ slide này chứ?',
+                    type: 'red',
+                    buttons: {
+                        confirm: function () {
+                            $.ajax({
+                                type: 'DELETE',
+                                url: '/admin/home/slide?Id=' + id,
+                                contentType: false,
+                                processData: false,
+                                beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                            }).done(function (res) {
+                                $(row).remove();
+                                $.toast({
+                                    heading: 'Success',
+                                    text: 'Dự án đã được bỏ khỏi slide',
+                                    icon: 'success',
+                                    position: 'bottom-right'
+                                });
+                            }).fail(function () {
+                                $.dialog({
+                                    title: 'Error',
+                                    content: 'Thao tác không thành công'
+                                });
+                            });
+                        },
+                        cancel: function () {
+
+                        },
+                    }
+                });
+
+
+            });
+            $('#table').on('click', '.row_up', function (e) {
+                e.preventDefault();
+                if (confirm("Bạn chắc chắn muốn đổi vị trí slide này?")) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/home/slide?handler=ChangeIndex&Id=' + $(this).attr("data-id"),
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                    }).done(function (res) {
+                        if (res.status) {
+                            location.reload();
+                        }
+                        else {
+                            $.toast({
+                                heading: 'Error',
+                                text: res.message,
+                                icon: 'error',
+                                position: 'bottom-right'
+                            });
+                        }
+
+                    }).fail(function () {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Thao tác không thành công',
+                            icon: 'error',
+                            position: 'bottom-right'
+                        });
+                    });
+                }
+                //window.location.href = "/admin/news/detail/" + data.id;
+            });
+            $('#table').on('click', '.row_down', function (e) {
+                e.preventDefault();
+                if (confirm("Bạn chắc chắn muốn đổi vị trí slide này?")) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/home/slide?handler=ChangeIndex&Id=' + $(this).attr("data-id")+'&moveUp=false',
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                    }).done(function (res) {
+                        if (res.status) {
+                            location.reload();
+                        }
+                        else {
+                            $.toast({
+                                heading: 'Error',
+                                text: res.message,
+                                icon: 'error',
+                                position: 'bottom-right'
+                            });
+                        }
+
+                    }).fail(function () {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Thao tác không thành công',
+                            icon: 'error',
+                            position: 'bottom-right'
+                        });
+                    });
+                }
+                //window.location.href = "/admin/news/detail/" + data.id;
+            });
+            $('#table').on('click', '.row_status', function (e) {
+                e.preventDefault();
+               
+                if (confirm('Bạn chắc chắn muốn đổi trạng thái slide này chứ?')) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/home/slide?handler=hide&Id=' + $(this).attr('data-id'),
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                    }).done(function (res) {
+
+                        window.location.reload();
+                    }).fail(function () {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Đổi trạng thái không thành công',
+                            icon: 'error',
+                            position: 'bottom-right'
+                        });
+                    });
+                }
+
+            });
+        })
+    </script>
+}

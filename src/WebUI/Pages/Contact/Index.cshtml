@@ -1,91 +1,59 @@
 ﻿@page
+@inject CommonLocalizationService localizer
 @model BaseProjectWebRazor.Pages.Contact.IndexModel
 @{
-    ViewData["Title"] = "Liên hệ";
+    ViewData["Title"] = localizer.Get("Liên hệ");
+    var banner = await setting.GetBanner(BannerType.Contact);
+    var siteInfo = await setting.GetSiteSetting();
 }
+@inject Services.CompanySettings setting
+
+<input hidden type="number" id="nav_theme" asp-for="@banner.Theme" />
 <div class="contact-page">
     <div class="banner">
-        <h2 class="title padding">Liên hệ</h2>
-        <img src="/assets/images/banner_contact.jpg">
+        @*<h2 class="title padding">@localizer.Get("Liên hệ")</h2>*@
+        <img src="@banner.Banner">
     </div>
     <div class="intro padding">
         <div class="heading_area">
             <h3 class="heading">
-                Thông tin liên hệ
+                @localizer.Get("Thông tin liên hệ")
 
             </h3>
             <div class="share">
-                <span>CHIA SẺ :</span>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12.76" height="23.598"
-                         viewBox="0 0 12.76 23.598">
-                        <g id="fb" transform="translate(18755 -1229)">
-                            <g transform="translate(-18755 1229)">
-                                <g transform="translate(0 0)">
-                                    <path d="M34.355,0l-3.06,0c-3.438,0-5.66,2.279-5.66,5.807V8.485H22.558a.481.481,0,0,0-.481.481v3.88a.481.481,0,0,0,.481.481h3.077v9.789a.481.481,0,0,0,.481.481h4.014a.481.481,0,0,0,.481-.481V13.327h3.6a.481.481,0,0,0,.481-.481V8.967a.482.482,0,0,0-.481-.481h-3.6V6.215c0-1.091.26-1.645,1.681-1.645h2.061a.481.481,0,0,0,.481-.481V.486A.481.481,0,0,0,34.355,0Z"
-                                          transform="translate(-22.077)" fill="#89a3a3" />
-                                </g>
-                            </g>
-                        </g>
-                    </svg>
-
-                </a>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22.836" height="22.551"
-                         viewBox="0 0 22.836 22.551">
-                        <g transform="translate(18705.822 -1229)">
-                            <g transform="translate(-18705.822 1229)">
-                                <g transform="translate(0 0)">
-                                    <g transform="translate(0 6.851)">
-                                        <g>
-                                            <rect width="5.107" height="15.7" fill="#89a3a3" />
-                                        </g>
-                                    </g>
-                                    <g transform="translate(7.136 6.851)">
-                                        <g>
-                                            <path id="Path_8" data-name="Path 8"
-                                                  d="M171.881,160.184c-.054-.017-.106-.036-.163-.051s-.137-.029-.207-.04a4.575,4.575,0,0,0-.916-.093,7.1,7.1,0,0,0-5.488,3v-3H160v15.7h5.107v-8.564s3.859-5.375,5.488-1.427V175.7H175.7V165.105A5.092,5.092,0,0,0,171.881,160.184Z"
-                                                  transform="translate(-160 -160)" fill="#89a3a3" />
-                                        </g>
-                                    </g>
-                                    <g transform="translate(0.269)">
-                                        <g>
-                                            <ellipse cx="2.394" cy="2.394" rx="2.394" ry="2.394" fill="#89a3a3" />
-                                        </g>
-                                    </g>
-                                </g>
-                            </g>
-                        </g>
-                    </svg>
-
-                </a>
+                <div class="fb-share-button" data-href="https://hacid.vn/contact" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
         </div>
         <div class="info">
-            <div class="title">Công ty CP tư vấn đầu tư xây dựng và phát triển đô thị hà nội</div>
+            <div class="title">
+                @siteInfo.CompanyName
+                
+            </div>
             <div class="line_info">
                 <div class="label">Add: </div>
-                <div class="text">69 Quán Thánh, Quận Ba Đình, Hà Nội, Việt Nam.</div>
+                <div class="text">@siteInfo.Address</div>
             </div>
             <div class="line_info">
                 <div class="label">Tel: </div>
-                <div class="text">0462 739 120</div>
+                <div class="text">@siteInfo.PhoneNumber</div>
             </div>
             <div class="line_info">
                 <div class="label">Fax: </div>
-                <div class="text">0462 739 116</div>
+                <div class="text">@siteInfo.Fax</div>
             </div>
             <div class="line_info">
                 <div class="label">Email: </div>
-                <div class="text">office@haicd.com</div>
+                <div class="text">@siteInfo.Email</div>
             </div>
         </div>
     </div>
     <div class="title_card bg_color_2">
-        Bản đồ
+        @localizer.Get("Bản đồ")
     </div>
     <div class="map">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.758505136629!2d105.83958121433879!3d21.04234669269154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abbaa4c43d9f%3A0x100c2af523c920d9!2zNjkgUXXDoW4gVGjDoW5oLCBCYSDEkMOsbmgsIEjDoCBO4buZaSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1603880579714!5m2!1svi!2s"
+        <iframe src="@siteInfo.MapEmbed"
                 frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" zoom="5" tabindex="0"></iframe>
     </div>
 

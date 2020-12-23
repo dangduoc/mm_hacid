@@ -29,6 +29,7 @@ namespace BaseProjectWebRazor.Services
 
         public void DeleteFile(string filePath)
         {
+            if (filePath.StartsWith('/')) filePath=filePath.Remove(0, 1);
             string path = Path.Combine(_env.WebRootPath, filePath);
             if (!File.Exists(path))
             {
@@ -36,7 +37,8 @@ namespace BaseProjectWebRazor.Services
             }
             File.Delete(path);
         }
-
+    
+       
         public async Task<Response<LocalFileUploadResponse>> UploadImage(IFormFile file, string folder, int? width, int? height, bool keepFileName = false)
         {
             try
@@ -263,7 +265,7 @@ namespace BaseProjectWebRazor.Services
                         }
                     }
                 }
-                else throw new NotFoundException("Folder", folderPath);
+           
                 return new Response<List<LocalFileUploadResponse>>(true, "", files);
             }
             catch (Exception ex)
@@ -306,6 +308,61 @@ namespace BaseProjectWebRazor.Services
             catch (Exception ex)
             {
                 return new Response<List<LocalFileUploadResponse>>(false, ex.ToString(), null);
+            }
+        }
+
+        public async Task<object> UploadForCkEditor(IFormFile fileToUpload, string folder, string host)
+        {
+            try
+            {
+
+                folder = Path.Combine(folder, DateTime.Now.ToString("dd-MM-yyyy"));
+                if (fileToUpload != null)
+                {
+                    if (fileToUpload.Length > 0)
+                    {
+                        int MaxContentLength = 1024 * 1024 * 5; //Size = 1 MB  
+                        IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".gif", ".png" };
+                        var ext = fileToUpload.FileName.Substring(fileToUpload.FileName.LastIndexOf('.'));
+                        var extension = ext.ToLower();
+                        if (!AllowedFileExtensions.Contains(extension))
+                        {
+                            return new { error = new { message = "Please Upload image of type .jpg, .gif, .png." } };
+                        }
+                        if (fileToUpload.Length > MaxContentLength)
+                        {
+                            return new { error = new { message = "Please Upload a file upto 5 mb." } };
+                        }
+                        else
+                        {
+                            string path = Path.Combine(RootImageUploadFolder, folder.TrimEnd('/'));
+                            if (!Directory.Exists(path))
+                            {
+                                Directory.CreateDirectory(path);
+                            }
+                            string guidFileName = Guid.NewGuid().ToString() + ext;
+                            string fullPath = Path.Combine(path, guidFileName);
+                            string url = folder + "/" + guidFileName;
+                            using (var stream = new FileStream(fullPath, FileMode.Create))
+                            {
+                                await fileToUpload.CopyToAsync(stream);
+                                return new { url = "http://" + host + "/upload/images/" + url };
+                            }
+                        }
+
+                    }
+                    return new { error = new { message = "File size equals zero" } };
+                }
+
+                else
+                {
+                    return new { error = new { message = "File upload not found!" } };
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new { error = new { message = ex.ToString() } };
             }
         }
     }

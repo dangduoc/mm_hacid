@@ -1,0 +1,124 @@
+﻿@page
+@model BaseProjectWebRazor.Areas.Admin.Pages.Home.Slide.CreateModel
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thêm slide trang chủ</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-page="/Home/Index" asp-area="Admin">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-page="/Home/Slide/Index" asp-area="Admin">Slides</a></li>
+                    <li class="breadcrumb-item">Slides</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            Điền các thông tin slide vào form bên dưới.
+        </div>
+        <div class="card-body">
+            @if (ViewData["error"] != null)
+            {
+                <div class="alert alert-danger">@ViewData["error"]</div>
+            }
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group row">
+                <label class="col-12" asp-for="MainModel.Title">Tiêu đề <span class="red">(*)</span></label>
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">vi</span>
+                        </div>
+                        <input type="text" placeholder="Tiếng Việt" class="form-control" asp-for="MainModel.Title" required>
+                        <span class="text-danger" asp-validation-for="MainModel.Title"></span>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">en</span>
+                        </div>
+                        <input type="text" placeholder="Tiếng Anh" class="form-control" asp-for="MainModel.TitleEn" required>
+                        <span class="text-danger" asp-validation-for="MainModel.TitleEn"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-12" asp-for="MainModel.ProjectTitle">Tên dự án</label>
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">vi</span>
+                        </div>
+                        <input type="text" placeholder="Tiếng Việt" class="form-control" asp-for="MainModel.ProjectTitle">
+                        <span class="text-danger" asp-validation-for="MainModel.ProjectTitle"></span>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">en</span>
+                        </div>
+                        <input type="text" placeholder="Tiếng Anh" class="form-control" asp-for="MainModel.ProjectTitleEn">
+                        <span class="text-danger" asp-validation-for="MainModel.ProjectTitleEn"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-12" asp-for="MainModel.ProjectTitle">Địa điểm</label>
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">vi</span>
+                        </div>
+                        <input type="text" placeholder="Tiếng Việt" class="form-control" asp-for="MainModel.Location">
+                        <span class="text-danger" asp-validation-for="MainModel.Location"></span>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">en</span>
+                        </div>
+                        <input type="text" placeholder="Tiếng Anh" class="form-control" asp-for="MainModel.LocationEn">
+                        <span class="text-danger" asp-validation-for="MainModel.LocationEn"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <div class="col-lg-6">
+                    <label asp-for="MainModel.Link">Đường dẫn <span class="red">(*)</span></label>
+                    <input type="text" placeholder="Tiếng Việt" class="form-control" asp-for="MainModel.Link" required>
+                    <span class="text-danger" asp-validation-for="MainModel.Link"></span>
+                </div>
+                <div class="col-lg-6">
+                    <label asp-for="MainModel.Theme">Màu menu <span class="red">(*)</span></label>
+                    <select asp-for="MainModel.Theme" asp-items="@Model.Themes" class="form-control" required>
+                    </select>
+                    <span class="text-danger" asp-validation-for="MainModel.Theme"></span>
+                </div>
+            </div>
+            <div class="form-group">
+
+                <label asp-for="Upload">Ảnh slide</label>
+                <input type="file" asp-for="Upload" />
+
+            </div>
+
+            <div class="form-group">
+                <br />
+                <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Lưu lại</button>
+                <a class="btn btn-default" asp-page="/About/Home/Slide/Index"><i class="fas fa-times"></i> Hủy bỏ</a>
+            </div>
+        </form>
+
+
+        </div>
+    </div>
+</section>

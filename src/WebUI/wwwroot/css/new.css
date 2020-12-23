@@ -181,6 +181,7 @@
 .related_news_area .list_projects .project_box {
   position: relative;
   padding: 15px;
+  display:block;
 }
 
 .related_news_area .list_projects .project_box .inside {
@@ -235,15 +236,14 @@
   margin-right: 3px;
 }
 
-.related_news_area .list_projects .project_box .inside .info a.title {
-  color: #2e9c93;
+.related_news_area .list_projects .project_box .inside .info .title {
   font-family: saira_semi_bold;
   text-transform: uppercase;
   margin: 8px 0;
   display: block;
 }
 
-.related_news_area .list_projects .project_box .inside .info a.view_more {
+.related_news_area .list_projects .project_box .inside .info .view_more {
   display: block;
   color: #1a4a8d;
   -webkit-transition: 0.5s;
@@ -260,7 +260,6 @@
 #banner_slides .item {
   width: 100%;
   height: 100vh;
-  height: calc(100vh - 80px);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

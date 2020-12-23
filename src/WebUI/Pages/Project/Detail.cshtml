@@ -1,12 +1,25 @@
-﻿@page
-@model BaseProjectWebRazor.Pages.Project.DetailModel
+﻿@page "{Id}"
+@model BaseProjectWebRazor.Pages.ProjectPage.DetailModel
 @{
-    ViewData["Title"] = "Chi tiết dự án";
+    ViewData["Title"] = Model.Detail.Title;
 }
+<input hidden type="number" id="nav_theme" asp-for="@Model.Detail.Theme" />
 <div class="project-detail-page">
-    <div class="banner">
+    <div id="banner_slides">
+        @foreach (var item in Model.Detail.Banners.Split(","))
+        {
+        <div class="item" style="background-image: url('@item');">
+            <div class="title_card_banner">
+                <div class="wrap_text">
+                    <div class="text">
+                        @Model.Detail.Title / @Model.Detail.Year | @Model.Detail.Location
+                    </div>
+                </div>
 
-        <img src="/assets/images/projects/project_banner.jpg">
+            </div>
+           
+        </div>
+        }
     </div>
     <div class="wrap_project_detail padding">
         <div class="row">
@@ -21,27 +34,27 @@
                     <div class="list-info">
                         <div class="line">
                             <div class="label">Tên công trình</div>
-                            <div class="text">Đài tưởng niệm liệt sĩ Tuyên Quang</div>
+                            <div class="text">@Model.Detail.Title</div>
                         </div>
                         <div class="line">
                             <div class="label">Địa điểm</div>
-                            <div class="text">Tuyên Quang</div>
+                            <div class="text">@Model.Detail.Location</div>
                         </div>
                         <div class="line">
                             <div class="label">Chủ đầu tư</div>
-                            <div class="text">??????????????????</div>
+                            <div class="text">@Model.Detail.Investor</div>
                         </div>
                         <div class="line">
                             <div class="label">Thể loại</div>
-                            <div class="text">Cộng đồng</div>
+                            <div class="text">@Model.Detail.Category</div>
                         </div>
                         <div class="line">
                             <div class="label">Lĩnh vực</div>
-                            <div class="text">Tư vấn Thiết kế, Dự án Đầu tư</div>
+                            <div class="text">@Model.Detail.Field</div>
                         </div>
                         <div class="line">
                             <div class="label">Thời gian</div>
-                            <div class="text">1995</div>
+                            <div class="text">@Model.Detail.Year</div>
                         </div>
                     </div>
                 </div>
@@ -50,78 +63,17 @@
                 <div class="article">
                     <div class="heading_area">
                         <h3 class="heading">
-                            Đài tưởng niệm liệt sĩ
+                            @Model.Detail.Title
 
                         </h3>
                         <div class="share">
-                            <span>CHIA SẺ :</span>
-                            <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12.76" height="23.598"
-                                     viewBox="0 0 12.76 23.598">
-                                    <g id="fb" transform="translate(18755 -1229)">
-                                        <g transform="translate(-18755 1229)">
-                                            <g transform="translate(0 0)">
-                                                <path d="M34.355,0l-3.06,0c-3.438,0-5.66,2.279-5.66,5.807V8.485H22.558a.481.481,0,0,0-.481.481v3.88a.481.481,0,0,0,.481.481h3.077v9.789a.481.481,0,0,0,.481.481h4.014a.481.481,0,0,0,.481-.481V13.327h3.6a.481.481,0,0,0,.481-.481V8.967a.482.482,0,0,0-.481-.481h-3.6V6.215c0-1.091.26-1.645,1.681-1.645h2.061a.481.481,0,0,0,.481-.481V.486A.481.481,0,0,0,34.355,0Z"
-                                                      transform="translate(-22.077)" fill="#89a3a3" />
-                                            </g>
-                                        </g>
-                                    </g>
-                                </svg>
-
-                            </a>
-                            <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="22.836" height="22.551"
-                                     viewBox="0 0 22.836 22.551">
-                                    <g transform="translate(18705.822 -1229)">
-                                        <g transform="translate(-18705.822 1229)">
-                                            <g transform="translate(0 0)">
-                                                <g transform="translate(0 6.851)">
-                                                    <g>
-                                                        <rect width="5.107" height="15.7" fill="#89a3a3" />
-                                                    </g>
-                                                </g>
-                                                <g transform="translate(7.136 6.851)">
-                                                    <g>
-                                                        <path id="Path_8" data-name="Path 8"
-                                                              d="M171.881,160.184c-.054-.017-.106-.036-.163-.051s-.137-.029-.207-.04a4.575,4.575,0,0,0-.916-.093,7.1,7.1,0,0,0-5.488,3v-3H160v15.7h5.107v-8.564s3.859-5.375,5.488-1.427V175.7H175.7V165.105A5.092,5.092,0,0,0,171.881,160.184Z"
-                                                              transform="translate(-160 -160)" fill="#89a3a3" />
-                                                    </g>
-                                                </g>
-                                                <g transform="translate(0.269)">
-                                                    <g>
-                                                        <ellipse cx="2.394" cy="2.394" rx="2.394" ry="2.394"
-                                                                 fill="#89a3a3" />
-                                                    </g>
-                                                </g>
-                                            </g>
-                                        </g>
-                                    </g>
-                                </svg>
-
-                            </a>
+                            <div class="fb-share-button" data-href="https://hacid.vn/project/detail/@Model.Detail.Id" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+                            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                         </div>
                     </div>
                     <div class="ck-content">
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit veniam ullam
-                            veritatis animi deleniti beatae dolor? Mollitia sapiente, tempora nesciunt modi est quam
-                            tempore ab nemo vel voluptate libero commodi.
-                        </p>
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit veniam ullam
-                            veritatis animi deleniti beatae dolor? Mollitia sapiente, tempora nesciunt modi est quam
-                            tempore ab nemo vel voluptate libero commodi.
-                        </p>
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit veniam ullam
-                            veritatis animi deleniti beatae dolor? Mollitia sapiente, tempora nesciunt modi est quam
-                            tempore ab nemo vel voluptate libero commodi.
-                        </p>
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit veniam ullam
-                            veritatis animi deleniti beatae dolor? Mollitia sapiente, tempora nesciunt modi est quam
-                            tempore ab nemo vel voluptate libero commodi.
-                        </p>
+                        @Html.Raw(Model.Detail.HtmlContent)
                     </div>
                 </div>
             </div>
@@ -134,6 +86,29 @@
         <a href="/project" class="back_to_list">[ Quay trở lại danh sách dự án ]</a>
     </div>
 </div>
-@section Styles{ 
+@section Styles{
+    <link href="~/lib/slick/slick.css" rel="stylesheet" />
+    <link href="~/lib/slick/slick-theme.css" rel="stylesheet" />
     <link href="~/css/projects.css" rel="stylesheet" />
+    <link href="~/css/project.css" rel="stylesheet" />
+}
+@section Scripts{
+    <script src="~/lib/slick/slick.min.js"></script>
+    <script>
+        $(function () {
+            $('#banner_slides').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                fade: true,
+                dots: true,
+                selector: '.item',
+                autoplay: true,
+                speed: 1000,
+                cssEase: 'linear',
+                autoplaySpeed: 5000,
+                infinite: true
+            });
+        });
+    </script>
 }

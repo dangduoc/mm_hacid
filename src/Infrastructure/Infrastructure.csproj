@@ -5,8 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Persistence\Configurations\" />
-    <Folder Include="Persistence\Migrations\" />
+    <Compile Remove="Persistence\Migrations\**" />
+    <EmbeddedResource Remove="Persistence\Migrations\**" />
+    <None Remove="Persistence\Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20201109102219_alter aboutproject and partner.cs" />
+    <Compile Remove="Migrations\20201109102219_alter aboutproject and partner.Designer.cs" />
+    <Compile Remove="Migrations\20201124091036_alter bannersettings.cs" />
+    <Compile Remove="Migrations\20201124091036_alter bannersettings.Designer.cs" />
+    <Compile Remove="Migrations\20201124091720_alter bannersettings.cs" />
+    <Compile Remove="Migrations\20201124091720_alter bannersettings.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Nhật Quỳnh Orchids</title>
-    <link rel="icon" type="image/png" href="~/icon.png" />
+    <title>Hacid Admin</title>
+    <link rel="shortcut icon" type="image/png" href="~/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/fontawesome-free/css/all.min.css">
@@ -13,6 +13,14 @@
     <link rel="stylesheet" href="~/lib/toast/jquery.toast.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     @RenderSection("Styles", required: false)
+    <style>
+        .input-group-text img {
+            width: 16px;
+        }
+        .nav-treeview .nav-treeview {
+            margin-left: 25px;
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -26,125 +34,216 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <a href="/admin" class="brand-link">
                 <img src="~/assets/images/logo.png"
-                     alt="Nhật Quỳnh Orchids Admin"
-                     class="brand-image img-circle elevation-3">
-                <span class="brand-text font-weight-light">Nhật Quỳnh Orchids</span>
+                     alt="Hacid Admin"
+                     class="brand-image">
+                <span class="brand-text font-weight-light">Hacid</span>
             </a>
             <div class="sidebar">
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item">
-                            <a asp-page="/Home/Index" class="nav-link">
-                                <i class="nav-icon fas fa-home"></i>
-                                <p>
-                                    Trang chủ
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/About/Index" class="nav-link">
+                        <li class="nav-item has-treeview">
+                            <a class="nav-link">
 
                                 <i class="nav-icon fas fa-info-circle"></i>
                                 <p>
-                                    Nhật Quỳnh (About)
+                                    Trang chủ
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-page="/Home/Slide/Index" class="nav-link">
+                                      
+                                        <p>
+                                            Slides
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Home/Index" class="nav-link">
+                                   
+                                        <p>
+                                            Bài viết giới thiệu
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+
+
+
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a class="nav-link">
+
+                                <i class="nav-icon fas fa-info-circle"></i>
+                                <p>
+                                    Hacid (About)
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+
+                                <li class="nav-item has-treeview">
+                                    <a class="nav-link">
+                                        <p>
+                                            Thông tin chung
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a asp-page="/About/Index" class="nav-link">
+
+                                                <p>Bài viết</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-page="/About/AboutProjectField/Index" class="nav-link">
+
+                                                <p>Lĩnh vực hoạt động</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-page="/About/CompanyHistory/Index" class="nav-link">
+
+                                                <p>Lịch sử công ty</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                </li>
+                                <li class="nav-item has-treeview">
+                                    <a class="nav-link">
+                                        <p>
+                                            Kinh nghiệm chuyên môn
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+
+                                            <a asp-page="/About/Specialist" class="nav-link">
+
+                                                <p>Bài viết</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-page="/About/AboutProject/Index" class="nav-link">
+
+                                                <p>Công trình tiêu biểu</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/About/Energy" class="nav-link">
+
+                                        <p>Năng lực hiện tại</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/About/Partner/Index" class="nav-link">
+
+                                        <p>Khách hàng & Đối tác</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-page="/News/Index" class="nav-link">
+                                <i class="nav-icon far fa-images"></i>
+                                <p>
+                                    Tin tức
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-page="/Collection/Index" class="nav-link">
-                                <i class="nav-icon far fa-images"></i>
-                                <p>
-                                    Bộ sưu tập
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
+                            <a href="/admin/project" class="nav-link">
                                 <i class="nav-icon fab fa-product-hunt"></i>
                                 <p>
-                                    Sản phẩm
-
-                                    <i class="right fas fa-angle-left"></i>
+                                    Dự án
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-page="/Product/Index" class="nav-link">
-                                        <i class="nav-icon fas fa-list-alt"></i>
-                                        <p>Danh sách sản phẩm</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Product/Category/Index" class="nav-link">
-                                        <i class="nav-icon fas fa-list-ol"></i>
-                                        <p>Thể loại sản phẩm</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-newspaper"></i>
-                                <p>
-                                    Blog
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-page="/Blog/Index" class="nav-link">
-                                        <i class="fas fa-list-alt nav-icon"></i>
-                                        <p>Danh sách bài viết</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Blog/Category/Index" class="nav-link">
-                                        <i class="fas fa-list-ol nav-icon"></i>
-                                        <p>Danh sách chuyên mục</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
 
-
+                        </li>
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tasks"></i>
                                 <p>
-                                    Quản lý
+                                    Danh mục thể loại
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
+
                                 <li class="nav-item">
-                                    <a asp-page="/Manage/Orders" class="nav-link">
+                                    <a href="/admin/category/projectcategory" class="nav-link">
                                         <i class="fas fa-list-ol nav-icon"></i>
-                                        <p>Đơn đặt hàng</p>
+                                        <p>Thể loại dự án</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-page="/Manage/Feedback" class="nav-link">
+                                    <a href="/admin/category/projectfield" class="nav-link">
                                         <i class="fas fa-users nav-icon"></i>
-                                        <p>Góp ý khách hàng</p>
+                                        <p>Lĩnh vực dự án</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-page="/Manage/Subscribers" class="nav-link">
+                                    <a href="/admin/category/newcategory" class="nav-link">
                                         <i class="fas fa-users nav-icon"></i>
-                                        <p>Đăng ký theo dõi</p>
+                                        <p>Thể loại tin tức</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Category/Location" class="nav-link">
+                                        <i class="fas fa-list-ol nav-icon"></i>
+                                        <p>Địa điểm</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/category/partnercategory" class="nav-link">
+                                        <i class="fas fa-users nav-icon"></i>
+                                        <p>Khách hàng & đối tác</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a asp-page="/Setup" class="nav-link">
+                        <li class="nav-item has-treeview">
+                            <a class="nav-link">
 
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>
                                     Cài đặt
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+
+                                <li class="nav-item has-treeview">
+                                    <a asp-page="/Setting/Index" class="nav-link">
+
+
+                                        <p>
+                                            Thông tin liên hệ
+                                        </p>
+                                    </a>
+
+                                </li>
+                                <li class="nav-item has-treeview">
+                                    <a asp-page="/Setting/BannerSetting" class="nav-link">
+
+
+                                        <p>
+                                            Ảnh bìa
+                                        </p>
+                                    </a>
+
+                                </li>
+
+                            </ul>
                         </li>
+
                     </ul>
                 </nav>
             </div>

@@ -1,0 +1,80 @@
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Http.Features
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var current_lang = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.TwoLetterISOLanguageName })
+        .ToList();
+
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+<li>
+    @*<a href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="23" viewBox="0 0 32 23">
+            <g transform="translate(18587 -1229)">
+                <g data-name="Group 2057">
+                    <g transform="translate(-20127 1180)">
+                        <g class="stroke" transform="translate(1540 49)" fill="none" stroke-width="2">
+                            <rect width="32" height="23" stroke="none" />
+                            <rect x="1" y="1" width="30" height="21" fill="none" />
+                        </g>
+                        <text class="fill" transform="translate(1565 65)" font-size="14"
+                              font-family="Saira-Medium, Saira" font-weight="500">
+                            <tspan x="-18.704" y="0">EN</tspan>
+                        </text>
+                    </g>
+
+                </g>
+            </g>
+        </svg>
+    </a>*@
+    <form class="select_language" asp-page="/Index" asp-page-handler="SetLanguage" asp-route-returnUrl="@returnUrl"
+          method="post" role="form">
+
+        @foreach (var item in cultureItems)
+        {
+            @if (item.Value != current_lang)
+            {
+                <a class="lang" href="#" data-id="@item.Value">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="23" viewBox="0 0 32 23">
+                        <g transform="translate(18587 -1229)">
+                            <g data-name="Group 2057">
+                                <g transform="translate(-20127 1180)">
+                                    <g class="stroke" transform="translate(1540 49)" fill="none" stroke-width="2">
+                                        <rect width="32" height="23" stroke="none" />
+                                        <rect x="1" y="1" width="30" height="21" fill="none" />
+                                    </g>
+                                    <text class="fill" transform="translate(1565 65)" font-size="14"
+                                          font-family="Saira-Medium, Saira" font-weight="500">
+                                        <tspan x="-18.704" y="0">@item.Value.ToUpper()</tspan>
+                                    </text>
+                                </g>
+
+                            </g>
+                        </g>
+                    </svg>
+
+                    @*//@item.Text*@
+                </a>
+            }
+           
+        }
+        <div style="display:none">
+            <select name="culture" asp-for="@requestCulture.RequestCulture.UICulture.Name"
+                    asp-items="cultureItems"
+                    onchange="this.form.submit();">
+            </select>
+        </div>
+
+    </form>
+
+</li>

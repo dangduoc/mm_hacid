@@ -1,0 +1,190 @@
+﻿@page
+@model About.AboutProject.IndexModel
+@{
+}
+@section Styles{
+    <link rel="stylesheet" href="~/lib/jquery-confirm/jquery-confirm.min.css" />
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Công trình tiêu biểu</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-page="/Index">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a asp-page="/About/Specialist">Kinh nghiệm chuyên môn</a></li>
+                    <li class="breadcrumb-item active">Công trình tiêu biểu</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="card">
+        <div class="card-header actions_card_header">
+            <a class="create_btn btn btn-success" asp-page="/About/AboutProject/Create"><i class="fas fa-plus-circle"></i> Thêm mới</a>
+            <div id="filter_search"></div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-12 col-xl-10">
+                    <table class="table table-bordered table-hover" id="table">
+                        <thead>
+                            <tr>
+
+                                <th style="width:80px">
+                                    Id
+                                </th>
+                                <th style="width:250px">Tiêu đề</th>
+                                <th style="width:auto">Dự án</th>
+                        
+                                <th style="width:200px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Projects)
+                            {
+                                <tr>
+
+                                    <td>@item.Id</td>
+                                    <td class="tabtitle">@item.TabTitle</td>
+                                    <td class="title">@item.Title</td>
+                                    <td>
+                                        <a data-id="@item.Id" class="row_down btn btn-success"><i class="fas fa-arrow-down"></i></a>
+                                        <a data-id="@item.Id" class="row_up btn btn-success"><i class="fas fa-arrow-up"></i></a>
+                                        <a href="/admin/about/aboutproject/detail/@item.Id" class="row_edit btn btn-warning"><i class="fas fa-edit"></i></a>
+                                        <a data-id="@item.Id" class="row_delete btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 col-xl-6">
+
+                </div>
+            </div>
+
+        </div>
+        <form method="post"></form>
+    </div>
+</section>
+@section Scripts{
+    <script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
+    <script>
+        $(function () {
+            $('#table').on('click', '.row_delete', function (e) {
+                e.preventDefault();
+                let id = parseInt($(this).attr('data-id'));
+                let row = $(this).closest('tr');
+                $.confirm({
+                    title: 'Xóa công trình',
+                    content: 'Bạn chắc chắn muốn xóa công trình này chứ?',
+                    type: 'red',
+                    buttons: {
+                        confirm: function () {
+                            $.ajax({
+                                type: 'DELETE',
+                                url: '/admin/about/aboutproject?Id=' + id,
+                                contentType: false,
+                                processData: false,
+                                beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                            }).done(function (res) {
+                                $(row).remove();
+                                $.toast({
+                                    heading: 'Success',
+                                    text: 'Xóa thành công',
+                                    icon: 'success',
+                                    position: 'bottom-right'
+                                });
+                            }).fail(function () {
+                                $.dialog({
+                                    title: 'Error',
+                                    content: 'Xóa không thành công'
+                                });
+                            });
+                        },
+                        cancel: function () {
+
+                        },
+                    }
+                });
+
+
+            });
+            $('#table').on('click', '.row_up', function (e) {
+                e.preventDefault();
+                if (confirm("Bạn chắc chắn muốn đổi vị trí dự án này?")) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/about/aboutproject?handler=ChangeIndex&Id=' + $(this).attr("data-id"),
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                    }).done(function (res) {
+                        if (res.status) {
+                            location.reload();
+                        }
+                        else {
+                            $.toast({
+                                heading: 'Error',
+                                text: res.message,
+                                icon: 'error',
+                                position: 'bottom-right'
+                            });
+                        }
+
+                    }).fail(function () {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Thao tác không thành công',
+                            icon: 'error',
+                            position: 'bottom-right'
+                        });
+                    });
+                }
+                //window.location.href = "/admin/news/detail/" + data.id;
+            });
+            $('#table').on('click', '.row_down', function (e) {
+                e.preventDefault();
+                if (confirm("Bạn chắc chắn muốn đổi vị trí dự án này?")) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/about/aboutproject?handler=ChangeIndex&Id=' + $(this).attr("data-id")+'&moveUp=false',
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                    }).done(function (res) {
+                        if (res.status) {
+                            location.reload();
+                        }
+                        else {
+                            $.toast({
+                                heading: 'Error',
+                                text: res.message,
+                                icon: 'error',
+                                position: 'bottom-right'
+                            });
+                        }
+
+                    }).fail(function () {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Thao tác không thành công',
+                            icon: 'error',
+                            position: 'bottom-right'
+                        });
+                    });
+                }
+                //window.location.href = "/admin/news/detail/" + data.id;
+            });
+
+        })
+    </script>
+}

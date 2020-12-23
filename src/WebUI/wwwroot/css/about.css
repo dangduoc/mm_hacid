@@ -105,14 +105,18 @@
 .about-page .fields .list ul li a:hover {
   text-decoration: none;
 }
+.about-page .fields #field_detail{
+    height: 100%;
+    overflow-y: auto;
+}
 
 .about-page .fields .info {
-  padding-top: 100px;
-  padding-bottom: 100px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100%;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
 }
 
 .about-page .fields .info .title {
@@ -185,7 +189,7 @@
 }
 
 .about-page .links .title_card {
-  color: #fff;
+
   height: 80px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -249,23 +253,21 @@
 }
 
 .about-partners .partners_list a {
-  display: block;
-  width: 10%;
-  -webkit-box-shadow: 0 0 1px 4px #ececec;
-          box-shadow: 0 0 1px 4px #ececec;
-  overflow: hidden;
-  position: relative;
+    display: block;
+    width: 10%;
+    border: 1px solid #ececec;
+    overflow: hidden;
+    position: relative;
 }
-
+.about-partners .partners_list a:last-child{
+    border-right:2px solid #ececec;
+}
 .about-partners .partners_list a::after {
   content: '';
   display: block;
   padding-top: 100%;
 }
 
-.about-partners .partners_list a:last-child {
-  width: 116px;
-}
 
 .about-partners .partners_list a img {
   position: absolute;
@@ -296,11 +298,13 @@
   text-transform: uppercase;
   text-align: center;
 }
-
-.about-specialist #examples_slide .item a:hover {
-  text-decoration: none;
-  color: #1a4a8d;
+.about-specialist #examples_slide .item a:focus{
+     outline: none;
 }
+    .about-specialist #examples_slide .item a:hover, .about-specialist #examples_slide .item a.active {
+        text-decoration: none;
+        color: #1a4a8d;
+    }
 
 .about-specialist #examples_slide .slick-arrow::before {
   color: gray;
@@ -334,11 +338,11 @@
   transition: 0.5s;
   text-transform: uppercase;
   font-family: saira_semi_bold;
+  cursor:default;
 }
 
 .about-specialist #project_detail .info a.title:hover {
   text-decoration: none;
-  color: #d8911b;
 }
 
 .about-specialist #project_detail .info .divider {
@@ -464,7 +468,7 @@
     width: 400px;
   }
     .about-page .history .timeline {
-        margin-left: 0; 
+        margin-left: 90px;
     }
 }
 /*# sourceMappingURL=about.css.map */

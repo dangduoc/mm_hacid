@@ -1,0 +1,514 @@
+﻿@page "{Id}"
+@model Project.DetailModel
+@section Styles{
+    <link rel="stylesheet" href="~/lib/jquery-confirm/jquery-confirm.min.css" />
+    <link rel="stylesheet" href="~/css/ckeditor/ckeditor.css" />
+    <link rel="stylesheet" href="~/css/ckeditor/editor-style.css" />
+    <style>
+        .ck-editor__editable {
+            min-height: 300px;
+        }
+
+        .form-group {
+            margin-bottom: .5em;
+        }
+
+        .right_pannel {
+            padding-left: 50px;
+        }
+
+            .right_pannel .section {
+                margin-bottom: 25px;
+                border-bottom: 1px solid #d9d9d9;
+                padding-bottom: 25px;
+            }
+
+        form > div.row {
+            border-bottom: 1px solid #d9d9d9;
+            padding-bottom: 15px;
+        }
+
+        .gallery_container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+            .gallery_container .image_box {
+                width: 110px;
+                height: 110px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 5px;
+                overflow: hidden;
+                background-color: #d9d9d9;
+            }
+
+                .gallery_container .image_box.selected {
+                    border: 2px solid #49b0f1;
+                    border-radius: 5px;
+                }
+
+        #preview {
+            width: 100%;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #d9d9d9;
+            margin: 15px 0;
+            overflow: auto;
+        }
+            #preview .img_box {
+                padding: 10px;
+                height: 100%;
+                width: 100%;
+            }
+            #preview img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                object-position:center;
+            }
+
+        #list_images {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+            #list_images .img_box {
+                width: 25%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                background-color: #e1e1e1;
+                border: 1px solid #000;
+            }
+
+                #list_images .img_box img {
+                    max-width: 100%;
+                    height: auto;
+                }
+    </style>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Sửa thông tin dự án</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-page="/Home/Index" asp-area="Admin">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-page="/Project/Index" asp-area="Admin">Danh sách dự án</a></li>
+                    <li class="breadcrumb-item">Sửa thông tin dự án</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            Điền các thông tin dự án vào form bên dưới.
+        </div>
+        <div class="card-body">
+            @if (ViewData["error"] != null)
+            {
+                <div class="alert alert-danger">@ViewData["error"]</div>
+            }
+        <form method="post">
+            <input asp-for="MainModel.Id" hidden />
+            <input asp-for="MainModel.CreatedOnDate" hidden />
+            <input asp-for="MainModel.LastModifiedOnDate" hidden />
+            <input asp-for="MainModel.CreatedByUserId" hidden />
+            <input asp-for="MainModel.LastModifiedByUserId" hidden />
+            <input asp-for="MainModel.Status" hidden />
+            <input asp-for="MainModel.Index" hidden />
+            <div class="row">
+                <div class="col-xl-6">
+                    <div>
+                        <div class="form-group">
+                            <label class="col-12">Tên dự án</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/assets/icons/vietnamese.svg" /></span>
+                                </div>
+                                <input asp-for="MainModel.Title" placeholder="Bằng tiếng Việt" class="form-control" required />
+                            </div>
+                            <span class="text-danger" asp-validation-for="MainModel.Title"></span>
+
+                        </div>
+                      
+
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <label asp-for="MainModel.CategoryId">Thể loại dự án</label>
+                                <select asp-for="MainModel.CategoryId" asp-items="Model.Categories" class="form-control" required>
+                                    <option value=""></option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="MainModel.CategoryId"></span>
+                            </div>
+
+
+                            <div class="col-lg-6">
+                                <label asp-for="MainModel.ProjectFieldId">Lĩnh vực</label>
+                                <select asp-for="MainModel.ProjectFieldId" asp-items="Model.ProjectFields" class="form-control" required>
+                                    <option value=""></option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="MainModel.ProjectFieldId"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <label asp-for="MainModel.LocationId">Địa điểm</label>
+                                <select asp-for="MainModel.LocationId" asp-items="Model.Locations" class="form-control" required>
+                                    <option value=""></option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="MainModel.LocationId"></span>
+                            </div>
+                            <div class="col-xl-6">
+                                <label asp-for="MainModel.Year">Năm</label>
+                                <input asp-for="MainModel.Year" class="form-control" required />
+                                <span class="text-danger" asp-validation-for="MainModel.Year"></span>
+                            </div>
+                            <div class="col-lg-6">
+                                <label asp-for="MainModel.Investor">Chủ đầu tư</label>
+                                <input asp-for="MainModel.Investor" class="form-control" required />
+                                <span class="text-danger" asp-validation-for="MainModel.Investor"></span>
+                            </div>
+                            <div class="col-lg-6">
+                                <label asp-for="MainModel.Theme">Màu menu <span class="red">(*)</span></label>
+                                <select asp-for="MainModel.Theme" asp-items="@Model.Themes" class="form-control" required>
+                                </select>
+                                <span class="text-danger" asp-validation-for="MainModel.Theme"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-xl-6">
+                    <div id="english_info_area" @(!Model.MainModel.IsEnglishIncluded ? "style=display:none" : "")>
+                        <div class="form-group">
+                            <label class="col-12">Tên tiếng Anh</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/assets/icons/english.svg" /></span>
+                                </div>
+                                <input asp-for="MainModel.TitleEn" placeholder="Bằng tiếng Anh" class="form-control" required />
+                            </div>
+                            <span class="text-danger" asp-validation-for="MainModel.TitleEn"></span>
+                        </div>
+                        
+                    </div>
+
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input id="english_enable_cb" type="checkbox" class="form-check-input" asp-for="MainModel.IsEnglishIncluded">Bao gồm bài viết tiếng Anh
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-12" style="margin-bottom:15px">
+                    <div class="form-group row">
+                        <div class="col-xl-6">
+                            <label>Ảnh Thumbnail <small>(Ảnh vuông, chất lượng tốt nhưng phải tối ưu kích thước tệp)</small></label>
+                            <br />
+                            <button type="button" mode="thumbnail" class="open_gallery btn btn-primary"><i class="far fa-save"></i> Browser</button>
+
+                            <div id="preview" class="gallery_image_show">
+                                <div class='img_box'><img src="@Model.MainModel.Thumbnail"></div>
+
+                            </div>
+                            <input id="thumbnail_input" asp-for="MainModel.Thumbnail" hidden required />
+                            <span class="text-danger" asp-validation-for="MainModel.Thumbnail"></span>
+                        </div>
+                    </div>
+                    <div class="form-group section">
+                        <label>Hình ảnh ở slide banner <small>(Ảnh sản phẩm ở chi tiết sản phẩm)</small></label>
+                        <br />
+                        <button type="button" class="open_gallery btn btn-primary" mode="multiple"><i class="far fa-save"></i> Browser</button>
+                        <div id="list_images" class="gallery_image_show">
+                            @foreach (var img in Model.MainModel.Banners.Split(','))
+                            {
+                                <div class='img_box'>
+                                    <img src="@img">
+                                </div>
+                            }
+                        </div>
+                        <input id="images_input" asp-for="MainModel.Banners" hidden />
+                    </div>
+
+                </div>
+
+                <div class="col-12" style="margin-bottom:15px">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#article_vi">Bài viết tiếng Việt</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#article_en">Bài viết tiếng Anh</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="article_vi">
+                            <textarea id="editor_vi" asp-for="MainModel.HtmlContent" class="form-control _editor"></textarea>
+                        </div>
+                        <div class="tab-pane fade" id="article_en">
+                            <textarea id="editor_en" asp-for="MainModel.HtmlContentEn" class="form-control _editor"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="col-12">
+
+                    <button type="submit" class="create_btn btn btn-primary"><i class="far fa-save"></i> Lưu lại</button>
+                    <a class="btn btn-default" asp-page="/Product/Index"><i class="fas fa-times"></i> Hủy bỏ</a>
+                </div>
+
+            </div>
+        </form>
+
+        </div>
+    </div>
+</section>
+<input type="file" accept="image/*" hidden id="input_files" multiple />
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
+    <script src="~/lib/ckeditor/ckeditor.js"></script>
+    <script>
+
+        $(function () {
+            ClassicEditor.create(document.querySelector('#editor_vi'), {
+                simpleUpload: {
+                    // The URL that the images are uploaded to.
+                    uploadUrl: '/api/fileupload/editor?folder=project/editor',
+                    // Headers sent along with the XMLHttpRequest to the upload server.
+                    headers: {
+                        'XSRF-TOKEN': $('input:hidden[name="__RequestVerificationToken"]').val()
+                    }
+                }
+            }).then(editor => {
+                window.editor_vi = editor;
+            }).catch(error => {
+                console.error('There was a problem initializing the editor.', error);
+            });
+             ClassicEditor.create(document.querySelector('#editor_en'), {
+                simpleUpload: {
+                    // The URL that the images are uploaded to.
+                    uploadUrl: '/api/fileupload/editor?folder=project/editor',
+                    // Headers sent along with the XMLHttpRequest to the upload server.
+                    headers: {
+                        'XSRF-TOKEN': $('input:hidden[name="__RequestVerificationToken"]').val()
+                    }
+                }
+            }).then(editor => {
+                window.editor_en = editor;
+            }).catch(error => {
+                console.error('There was a problem initializing the editor.', error);
+            });
+
+            $('.open_gallery').on('click', function () {
+                openGallery($(this));
+            });
+            images = [];
+            function getHtmlContent() {
+                let imagesHtml = "";
+                images.forEach(element => {
+                    imagesHtml += `<div class="image_box"><img src="/upload/images/${element.fileUrl}"></div>`;
+                });
+                let html = `<div class="gallery_container">${imagesHtml}</div>`;
+                return html;
+            }
+            function openGallery(source) {
+                $.confirm({
+                    title: 'Các ảnh trong dự án',
+                    boxWidth: '530px',
+                    useBootstrap: false,
+                    closeIcon: true,
+                    content: function () {
+                        var self = this;
+                        return $.ajax({
+                            url: '/api/fileupload?folder=project_image/@Model.MainModel.Id',
+                            method: 'get'
+                        }).done(function (response) {
+                            if (response.status) {
+                                images = response.data;
+                                self.setContent(getHtmlContent());
+                            }
+                            else {
+                                images = [];
+                                self.setContent('Something went wrong.');
+                            }
+                        }).fail(function () {
+                            self.setContent('Something went wrong.');
+                        });
+                    },
+                    onContentReady: function () {
+                        var self = this;
+                        this.buttons.ok.disable();
+                        this.buttons.delete.disable();
+                        let container = this.$content.find('.gallery_container')[0];
+                        $(container).delegate('.image_box', 'click', function () {
+                            $(this).toggleClass('selected');
+                            if (self.$content.find('.image_box.selected').length > 0) {
+                                self.buttons.delete.enable();
+                                self.buttons.ok.enable();
+                            }
+                            else {
+                                self.buttons.delete.disable();
+                                self.buttons.ok.disable();
+                            }
+                        })
+                        $('#input_files').on('change', function (event) {
+                            console.log(event.target.files);
+                            var fd = new FormData();
+                            for (var i = 0; i < event.target.files.length; i++) {
+                                fd.append('file_' + i, event.target.files[i]);
+                            }
+
+                            $.ajax({
+                                type: 'POST',
+                                data: fd,
+                                url: '/api/fileupload?folder=project_image/@Model.MainModel.Id',
+                                contentType: false,
+                                processData: false,
+                                //contentType: "application/json; charset=utf-8",
+                                //beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                                dataType: "json"
+                            }).done(function (res) {
+                                if (res.status) {
+                                    $(self.$content.find('.gallery_container')[0]).children('.image_box').removeClass('selected');
+                                    for (let i = 0; i < res.data.length; i++) {
+                                        images.unshift(res.data[i]);
+                                        $(self.$content.find('.gallery_container')[0]).prepend(
+                                            `<div class="image_box selected"><img src="/upload/images/${res.data[i].fileUrl}"></div>`
+                                        );
+
+                                    }
+                                    $.toast({
+                                        heading: 'Success',
+                                        text: 'Tải lên thành công ' + res.data.length + ' ảnh',
+                                        icon: 'success',
+                                        position: 'bottom-right'
+                                    });
+                                }
+                                else {
+                                    $.alert({
+                                        title: 'Upload không thành công',
+                                        content: 'Tải tệp lên không thành công, hãy thử lại nhé'
+                                    });
+                                }
+                            }).fail(function () {
+                                $.alert({
+                                    title: 'Upload không thành công',
+                                    content: 'Tải tệp lên không thành công, hãy thử lại nhé'
+                                });
+                            });
+                        });
+                    },
+                    onDestroy: function () {
+                        $('#input_files').off();
+                    },
+                    onClose: function () {
+                        $('#input_files').off();
+                    },
+                    buttons: {
+
+                        upload: {
+                            text: 'Tải lên',
+                            action: function () {
+
+                                $('#input_files').trigger('click');
+                                return false;
+                            }
+                        },
+                        delete: {
+                            text: 'Xóa',
+                            action: function () {
+                                if (this.$content.find('.image_box.selected').length > 1) {
+                                    $.alert({
+                                        title: 'Xóa không thành công',
+                                        content: 'Bạn chỉ có thể xóa mỗi lần 1 ảnh',
+                                        type: 'red'
+                                    });
+                                }
+
+                                let element_delete = this.$content.find('.image_box.selected img')[0];
+                                //let img_delete = $(element_delete).attr('src');
+                                let img_delete = images.filter(i => '/upload/images/' + i.fileUrl === $(element_delete).attr('src'))[0];
+                                if (!img_delete) return false;
+                                $.ajax({
+                                    type: 'DELETE',
+                                    url: `/api/fileupload?filePath=${$(element_delete).attr('src')}`
+                                    //beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                                }).done(function (res) {
+                                    $(element_delete).closest('.image_box.selected').remove();
+                                    images = images.filter(i => i != img_delete);
+                                    $.toast({
+                                        heading: 'Success',
+                                        text: 'Xóa thành công 1 ảnh',
+                                        icon: 'success',
+                                        position: 'bottom-right'
+                                    });
+                                }).fail(function () {
+                                    $.alert({
+                                        title: 'Xóa không thành công',
+                                        content: 'Xóa tệp không thành công, hãy thử lại nhé'
+                                    });
+                                });
+                                return false;
+                            }
+                        },
+                        ok: {
+                            text: 'Chọn',
+                            action: function () {
+                                let show_image_container = $(source).next('.gallery_image_show');
+                                $(show_image_container).empty();
+                                if ($(source).attr('mode') === 'banner') {
+                                    let tmp = $(this.$content.find('.image_box.selected img')[0]).attr('src');
+                                    $(show_image_container).append(`<div class='img_box'><img src='${tmp}'></div>`);
+                                    $('#banner_input').val(tmp);
+                                }
+                                else if ($(source).attr('mode') === 'thumbnail') {
+                                    let tmp = $(this.$content.find('.image_box.selected img')[0]).attr('src');
+                                    $(show_image_container).append(`<div class='img_box'><img src='${tmp}'></div>`);
+                                    $('#thumbnail_input').val(tmp);
+                                }
+                                else {
+                                    let input_vals = [];
+                                    this.$content.find('.image_box.selected img').each((index, element) => {
+                                        let tmp = $(element).attr('src');
+                                        input_vals.push(tmp);
+                                        $(show_image_container).append(`<div class='img_box'><img src='${tmp}'></div>`);
+                                    });
+                                    $('#images_input').val(input_vals.join(','));
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+    <script>
+        $(function () {
+            $('#english_enable_cb').on('change', function (e) {
+                $('#english_info_area').fadeToggle();
+            });
+        });
+    </script>
+}

@@ -1,0 +1,142 @@
+﻿@page
+@model Setting.IndexModel
+@{
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thông tin công ty</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-page="/Home/Index" asp-area="Admin">Home</a></li>
+
+                    <li class="breadcrumb-item">Cài đặt</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            Thông tin về công ty
+        </div>
+        <div class="card-body">
+            @if (ViewData["error"] != null)
+            {
+                <div class="alert alert-danger">@ViewData["error"]</div>
+            }
+        <form method="post" enctype="multipart/form-data">
+            <input asp-for="MainModel.Id" hidden />
+            <input asp-for="MainModel.Bin" hidden placeholder="" class="form-control" />
+            <input asp-for="MainModel.Revit" hidden placeholder="" class="form-control" />
+            <div class="row">
+                <div class="col-xl-6">
+                    <div>
+                        <div class="form-group">
+                            <label>Tên công ty</label>
+                            <input asp-for="MainModel.CompanyName" placeholder="" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="MainModel.CompanyName"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Tên công ty (tiếng Anh)</label>
+                            <input asp-for="MainModel.CompanyNameEn" placeholder="" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="MainModel.CompanyNameEn"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ</label>
+                            <input asp-for="MainModel.Address" placeholder="" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="MainModel.Address"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ (tiếng Anh)</label>
+                            <input asp-for="MainModel.AddressEn" placeholder="" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="MainModel.AddressEn"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại</label>
+                            <input asp-for="MainModel.PhoneNumber" placeholder="" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="MainModel.PhoneNumber"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Fax</label>
+                            <input asp-for="MainModel.Fax" placeholder="" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="MainModel.Fax"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input asp-for="MainModel.Email" placeholder="" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="MainModel.Email"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Copyright</label>
+                            <input asp-for="MainModel.CopyRight" placeholder="" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="MainModel.CopyRight"></span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Facebook</label>
+                        <input asp-for="MainModel.Facebook" placeholder="" class="form-control" />
+                        <span class="text-danger" asp-validation-for="MainModel.Facebook"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>LinkedIn</label>
+                        <input asp-for="MainModel.Linkedin" placeholder="" class="form-control" />
+                        <span class="text-danger" asp-validation-for="MainModel.Linkedin"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Youtube</label>
+                        <input asp-for="MainModel.Youtube" placeholder="" class="form-control" />
+                        <span class="text-danger" asp-validation-for="MainModel.Youtube"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Link bản đồ</label>
+                        <input asp-for="MainModel.Map" placeholder="" class="form-control" />
+                        <span class="text-danger" asp-validation-for="MainModel.Map"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Link nhúng bản đồ (Embed)</label>
+                        <input asp-for="MainModel.MapEmbed" placeholder="" class="form-control" />
+                        <span class="text-danger" asp-validation-for="MainModel.MapEmbed"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Link Forum</label>
+                        <input asp-for="MainModel.ForumLink" placeholder="" class="form-control" />
+                        <span class="text-danger" asp-validation-for="MainModel.ForumLink"></span>
+                    </div>
+                    <div class="form-group">
+
+                        <label asp-for="Upload">Ảnh trụ sở</label>
+                        <input type="file" asp-for="Upload" />
+                        <div>
+                            <div class='img_box'><img style="max-width:200px" src="@("/upload/images/"+Model.MainModel.CompanyImage)"></div>
+                        </div>
+                        <input asp-for="MainModel.CompanyImage" hidden />
+                    </div>
+                </div>
+                
+                <br />
+                <div class="col-12">
+
+                    <button type="submit" class="create_btn btn btn-primary"><i class="far fa-save"></i> Lưu lại</button>
+                    <a class="btn btn-default" asp-page="/Product/Index"><i class="fas fa-times"></i> Hủy bỏ</a>
+                </div>
+
+            </div>
+        </form>
+
+        </div>
+    </div>
+</section>

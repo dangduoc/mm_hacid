@@ -1,0 +1,136 @@
+﻿@page
+@model About.AboutProjectField.CreateModel
+@section Styles{
+    <link rel="stylesheet" href="~/css/ckeditor/ckeditor.css" />
+    <link rel="stylesheet" href="~/css/ckeditor/editor-style.css" />
+    <style>
+        .ck-editor__editable {
+            min-height: 300px;
+        }
+        </style>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Lĩnh vực hoạt động chính</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-page="/Home/Index" asp-area="Admin">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-page="/About/Index" asp-area="Admin">Thông tin chung</a></li>
+                    <li class="breadcrumb-item">Lĩnh vực chính</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            Điền thông tin lĩnh vực vào form bên dưới
+        </div>
+        <div class="card-body">
+            @if (ViewData["error"] != null)
+            {
+                <div class="alert alert-danger">@ViewData["error"]</div>
+            }
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group row">
+                    <label class="col-12" asp-for="MainModel.Name">Tên lĩnh vực <span class="red">(*)</span></label>
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">vi</span>
+                            </div>
+                            <input type="text" placeholder="Tiếng Việt" class="form-control" asp-for="MainModel.Name" required>
+                            <span class="text-danger" asp-validation-for="MainModel.Name"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">en</span>
+                            </div>
+                            <input type="text" placeholder="Tiếng Anh" class="form-control" asp-for="MainModel.NameEn" required>
+                            <span class="text-danger" asp-validation-for="MainModel.NameEn"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+
+                    <div class="col-lg-6">
+                        <label asp-for="Upload">Ảnh nền</label>
+                        <input type="file" class="form-control" asp-for="Upload" />
+                    </div>
+                    <div class="col-lg-6">
+                        <label asp-for="MainModel.OrderIndex">Thứ tự <span class="red">(*)</span></label>
+                        <input type="number" placeholder="Thứ tự" class="form-control" asp-for="MainModel.OrderIndex" required>
+                        <span class="text-danger" asp-validation-for="MainModel.OrderIndex"></span>
+                    </div>
+                </div>
+                <div style="margin-bottom:15px">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#article_vi">Mô tả tiếng Việt</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#article_en">Mô tả tiếng Anh</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="article_vi">
+                            <textarea id="editor_vi" asp-for="MainModel.Summary" class="form-control _editor"></textarea>
+                        </div>
+                        <div class="tab-pane fade" id="article_en">
+                            <textarea id="editor_en" asp-for="MainModel.SummaryEn" class="form-control _editor"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Lưu lại</button>
+                    <a class="btn btn-default" asp-page="/About/AboutProjectField/Index"><i class="fas fa-times"></i> Hủy bỏ</a>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script src="~/lib/ckeditor/ckeditor.js"></script>
+    <script>
+        $(function () {
+            ClassicEditor.create(document.querySelector('#editor_vi'), {
+                simpleUpload: {
+                    // The URL that the images are uploaded to.
+                    uploadUrl: '/api/fileupload/editor?folder=about/project_field',
+                    // Headers sent along with the XMLHttpRequest to the upload server.
+                    headers: {
+                        'XSRF-TOKEN': $('input:hidden[name="__RequestVerificationToken"]').val()
+                    }
+                }
+            }).then(editor => {
+                window.editor_vi = editor;
+            }).catch(error => {
+                console.error('There was a problem initializing the editor.', error);
+            });
+            ClassicEditor.create(document.querySelector('#editor_en'), {
+                simpleUpload: {
+                    // The URL that the images are uploaded to.
+                    uploadUrl: '/api/fileupload/editor?folder=about/project_field',
+                    // Headers sent along with the XMLHttpRequest to the upload server.
+                    headers: {
+                        'XSRF-TOKEN': $('input:hidden[name="__RequestVerificationToken"]').val()
+                    }
+                }
+            }).then(editor => {
+                window.editor_en = editor;
+            }).catch(error => {
+                console.error('There was a problem initializing the editor.', error);
+            });
+        })
+    </script>
+}

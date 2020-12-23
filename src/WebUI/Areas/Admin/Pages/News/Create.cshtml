@@ -1,0 +1,97 @@
+﻿@page
+@model News.CreateModel
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thêm mới tin tức</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-page="/Home/Index" asp-area="Admin">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-page="/News/Index" asp-area="Admin">Danh sách tin tức</a></li>
+                    <li class="breadcrumb-item">Thêm mới tin tức</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            Thêm các nội dung tin tức mới vào form bên dưới. <br /> <small>(Ảnh thumbnail và ảnh banner sẽ được thêm sau khi tạo)</small>
+        </div>
+        <div class="card-body">
+            @if (ViewData["error"] != null)
+            {
+                <div class="alert alert-danger">@ViewData["error"]</div>
+            }
+            <form method="post">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label class="col-12">Tiêu đề</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/assets/icons/vietnamese.svg" /></span>
+                                </div>
+                                <input asp-for="MainModel.Title" placeholder="Bằng tiếng Việt" class="form-control" required />
+                            </div>
+                            <span class="text-danger" asp-validation-for="MainModel.Title"></span>
+
+                        </div>
+                      
+                        <div class="form-group row">
+                            <div class="col-lg-12">
+                                <label asp-for="MainModel.CategoryId">Thể loại tin tức</label>
+                                <select asp-for="MainModel.CategoryId" asp-items="Model.Categories" class="form-control" required>
+                                  
+                                </select>
+                                <span class="text-danger" asp-validation-for="MainModel.CategoryId"></span>
+                            </div>
+                        </div>
+                        </div>
+                    <div class="col-xl-6">
+                        <div id="english_info_area" style="display:none">
+                            <div class="form-group">
+                                <label class="col-12">Tên tiếng Anh</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><img src="/assets/icons/english.svg" /></span>
+                                    </div>
+                                    <input asp-for="MainModel.TitleEn" placeholder="Bằng tiếng Anh" class="form-control" required />
+                                </div>
+                                <span class="text-danger" asp-validation-for="MainModel.TitleEn"></span>
+                            </div>
+                            
+                        </div>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input id="english_enable_cb" type="checkbox" class="form-check-input" asp-for="MainModel.IsEnglishIncluded">Bao gồm bài viết tiếng Anh
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <br />
+                        <button type="submit" class="create_btn btn btn-primary"><i class="far fa-save"></i> Lưu lại</button>
+                        <a class="btn btn-default" asp-page="/News/Index"><i class="fas fa-times"></i> Hủy bỏ</a>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(function () {
+            $('#english_enable_cb').on('change', function (e) {
+                $('#english_info_area').fadeToggle();
+            });
+        });
+    </script>
+}

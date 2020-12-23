@@ -1,0 +1,404 @@
+﻿@page
+@model BaseProjectWebRazor.Areas.Admin.Pages.Category.ProjectCategoryModel
+@{
+}
+@section Styles{
+    <link rel="stylesheet" href="~/lib/jquery-confirm/jquery-confirm.min.css" />
+    <style>
+        a {
+            cursor: pointer;
+        }
+
+        .modal .modal-content {
+            padding: 15px;
+        }
+
+        .modal .modal-title {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #d9d9d9;
+            padding-bottom: 10px;
+        }
+
+        .modal .modal_footer {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        input:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        .modal .btn-blue {
+            background-color: #3498db;
+            color: #fff;
+            transition: .5s;
+        }
+
+            .modal .btn-blue:hover {
+                background-color: #3479a7;
+            }
+
+        .jconfirm.jconfirm-light .jconfirm-bg {
+            background-color: #000;
+            opacity: .5;
+        }
+
+        .jconfirm .jconfirm-box div.jconfirm-content-pane .jconfirm-content {
+            overflow-x: hidden;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .table td, .table th {
+            vertical-align: middle;
+        }
+    </style>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thể loại dự án</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-page="/Index">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Danh sách danh mục</li>
+                    <li class="breadcrumb-item active">Địa điểm dự án</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal animated zoomIn faster" id="modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <h5 class="modal-title">Thêm thể loại</h5>
+
+            <form id="create_form" method="post">
+                <div class="form-group row">
+                    <label class="col-12">Tên thể loại <span class="red">(*)</span></label>
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">vi</span>
+                            </div>
+                            <input type="text" placeholder="Tiếng Việt" class="form-control name" name="name" required>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">en</span>
+                            </div>
+                            <input type="text" placeholder="Tiếng Anh" class="form-control name_en" name="name_en" required>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="modal_footer">
+                <button type="button" class="btn btn-blue" id="submit_create">Lưu lại</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Main content -->
+<section class="content">
+    <div class="card">
+        <div class="card-header actions_card_header">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal"><i class="fas fa-plus-circle"></i> Thêm mới</button>
+            <div id="filter_search"></div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-12 col-xl-6">
+                    <table class="table table-bordered table-hover" id="table">
+                        <thead>
+                            <tr>
+
+                                <th style="width:80px">
+                                    Id
+                                </th>
+                                <th style="width:auto">Tên</th>
+                                <th style="width:150px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Categories)
+                            {
+                                <tr>
+
+                                    <td>@item.Id</td>
+                                    <td class="name">@item.Name</td>
+                                    <td>
+                                        <a data-id="@item.Id" class="row_edit btn btn-warning"><i class="fas fa-edit"></i></a>
+                                        <a data-id="@item.Id" class="row_delete btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 col-xl-6">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
+    <script>
+        function hasUnicode(str) {
+            for (var i = 0; i < str.length; i++) {
+                if (str.charCodeAt(i) > 127) return true;
+            }
+            return false;
+        }
+        $(function () {
+            $('#submit_create').on('click', function (e) {
+                e.preventDefault();
+                let formData = new FormData(document.querySelector('#create_form'));
+                let name = $('#create_form').find('.name').val();
+                let name_en = $('#create_form').find('.name_en').val();
+                if ((!name) || (!name_en)) {
+                    $.alert({
+                        title: 'Nhập thông tin chưa đúng',
+                        content: 'Mời nhập đầy đủ thông tin có dấu <span class="red">(*)</span>',
+                        type: 'red'
+                    });
+                    return false;
+                }
+                else if (hasUnicode(name_en)) {
+                    $.alert({
+                        title: 'Nhập thông tin chưa đúng',
+                        content: 'Tên tiếng Anh đừng có nhập tiếng Việt chứ?',
+                        type: 'red'
+                    });
+                    return false;
+                }
+                $.ajax({
+                    type: 'POST',
+                    data: formData,
+                    url: '/admin/category/projectcategory',
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); }
+                }).done(function (res) {
+                    if (res) {
+                        $('#modal').modal('hide');
+                        document.getElementById("create_form").reset();
+                        let _trHtml =
+                            `
+                                    <tr>
+                                        <td>${res.id}</td>
+                                        <td class="name">${res.name}</td>
+                                        <td>
+                                            <a data-id="${res.id}" class="row_edit btn btn-warning"><i class="fas fa-edit"></i></a>
+                                            <a data-id="${res.id}" class="row_delete btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                    `;
+                        $('#table tbody').append(_trHtml);
+                        setTimeout(function () {
+                            $.toast({
+                                heading: 'Success',
+                                text: 'Thêm thành công',
+                                icon: 'success',
+                                position: 'bottom-right'
+                            });
+                        }, 300);
+                    }
+                    else {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Thêm không thành công',
+                            icon: 'error',
+                            position: 'bottom-right'
+                        });
+                    }
+                }).fail(function () {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Thêm không thành công',
+                        icon: 'error',
+                        position: 'bottom-right'
+                    });
+                });
+            });
+            $('#table').on('click', '.row_delete', function (e) {
+                e.preventDefault();
+                let id = parseInt($(this).attr('data-id'));
+                let row = $(this).closest('tr');
+                $.confirm({
+                    title: 'Xóa thể loại',
+                    content: 'Bạn chắc chắn muốn xóa thể loại này chứ?',
+                    type: 'red',
+                    buttons: {
+                        confirm: function () {
+                            $.ajax({
+                                type: 'DELETE',
+                                url: '/admin/category/projectcategory?Id=' + id,
+                                contentType: false,
+                                processData: false,
+                                beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                            }).done(function (res) {
+                                $(row).remove();
+                                $.toast({
+                                    heading: 'Success',
+                                    text: 'Xóa thành công',
+                                    icon: 'success',
+                                    position: 'bottom-right'
+                                });
+                            }).fail(function () {
+                                $.dialog({
+                                    title: 'Error',
+                                    content: 'Xóa không thành công'
+                                });
+                            });
+                        },
+                        cancel: function () {
+
+                        },
+                    }
+                });
+
+
+            });
+            $('#table').on('click', '.row_edit', function (e) {
+                e.preventDefault();
+                let id = parseInt($(this).attr('data-id'));
+                let row = $(this).closest('tr');
+                OpenUpdate(id, row);
+
+            });
+            function OpenUpdate(id, row) {
+                let data;
+                $.confirm({
+                    title: 'Thay đổi thông tin',
+                    columnClass: 'medium',
+                    content: function () {
+                        var self = this;
+                        return $.ajax({
+                            url: '/admin/category/projectcategory?handler=detail&Id=' + id,
+                            dataType: 'json',
+                            method: 'get'
+                        }).done(function (res) {
+                            data = res;
+                            self.setContent(
+                                `  <form method="post">
+                                            <div class="form-group row">
+                                                <label class="col-12">Tên địa điểm <span class="red">(*)</span></label>
+                                                <div class="col-lg-6">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">vi</span>
+                                                        </div>
+                                                        <input type="text" placeholder="Tiếng Việt" value="${data.name}" class="form-control name" name="name" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">en</span>
+                                                        </div>
+                                                        <input type="text" placeholder="Tiếng Anh" value="${data.nameEn}" class="form-control name_en" name="name_en" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    `
+                            );
+                        }).fail(function () {
+                            self.setContent('Tải thông tin không thành công');
+                        });
+                    },
+                    buttons: {
+                        formSubmit: {
+                            text: 'Lưu lại',
+                            btnClass: 'btn-blue',
+                            action: function () {
+                                let name = this.$content.find('.name').val();
+                                let name_en = this.$content.find('.name_en').val();
+                                if ((!name) || (!name_en)) {
+                                    $.alert({
+                                        title: 'Nhập thông tin chưa đúng',
+                                        content: 'Mời nhập đầy đủ các thông tin có dấu (*)',
+                                        type: 'red'
+                                    });
+                                    return false;
+                                }
+                                data.name = name;
+                                data.nameEn = name_en;
+                                SaveUpdate(data, row);
+                            }
+                        },
+                       cancel:
+                        {
+                            text: 'Hủy bỏ',
+                            action: function () {
+                                //close
+                            }
+                        }
+                    },
+                    onContentReady: function () {
+                        // bind to events
+                        var jc = this;
+                        this.$content.find('form').on('submit', function (e) {
+                            // if the user submits the form by pressing enter in the field.
+                            e.preventDefault();
+                            jc.$$formSubmit.trigger('click'); // reference the button and click it
+                        });
+                    }
+                });
+
+            }
+            function SaveUpdate(data, row) {
+                $.ajax({
+                    type: 'PUT',
+                    url: '/admin/category/projectcategory',
+                    contentType: "application/json",
+                    dataType: 'json',
+                    processData: false,
+                    data: JSON.stringify(data),
+                    beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                }).done(function (res) {
+                    if (res) {
+                        $.toast({
+                            heading: 'Success',
+                            text: 'Sửa thành công',
+                            icon: 'success',
+                            position: 'bottom-right'
+                        });
+                        $(row).find('.name').text(res.name);
+                    }
+                    else {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Sửa không thành công',
+                            icon: 'error',
+                            position: 'bottom-right'
+                        });
+                    }
+                }).fail(function () {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Sửa không thành công',
+                        icon: 'error',
+                        position: 'bottom-right'
+                    });
+                });
+            }
+        })
+    </script>
+}

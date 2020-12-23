@@ -1,47 +1,75 @@
 ﻿@page
-@model BaseProjectWebRazor.Pages.Project.IndexModel
+@inject CommonLocalizationService localizer
+@model BaseProjectWebRazor.Pages.ProjectPage.IndexModel
 @{
-    ViewData["Title"] = "Danh sách dự án";
+    ViewData["Title"] = "Dự án";
+    var banner = await setting.GetBanner(BannerType.Project);
 }
+@inject Services.CompanySettings setting
+
+<input hidden type="number" id="nav_theme" asp-for="@banner.Theme" />
 <div class="projects-page">
     <div class="banner">
-        <h2 class="title padding">Dự án</h2>
-        <img src="/assets/images/banner_project.jpg">
+        @*<a class="hv_normal" href="/project"><h2 class="title padding">@localizer.Get("Dự án")</h2></a>*@
+        <img src="@banner.Banner">
     </div>
     <div class="wrapper">
         <div class="top-filter-list padding">
             <div class="left">
-                <div class="label">Bộ lọc dự án: </div>
-                <div class="options animate__animated animate__fadeIn">
+                <div class="label">@localizer.Get("Bộ lọc dự án"): </div>
+                <form class="options" method="get">
                     <div class="option">
-                        <select>
-                            <option selected value="0">Tất cả loại hình +</option>
-                            <option value="1">Văn Phòng - thương mại</option>
-                            <option value="2">Nhà ở</option>
-                            <option value="3">Hỗn hợp</option>
-                            <option value="4">Văn hóa - thể thao</option>
+                        <select name="cate">
+                            <option value="">@localizer.Get("Tất cả loại hình") +</option>
+                            @foreach (var x in Model.Categories)
+                            {
+                                @if (x.Selected)
+                                {
+                                    <option selected value="@x.Id">@x.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@x.Id">@x.Name</option>
+                                }
+
+                            }
+
                         </select>
                     </div>
                     <div class="option">
-                        <select>
-                            <option selected value="0">Tất cả lĩnh vực +</option>
-                            <option value="1">Tư vấn đầu tư</option>
-                            <option value="2">Tư vấn xây dựng</option>
-                            <option value="3">Hỗn hợp</option>
-                            <option value="4">Văn hóa - thể thao</option>
+                        <select name="field">
+                            <option value="">@localizer.Get("Tất cả lĩnh vực") +</option>
+                            @foreach (var x in Model.Fields)
+                            {
+                                @if (x.Selected)
+                                {
+                                    <option selected value="@x.Id">@x.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@x.Id">@x.Name</option>
+                                }
+                            }
                         </select>
                     </div>
                     <div class="option">
-                        <select>
-                            <option selected value="0">Tất cả khu vực +</option>
-                            <option value="1">Hà Nội</option>
-                            <option value="2">Hồ chí minh</option>
-                            <option value="3">Hỗn hợp</option>
-                            <option value="4">Văn hóa - thể thao</option>
+                        <select name="location">
+                            <option value="">@localizer.Get("Tất cả khu vực") +</option>
+                            @foreach (var x in Model.Locations)
+                            {
+                                @if (x.Selected)
+                                {
+                                    <option selected value="@x.Id">@x.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@x.Id">@x.Name</option>
+                                }
+                            }
                         </select>
 
                     </div>
-                </div>
+                </form>
             </div>
             <button><span>+</span></button>
         </div>
@@ -50,9 +78,9 @@
             <div class="filters">
                 <div class="left">
                     <div class="option">
-                        <div class="label">Tìm kiếm dự án</div>
-                        <form class="search_form">
-                            <input type="text" class="search" placeholder="Nhập từ khóa tìm kiếm...">
+                        <div class="label"> @localizer.Get("Tìm kiếm dự án")</div>
+                        <form class="search_form" method="get">
+                            <input type="text" name="textSearch" class="search" placeholder="@localizer.Get("Nhập từ khóa tìm kiếm")...">
                             <img src="/assets/icons/search.svg" class="input_icon">
                         </form>
                     </div>
@@ -61,18 +89,35 @@
                 </div>
                 <div class="right">
                     <div class="option">
-                        <div class="label">Sắp xếp</div>
-                        <div>
-                            <select>
-                                <option value="1">A - Z</option>
-                                <option value="2">Z - A</option>
+                        <div class="label">@localizer.Get("Sắp xếp")</div>
+                        <form id="order_form">
+                            <select name="orderby">
+                                @if (Model.OrderBy == 0)
+                                {
+                                    <option value="0" selected>@localizer.Get("Mặc định")</option>
+                                    <option value="1">@localizer.Get("Ngày đăng")</option>
+                                    <option value="2">A-Z</option>
+                                }
+                                else if (Model.OrderBy == 1)
+                                {
+                                    <option value="0">@localizer.Get("Mặc định")</option>
+                                    <option value="1" selected>@localizer.Get("Ngày đăng")</option>
+                                    <option value="2">A-Z</option>
+                                }
+                                else if (Model.OrderBy == 2)
+                                {
+                                    <option value="0">@localizer.Get("Mặc định")</option>
+                                    <option value="1">@localizer.Get("Ngày đăng")</option>
+                                    <option value="2" selected>A-Z</option>
+                                }
+
                             </select>
-                        </div>
+                        </form>
                     </div>
                     <div class="option" id="type_views">
-                        <div class="label">Hiển thị</div>
+                        <div class="label">@localizer.Get("Hiển thị")</div>
                         <div class="buttons">
-                            <button class="view_grid active">
+                            <a href="/project" class="view_grid active">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                      height="28" viewBox="0 0 28 28">
                                     <g transform="translate(18469 -1284.908)">
@@ -103,8 +148,8 @@
                                         </g>
                                     </g>
                                 </svg>
-                            </button>
-                            <button class="view_list">
+                            </a>
+                            <a href="/project/list" class="view_list" style="opacity:.1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
                                     <g transform="translate(18395 -1284.908)">
                                         <g transform="translate(-18395 1284.908)">
@@ -119,115 +164,110 @@
                                     </g>
                                 </svg>
 
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="list_projects">
-                <div class="project_box">
-                    <div class="img" style="background-image: url('/assets/images/projects/1.jpg');">
-                        <div class="info">
-                            <div class="cate">Tư vấn xây dựng</div>
-                            <a class="title" href="/project/detail">
-                                Đài tưởng niệm liệt sỹ móng cái
+                @foreach (var project in Model.Projects)
+                {
+                    <div class="project_box">
+                        <div class="img" style="background-image: url('@project.Thumbnail');">
+                            <a class="info" href="/project/detail/@project.Id" title="@project.Title">
+                                <div class="cate">@project.Category</div>
+                                <div class="title" href="/project/detail">
+                                    @project.Title
+                                </div>
+                                <div class="location">
+                                    <img src="/assets/icons/location.svg" />
+                                    @project.Location
+                                </div>
+                                <div href="#" class="egde"></div>
                             </a>
-                            <div class="location">
-                                <img>
-                                Quảng Ninh
-                            </div>
-                            <a href="#" class="egde"></a>
                         </div>
                     </div>
-                </div>
-                <div class="project_box">
-                    <div class="img" style="background-image: url('/assets/images/projects/2.jpg');">
-                        <div class="info">
-                            <div class="cate">Tư vấn xây dựng</div>
-                            <a class="title" href="/project/detail">
-                                Đài tưởng niệm liệt sỹ móng cái
-                            </a>
-                            <div class="location">
-                                <img>
-                                Quảng Ninh
-                            </div>
-                            <a href="#" class="egde"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project_box">
-                    <div class="img" style="background-image: url('/assets/images/projects/3.jpg');">
-                        <div class="info">
-                            <div class="cate">Tư vấn xây dựng</div>
-                            <a class="title" href="/project/detail">
-                                Đài tưởng niệm liệt sỹ móng cái
-                            </a>
-                            <div class="location">
-                                <img>
-                                Quảng Ninh
-                            </div>
-                            <a href="#" class="egde"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project_box">
-                    <div class="img" style="background-image: url('/assets/images/projects/4.jpg');">
-                        <div class="info">
-                            <div class="cate">Tư vấn xây dựng</div>
-                            <a class="title" href="/project/detail">
-                                Đài tưởng niệm liệt sỹ móng cái
-                            </a>
-                            <div class="location">
-                                <img>
-                                Quảng Ninh
-                            </div>
-                            <a href="#" class="egde"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project_box">
-                    <div class="img" style="background-image: url('/assets/images/projects/5.jpg');">
-                        <div class="info">
-                            <div class="cate">Tư vấn xây dựng</div>
-                            <a class="title" href="/project/detail">
-                                Đài tưởng niệm liệt sỹ móng cái
-                            </a>
-                            <div class="location">
-                                <img>
-                                Quảng Ninh
-                            </div>
-                            <a href="#" class="egde"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project_box">
-                    <div class="img" style="background-image: url('/assets/images/projects/6.jpg');">
-                        <div class="info">
-                            <div class="cate">Tư vấn xây dựng</div>
-                            <a class="title" href="/project/detail">
-                                Đài tưởng niệm liệt sỹ móng cái
-                            </a>
-                            <div class="location">
-                                <img>
-                                Quảng Ninh
-                            </div>
-                            <a href="#" class="egde"></a>
-                        </div>
-                    </div>
-                </div>
+                }
+
             </div>
             <div class="paginations">
                 <ul>
-                    <li><a href="#" class="active">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
+                    @for (var i = 1; i <= Model.PagingInfo.TotalPages; i++)
+                    {
+                        <li><a data-id="@i" asp-page="/Project/Index" asp-route-p="@i" class="@(i == Model.CurrentPage ? "active" : "")">@i</a></li>
+                        @*<li class="page-item ">
+                        <a asp-page="/pagination"  class="page-link"></a>
+                    </li>*@
+                    }
+
                 </ul>
             </div>
+            @if (Model.Projects.Count() == 0)
+            {
+                <div class="empty_list">
+                    <img src="/assets/images/empty.png" />
+                    <div class="title">@localizer.Get("Xin lỗi, không tìm thấy kết quả")</div>
+                    <a href="/project" class="color_1">[ @localizer.Get("Quay lại danh sách") ]</a>
+                </div>
+            }
         </div>
     </div>
 </div>
 @section Styles{
     <link href="~/css/filter-list.css" rel="stylesheet" />
     <link href="~/css/projects.css" rel="stylesheet" />
+}
+@section Scripts{
+    <script>
+        $(function () {
+            $('form.options select').on('change', function () {
+                $(this).closest('form').submit();
+            });
+            $('form#order_form select').on('change', function () {
+                if (window.location.search.length > 0) {
+                    let _search_parmas = updateParams([{ name: 'orderby', value: $(this).val() }]);
+                    window.location.href = window.location.href.replace(window.location.search, '?' + _search_parmas);
+                }
+                else {
+                    window.location.href = window.location.href + '?orderby=' + $(this).val();
+                }
+
+                //if (urlParams.has('orderType')) {
+                //    updateParams([{ name: 'orderType', value: $(this).val() }])
+                //}
+                //else {
+                //    history.pushState(null, null, '?' + _search_parmas);
+                //}
+            });
+            $('.paginations li a').on('click', function (e) {
+                e.preventDefault();
+                if (window.location.search.length > 0) {
+                    var urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.has('p')) urlParams.set('p', $(this).attr('data-id'));
+                    else urlParams.append('p', $(this).attr('data-id'));
+                    window.location.href = window.location.href.replace(window.location.search, '?' + urlParams.toString());
+                }
+                else {
+                    window.location.href = window.location.href + '?p=' + $(this).attr('data-id');
+                }
+
+            });
+            function updateParams(params) {
+                if (params.length == 0) return "";
+                var urlParams = new URLSearchParams(window.location.search);
+                params.forEach((item) => {
+                    if ((item.value.length == 0) || (!item.value)) urlParams.delete(item.name);
+                    else if (urlParams.has(item.name)) urlParams.set(item.name, item.value);
+                    else urlParams.append(item.name, item.value);
+                })
+                return getParams(urlParams);
+            }
+            function getParams(urlParams) {
+                // var urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has('p')) urlParams.delete('p');
+                if (urlParams.has('ps')) urlParams.delete('ps');
+                return urlParams.toString();
+            }
+        });
+    </script>
 }

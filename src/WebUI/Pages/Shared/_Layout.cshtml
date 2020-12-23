@@ -1,9 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@inject CommonLocalizationService localizer
+@inject Services.CompanySettings settings
+@{ 
+    var SiteInfo = await settings.GetSiteSetting();
+    var _mapBg = await settings.MapImage();
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="~/favicon.ico">
+
+    <link rel="shortcut icon" type="image/png" href="~/icon.png" />
     <title>@ViewData["Title"] - Hacid</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     @*<link rel="icon" type="image/png" href="~/icon.png" />*@
@@ -16,6 +23,35 @@
     <meta property="og:image" content="/assets/home/slides/1.jpg" />
     <link href="~/css/ck-editor.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .ck-content .custom-block-indent-a {
+            margin-left: 10%;
+        }
+
+        .ck-content .custom-block-indent-b {
+            margin-left: 20%;
+        }
+
+        .ck-content .custom-block-indent-c {
+            margin-left: 30%;
+        }
+
+        .ck-content .text-tiny {
+            font-size: 10px;
+        }
+
+        .ck-content .text-small {
+            font-size: 14px;
+        }
+
+        .ck-content .text-big {
+            font-size: 18px;
+        }
+
+        .ck-content .text-huge {
+            font-size: 24px;
+        }
+    </style>
     @RenderSection("Styles", required: false)
 </head>
 <body>
@@ -25,29 +61,9 @@
             <img class="logo-dark" src="/assets/images/logo.png">
         </a>
         <ul class="menu-items">
+            @await Html.PartialAsync("_SelectLanguagePartial")
             <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="23" viewBox="0 0 32 23">
-                        <g transform="translate(18587 -1229)">
-                            <g data-name="Group 2057">
-                                <g transform="translate(-20127 1180)">
-                                    <g class="stroke" transform="translate(1540 49)" fill="none" stroke-width="2">
-                                        <rect width="32" height="23" stroke="none" />
-                                        <rect x="1" y="1" width="30" height="21" fill="none" />
-                                    </g>
-                                    <text class="fill" transform="translate(1565 65)" font-size="14"
-                                          font-family="Saira-Medium, Saira" font-weight="500">
-                                        <tspan x="-18.704" y="0">EN</tspan>
-                                    </text>
-                                </g>
-
-                            </g>
-                        </g>
-                    </svg>
-                </a>
-            </li>
-            <li>
-                <a href="#">
+                <a href="@SiteInfo.ForumLink" target="_blank">
                     <svg style="margin-top:2px" xmlns="http://www.w3.org/2000/svg" width="32.389" height="27.086"
                          viewBox="0 0 32.389 27.086">
                         <g transform="translate(18525 -1229)">
@@ -70,7 +86,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="http://mail.hacid.vn" target="_blank">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32.395" height="23.173" viewBox="0 0 32.395 23.173">
                         <g transform="translate(18463 -1228.992)">
                             <g>
@@ -90,7 +106,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="open_sub_menu">
+                <a class="open_sub_menu">
                     <svg xmlns="http://www.w3.org/2000/svg" width="33.611" height="22.092" viewBox="0 0 33.611 22.092">
                         <g transform="translate(18401 -1229)">
                             <g transform="translate(-18401 1229)">
@@ -134,40 +150,38 @@
         <div class="animate__animated animate__fadeIn sub-menu padding">
             <div class="wrap">
                 <div class="column">
-                    <a class="title" href="#">
+                    <a class="title" href="/about">
                         Hacid
                         <div class="number">1</div>
                     </a>
                     <ul class="list">
                         <li>
-                            <a href="/about">Giới thiệu chung</a>
+                            <a href="/about">@localizer.Get("Giới thiệu chung")</a>
                         </li>
                         <li>
-                            <a href="/about/specialist">Kinh nghiệm chuyên môn</a>
+                            <a href="/about/specialist">@localizer.Get("Kinh nghiệm chuyên môn")</a>
                         </li>
                         <li>
-                            <a href="/about/energy">Năng lực hiện tại</a>
+                            <a href="/about/energy">@localizer.Get("Năng lực hiện tại")</a>
                         </li>
                         <li>
-                            <a href="/about/partners">Khách hàng - đối tác</a>
+                            <a href="/about/partners">@localizer.Get("Khách hàng - đối tác")</a>
                         </li>
                     </ul>
                 </div>
                 <div class="column">
                     <a class="title" href="/project">
-                        Dự án
+                        @localizer.Get("Dự án")
                         <div class="number">2</div>
                     </a>
                     <ul class="list">
-                        <li>
-                            <a href="/project?cate=1">Tư vấn xây dựng</a>
-                        </li>
-                        <li>
-                            <a href="/project?cate=2">Tư vấn đầu tư</a>
-                        </li>
-                        <li>
-                            <a href="/project?cate=3">Dự án đầu tư</a>
-                        </li>
+                        @foreach (var item in await settings.GetProjectCategories())
+                        {
+                            <li>
+                                <a href="/project?field=@item.Id">@item.Name</a>
+                            </li>
+                        }
+
                     </ul>
                 </div>
                 <div class="column">
@@ -177,36 +191,32 @@
                     </a>
                     <ul class="list">
                         <li>
-                            <a href="/bim">Công nghệ bim</a>
+                            <a href="/bim">@localizer.Get("Công nghệ bim")</a>
                         </li>
                         <li>
-                            <a href="/project">Công trình áp dụng revit</a>
+                            <a href="/project?field=@SiteInfo.Revit">@localizer.Get("Công trình áp dụng revit")</a>
                         </li>
                     </ul>
                 </div>
                 <div class="column">
                     <a class="title" href="/new">
-                        Tin tức
+                        @localizer.Get("Tin tức")
                         <div class="number">4</div>
                     </a>
                     <ul class="list">
-                        <li>
-                            <a href="/new?cate=1">Đào tạo</a>
-                        </li>
-                        <li>
-                            <a href="/new?cate=2">Tin chuyên ngành</a>
-                        </li>
-                        <li>
-                            <a href="/new?cate=3">Tin hoạt động</a>
-                        </li>
-                        <li>
-                            <a href="/new?cate=4">Tuyển dụng</a>
-                        </li>
+                        
+                        @foreach (var item in await settings.GetNewCategories())
+                        {
+                            <li>
+                                <a href="/new?cate=@item.Id">@item.Name</a>
+                            </li>
+                        }
+
                     </ul>
                 </div>
                 <div class="column">
                     <a class="title" href="/contact">
-                        Liên hệ
+                        @localizer.Get("Liên hệ")
                         <div class="number">5</div>
                     </a>
 
@@ -217,6 +227,7 @@
     <nav id="menu_mobile" class="menu bg_color_1 padding">
         <a class="logo" href="/">
             <img class="logo-white" src="/assets/images/logo_white.png">
+            <img class="logo-dark" src="/assets/images/logo.png">
         </a>
         <a href="#" class="open_sub_menu">
             <svg xmlns="http://www.w3.org/2000/svg" width="33.611" height="22.092" viewBox="0 0 33.611 22.092">
@@ -265,34 +276,34 @@
                         </a>
                         <ul class="list collapse" id="menu_item_1">
                             <li>
-                                <a href="#">Giới thiệu chung</a>
+                                <a href="/about">@localizer.Get("Giới thiệu chung")</a>
                             </li>
                             <li>
-                                <a href="#">Kinh nghiệm chuyên môn</a>
+                                <a href="/about/specialist">@localizer.Get("Kinh nghiệm chuyên môn")</a>
                             </li>
                             <li>
-                                <a href="#">Năng lực hiện tại</a>
+                                <a href="/about/energy">@localizer.Get("Năng lực hiện tại")</a>
                             </li>
                             <li>
-                                <a href="#">Khách hàng - đối tác</a>
+                                <a href="/about/partners">@localizer.Get("Khách hàng - đối tác")</a>
                             </li>
                         </ul>
                     </div>
                     <div class="column">
                         <a class="title" data-toggle="collapse" data-target="#menu_item_2">
-                            Dự án
+                            @localizer.Get("Dự án")
                             <div class="number">2</div>
                         </a>
                         <ul class="list collapse" id="menu_item_2">
                             <li>
-                                <a href="#">Tư vấn xây dựng</a>
+                                <a href="/project">@localizer.Get("Tất cả")</a>
                             </li>
-                            <li>
-                                <a href="#">Tư vấn đầu tư</a>
-                            </li>
-                            <li>
-                                <a href="#">Dự án đầu tư</a>
-                            </li>
+                            @foreach (var item in await settings.GetProjectCategories())
+                            {
+                                <li>
+                                    <a href="/project?field=@item.Id">@item.Name</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                     <div class="column">
@@ -302,36 +313,33 @@
                         </a>
                         <ul class="list collapse" id="menu_item_3">
                             <li>
-                                <a href="#">Công nghệ bim</a>
+                                <a href="/bim">@localizer.Get("Công nghệ bim")</a>
                             </li>
                             <li>
-                                <a href="#">Công trình áp dụng revit</a>
+                                <a href="/project?field=8">@localizer.Get("Công trình áp dụng revit")</a>
                             </li>
                         </ul>
                     </div>
                     <div class="column">
                         <a class="title" data-toggle="collapse" data-target="#menu_item_4">
-                            Tin tức
+                            @localizer.Get("Tin tức")
                             <div class="number">4</div>
                         </a>
                         <ul class="list collapse" id="menu_item_4">
                             <li>
-                                <a href="#">Đào tạo</a>
+                                <a href="/new">@localizer.Get("Tất cả")</a>
                             </li>
-                            <li>
-                                <a href="#">Tin chuyên ngành</a>
-                            </li>
-                            <li>
-                                <a href="#">Tin hoạt động</a>
-                            </li>
-                            <li>
-                                <a href="#">Tuyển dụng</a>
-                            </li>
+                            @foreach (var item in await settings.GetNewCategories())
+                            {
+                                <li>
+                                    <a href="/new?cate=@item.Id">@item.Name</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                     <div class="column">
-                        <a class="title">
-                            Liên hệ
+                        <a class="title" href="/contact">
+                            @localizer.Get("Liên hệ")
                             <div class="number">5</div>
                         </a>
 
@@ -341,20 +349,46 @@
                 <div class="bottom">
                     <ul class="menu-items">
                         <li>
-                            <a href="#">
-                                <img src="/assets/icons/en.svg">
+                            @await Html.PartialAsync("_SelectLanguagePartial")
+                        </li>
+                        <li>
+                            <a href="@SiteInfo.ForumLink">
+                                <svg style="margin-top:2px" xmlns="http://www.w3.org/2000/svg" width="32.389" height="27.086"
+                                     viewBox="0 0 32.389 27.086">
+                                    <g transform="translate(18525 -1229)">
+                                        <g>
+                                            <g transform="translate(-18525 1229)">
+                                                <path class="fill"
+                                                      d="M0,0V23.29H4.428v3.8h.949a4.753,4.753,0,0,0,4.649-3.8H32.389V0ZM30.421,21.265l-22.2-.015v1.091a2.852,2.852,0,0,1-1.9,2.684V21.25l-4.311.015V2.069H30.421Z" />
+                                                <path class="fill" d="M241,211h2.454v2.454H241Z"
+                                                      transform="translate(-226.032 -200.93)" />
+                                                <path class="fill" d="M301,211h2.454v2.454H301Z"
+                                                      transform="translate(-281.125 -200.93)" />
+                                                <path class="fill" d="M181,211h2.454v2.454H181Z"
+                                                      transform="translate(-170.94 -200.93)" />
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                <img src="/assets/icons/forum.svg" style="margin-top: 1px;">
+                            <a href="http://mail.hacid.vn/">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32.395" height="23.173" viewBox="0 0 32.395 23.173">
+                                    <g transform="translate(18463 -1228.992)">
+                                        <g>
+                                            <g transform="translate(-18462.994 1160.73)">
+                                                <g transform="translate(0 68.267)">
+                                                    <path class="fill"
+                                                          d="M32.389,68.262H0c-.012.661,0,.523,0,1.162V91.375l32.389.06V68.262ZM29.335,70.58,16.195,80.688,3.054,70.58Zm.74,18.508H2.313V72.93L15.49,83.065a1.157,1.157,0,0,0,1.409,0L30.076,72.93Z"
+                                                          transform="translate(0 -68.267)" />
+                                                </g>
+                                            </g>
 
-
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/assets/icons/email.svg">
+                                        </g>
+                                    </g>
+                                </svg>
 
 
                             </a>
@@ -370,62 +404,65 @@
         @RenderBody()
 
     </div>
+
     <footer>
-        <div class="map padding" style="background-image: url('/assets/images/footer.jpg');">
+        <a class="map padding hv_color_2" href="@SiteInfo.Map" target="_blank" style="background-image: url('@_mapBg');">
             <div class="text">
                 <div>
-                    69 Quán Thánh, Quận Ba Đình, Hà Nội, Việt Nam
+                    @SiteInfo.Address
+
                 </div>
-                <div>
-                    <a href="https://goo.gl/maps/YtEA9XgxeqxF5k8v9" target="_blank">[HACID in GoogleMap.]</a>
+                <div style="color:#bfffff">
+                    [HACID in GoogleMap.]
                 </div>
             </div>
 
-        </div>
+        </a>
         <div class="footer-info padding">
-            <div class="copyright">© Copyright 2015 HACID.,JSC<br /> All right reserved</div>
+            <div class="copyright">@SiteInfo.CopyRight<br /> <span style="color:gray;font-size:13px">Design By Marmedia</span></div>
             <ul class="footer-menu">
                 <li>
-                    <a href="/">Trang chủ.</a>
+                    <a class="hv_color_2" href="/">@localizer.Get("Trang chủ").</a>
                 </li>
                 <li>
-                    <a href="/about">Hacid.</a>
+                    <a class="hv_color_2" href="/about">Hacid.</a>
                 </li>
                 <li>
-                    <a href="/project">Dự án.</a>
+                    <a class="hv_color_2" href="/project">@localizer.Get("Dự án").</a>
                 </li>
                 <li>
-                    <a href="/bim">Bim.</a>
+                    <a class="hv_color_2" href="/bim">Bim.</a>
                 </li>
                 <li>
-                    <a href="/new">Tin tức.</a>
+                    <a class="hv_color_2" href="/new">@localizer.Get("Tin tức").</a>
                 </li>
                 <li>
-                    <a href="/contact">Liên hệ.</a>
+                    <a class="hv_color_2" href="/contact">@localizer.Get("Liên hệ").</a>
                 </li>
             </ul>
             <div class="socials">
                 <ul>
                     <li>
-                        <a href="#"><img src="/assets/icons/fb.svg"></a>
+                        <a href="@SiteInfo.Facebook" target="_blank"><img src="/assets/icons/fb.svg"></a>
                     </li>
                     <li>
-                        <a href="#"><img src="/assets/icons/in.svg"></a>
+                        <a href="@SiteInfo.Linkedin"><img src="/assets/icons/in.svg"></a>
                     </li>
                     <li>
-                        <a href="#"><img class="yt" src="/assets/icons/you.svg"></a>
+                        <a href="@SiteInfo.Youtube"><img class="yt" style=" height: 15px; margin-top: 3px;" src="/assets/icons/you.svg"></a>
                     </li>
                 </ul>
             </div>
         </div>
     </footer>
-
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
-   
     @RenderSection("Scripts", required: false)
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v9.0&appId=219237851782524&autoLogAppEvents=1" nonce="0fogS1LJ"></script>
+
 </body>
+
 </html>

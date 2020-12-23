@@ -1,0 +1,373 @@
+﻿@page
+@model Project.IndexModel
+@section Styles{
+    <link rel="stylesheet" href="~/lib/datatables-bs4/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="~/lib/jquery-confirm/jquery-confirm.min.css" />
+    <style>
+        table.dataTable tbody tr.selected {
+            background-color: #B0BED9;
+        }
+
+        #filter_search {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+            #filter_search label {
+                display: flex;
+                width: 220px;
+                margin-left: auto;
+                align-items: center;
+                margin-bottom: 0;
+            }
+
+                #filter_search label input {
+                    margin-left: 5px;
+                }
+
+        .actions_card_header {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .table td, .table th {
+            vertical-align: middle;
+        }
+
+        a {
+            cursor: pointer
+        }
+    </style>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách dự án</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+                    <li class="breadcrumb-item active">Dự án</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="card">
+        <div class="card-header actions_card_header">
+            <div>
+                <a class="create_btn btn btn-success" asp-page="/Project/Create"><i class="fas fa-plus-circle"></i> Thêm mới</a>        
+            </div>
+
+
+            <div id="filter_search"></div>
+
+        </div>
+        <div class="card-body">
+            <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th style="width:50px">ID</th>
+                        <th>Tên dự án</th>
+                        <th style="width:120px">Khách hàng</th>
+                        <th style="width:120px">Năm</th>
+                        <th style="width:120px">Trạng thái</th>
+                        <th style="width:120px">Ngày tạo</th>
+                        <th style="width:180px"></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <form method="post"></form>
+</section>
+
+@section Scripts{
+    <!-- DataTables -->
+    <script src="~/lib/datatables/jquery.dataTables.js"></script>
+    <script src="~/lib/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+    <script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
+    <script>
+        $(function () {
+            var table = $('#example2').DataTable({
+                "paging": true,
+                "ordering": false,
+                "lengthChange": false,
+                "searching": true,
+                "info": true,
+                "autoWidth": false,
+                "serverSide": true,
+                "processing": true,
+                "select": true,
+                "ajax": {
+                    url: '/admin/project?handler=data',
+                    data: function (d) {
+                        _d = {
+                            start: d.start,
+                            length: d.length,
+                            draw: d.draw,
+                            textSearch: d.search.value
+                        };
+                        return _d;
+                    }
+                },
+                "columns": [
+                    { "data": "id" },
+                    { "data": "title" },
+                    { "data": "investor" },
+                    { "data": "year" },
+                    {
+                        "data": "status", render: function (data, type, row) {
+                            if (data) {
+                                return `<button title="Click để đổi trạng thái" class="row_status btn btn-success"><i class="far fa-eye"></i> Hiển thị</button>`;
+                            }
+                            else return `<button title="Click để đổi trạng thái" class="row_status btn btn-secondary"><i class="far fa-eye-slash"></i> Đang ẩn</button>`;
+                        }
+                    },
+                    { "data": "createdOnDate" },
+                    {
+                        data: null,
+                        className: "center",
+                        defaultContent: `
+<a href="" class="row_down btn btn-success"><i class="fas fa-arrow-down"></i></a>
+<a href="" class="row_up btn btn-success"><i class="fas fa-arrow-up"></i></a>
+<a href="" class="row_edit btn btn-warning"><i class="far fa-edit"></i></a> 
+<a href="" class="row_remove btn btn-danger"><i class="fa fa-trash"></i></a>`
+                    }
+                    ]
+        });
+        //$('#add_to_banner_btn').on('click', 'tr', function () {
+        //    console.log(table.row(this).data());
+        //});
+        $('#add_to_banner_btn').on('click', function () {
+            let data = table.rows('.selected').data()[0];
+            if (data) {
+                $.confirm({
+                    title: 'Thêm vào slide trang chủ',
+                    content: 'Bạn chắc chắn muốn thêm dự án: "' + data.title + '" vào slide ở trang chủ chứ?',
+                    type: 'red',
+                    onAction: function (btnName) {
+                        if (btnName === 'ok') {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/admin/project?handler=AddProjectToHome&Id=' + data.id,
+                                contentType: false,
+                                processData: false,
+                                beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                            }).done(function (res) {
+                                if (res.status) {
+                                    table.row($(this).closest('tr')).remove().draw(false);;
+                                    $.toast({
+                                        heading: 'Success',
+                                        text: 'Thêm thành công. Bạn có thể vào trang chủ để kiểm tra',
+                                        icon: 'success',
+                                        position: 'bottom-right'
+                                    });
+                                }
+                                else {
+                                    $.toast({
+                                        heading: 'Error',
+                                        text: res.message,
+                                        icon: 'error',
+                                        position: 'bottom-right'
+                                    });
+                                }
+
+                            }).fail(function () {
+                                $.toast({
+                                    heading: 'Error',
+                                    text: 'Xóa dự án không thành công',
+                                    icon: 'error',
+                                    position: 'bottom-right'
+                                });
+                            });
+                        }
+                    }
+                });
+
+            }
+        })
+        $('#example2 tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+        $('#example2').on('click', '.row_edit', function (e) {
+            e.preventDefault();
+            let data = table.row($(this).closest('tr')).data();
+            window.location.href = "/admin/project/detail/" + data.id;
+        });
+        $('#example2').on('click', '.row_up', function (e) {
+            e.preventDefault();
+            let data = table.row($(this).closest('tr')).data();
+            let currentIndex = table.row($(this).closest('tr')).index();
+            //if (currentIndex==0)
+            console.log(data);
+            if (confirm("Bạn chắc chắn muốn đổi vị trí tin tức này?")) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/project?handler=ChangeIndex&Id=' + data.id,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                }).done(function (res) {
+                    if (res.status) {
+
+                        swapDataTableRows(currentIndex, currentIndex - 1);
+                        $.toast({
+                            heading: 'Success',
+                            text: 'Đổi vị trí thành công',
+                            icon: 'success',
+                            position: 'bottom-right'
+                        });
+                    }
+                    else {
+                        $.toast({
+                            heading: 'Error',
+                            text: res.message,
+                            icon: 'error',
+                            position: 'bottom-right'
+                        });
+                    }
+
+                }).fail(function () {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Thao tác không thành công',
+                        icon: 'error',
+                        position: 'bottom-right'
+                    });
+                });
+            }
+            //window.location.href = "/admin/news/detail/" + data.id;
+        });
+            $('#example2').on('click', '.row_down', function (e) {
+                e.preventDefault();
+                let data = table.row($(this).closest('tr')).data();
+                let currentIndex = table.row($(this).closest('tr')).index();
+                //if (currentIndex==0)
+                console.log(data);
+                if (confirm("Bạn chắc chắn muốn đổi vị trí tin tức này?")) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/project?handler=ChangeIndex&Id=' + data.id + '&moveUp=false',
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                    }).done(function (res) {
+                        if (res.status) {
+
+                            swapDataTableRows(currentIndex, currentIndex + 1);
+                            $.toast({
+                                heading: 'Success',
+                                text: 'Đổi vị trí thành công',
+                                icon: 'success',
+                                position: 'bottom-right'
+                            });
+                        }
+                        else {
+                            $.toast({
+                                heading: 'Error',
+                                text: res.message,
+                                icon: 'error',
+                                position: 'bottom-right'
+                            });
+                        }
+
+                    }).fail(function () {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Thao tác không thành công',
+                            icon: 'error',
+                            position: 'bottom-right'
+                        });
+                    });
+                }
+                //window.location.href = "/admin/news/detail/" + data.id;
+            });
+
+        $('#example2').on('click', '.row_status', function (e) {
+            e.preventDefault();
+            var data = table.row($(this).closest('tr')).data();
+            if (confirm('Bạn chắc chắn muốn đổi trạng thái dự án này chứ?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/project?handler=hide&Id=' + data.id,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                }).done(function (res) {
+
+                    window.location.reload();
+                }).fail(function () {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Đổi trạng thái dự dự án không thành công',
+                        icon: 'error',
+                        position: 'bottom-right'
+                    });
+                });
+            }
+
+        });
+        $('#example2').on('click', '.row_remove', function (e) {
+            e.preventDefault();
+            let data = table.row($(this).closest('tr')).data();
+            $.confirm({
+                title: 'Xác nhận hành động',
+                content: 'Bạn chắc chắn muốn xóa dự án này chứ?',
+                type: 'red',
+                onAction: function (btnName) {
+                    if (btnName === 'ok') {
+                        $.ajax({
+                            type: 'DELETE',
+                            url: '/admin/project?Id=' + data.id,
+                            contentType: false,
+                            processData: false,
+                            beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                        }).done(function (res) {
+                            table.row($(this).closest('tr')).remove().draw(false);;
+                            $.toast({
+                                heading: 'Success',
+                                text: 'Xóa dự án thành công',
+                                icon: 'success',
+                                position: 'bottom-right'
+                            });
+                        }).fail(function () {
+                            $.toast({
+                                heading: 'Error',
+                                text: 'Xóa dự án không thành công',
+                                icon: 'error',
+                                position: 'bottom-right'
+                            });
+                        });
+                    }
+                }
+            });
+        });
+        $('div.dataTables_filter').appendTo('#filter_search');
+        function swapDataTableRows(row1Index, row2Index) {
+
+            //var rows = datatable.rows().data();
+            var row1Data = table.row(row1Index).data();
+            var row2Data = table.row(row2Index).data();
+
+            table.row(row1Index).data(row2Data);
+            table.row(row2Index).data(row1Data);
+            table.draw();
+            //    datatable.drow();
+        }
+            });
+    </script>
+}

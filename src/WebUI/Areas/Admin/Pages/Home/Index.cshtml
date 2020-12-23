@@ -1,42 +1,145 @@
 ﻿@page
-@model HomePageModel
+@model Home.HomePageModel
 @section Styles{
     <link rel="stylesheet" href="~/lib/jquery-confirm/jquery-confirm.min.css" />
-    <link rel="stylesheet" href="~/lib/slick/slick.css" />
-    <link rel="stylesheet" href="~/lib/slick/slick-theme.css" />
-  
+    <link rel="stylesheet" href="~/css/ckeditor/ckeditor.css" />
+    <link rel="stylesheet" href="~/css/ckeditor/editor-style.css" />
+    <style>
+        .ck-editor__editable {
+            min-height: 300px;
+        }
+
+        .form-group {
+            margin-bottom: .5em;
+        }
+
+        .right_pannel {
+            padding-left: 50px;
+        }
+
+            .right_pannel .section {
+                margin-bottom: 25px;
+                border-bottom: 1px solid #d9d9d9;
+                padding-bottom: 25px;
+            }
+
+        form > div.row {
+            border-bottom: 1px solid #d9d9d9;
+            padding-bottom: 15px;
+        }
+
+    </style>
 }
+
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Thông tin trang chủ</h1>
+                <h1>Thông tin chung (Trang chủ)</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
-                    <li class="breadcrumb-item active">Trang chủ</li>
+                    <li class="breadcrumb-item"><a asp-page="/Home/Index" asp-area="Admin">Home</a></li>
+                    <li class="breadcrumb-item">Thông tin chung</li>
                 </ol>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Main content -->
 <section class="content">
     <div class="card">
         <div class="card-header">
-            <button type="button" id="save_btn" class="btn btn-success"><i class="far fa-save"></i> Lưu lại</button>
-            <small>(Đừng quên lưu lại sau khi hoàn tất)</small>
+            Nhập nội dung đoạn giới thiệu trang chủ
         </div>
         <div class="card-body">
-            
+            @if (ViewData["error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    @ViewData["error"]
+                </div>
+            }
+            else if (ViewData["success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    @ViewData["success"]
+                </div>
+            }
+            <form method="post">
+                <input asp-for="MainModel.Id" hidden />
+                <input asp-for="MainModel.Type" hidden />
+                <div class="row">
+                    <div class="col-12" style="margin-bottom:15px">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#article_vi">Bài viết tiếng Việt</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#article_en">Bài viết tiếng Anh</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="article_vi">
+                                <textarea id="editor_vi" asp-for="MainModel.HtmlContent" class="form-control _editor"></textarea>
+                            </div>
+                            <div class="tab-pane fade" id="article_en">
+                                <textarea id="editor_en" asp-for="MainModel.HtmlContentEn" class="form-control _editor"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="col-12">
+
+                        <button type="submit" class="create_btn btn btn-primary"><i class="far fa-save"></i> Lưu lại</button>
+                        @*<a class="btn btn-default" asp-page="/Product/Index"><i class="fas fa-times"></i> Hủy bỏ</a>*@
+                    </div>
+
+                </div>
+            </form>
+
         </div>
     </div>
-    <form method="post"></form>
 </section>
-<input type="file" accept="image/*" hidden id="input_files" multiple />
 @section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
-    <script src="~/lib/slick/slick.min.js"></script>
+    <script src="~/lib/ckeditor/ckeditor.js"></script>
+    <script>
+
+        $(function () {
+            ClassicEditor.create(document.querySelector('#editor_vi'), {
+                simpleUpload: {
+                    // The URL that the images are uploaded to.
+                    uploadUrl: '/api/fileupload/editor?folder=about/editor',
+                    // Headers sent along with the XMLHttpRequest to the upload server.
+                    headers: {
+                        'XSRF-TOKEN': $('input:hidden[name="__RequestVerificationToken"]').val()
+                    }
+                }
+            }).then(editor => {
+                window.editor_vi = editor;
+            }).catch(error => {
+                console.error('There was a problem initializing the editor.', error);
+            });
+            ClassicEditor.create(document.querySelector('#editor_en'), {
+                simpleUpload: {
+                    // The URL that the images are uploaded to.
+                    uploadUrl: '/api/fileupload/editor?folder=about/editor',
+                    // Headers sent along with the XMLHttpRequest to the upload server.
+                    headers: {
+                        'XSRF-TOKEN': $('input:hidden[name="__RequestVerificationToken"]').val()
+                    }
+                }
+            }).then(editor => {
+                window.editor_en = editor;
+            }).catch(error => {
+                console.error('There was a problem initializing the editor.', error);
+            });
+        });
+    </script>
 }

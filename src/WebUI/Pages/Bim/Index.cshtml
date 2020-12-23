@@ -1,39 +1,47 @@
 ﻿@page
 @model BaseProjectWebRazor.Pages.Bim.IndexModel
+@inject CommonLocalizationService localizer
 @{
-    ViewData["Title"] = "Công nghệ bim";
+    ViewData["Title"] = "Bim";
+    var banner = await setting.GetBanner(BannerType.New);
 }
+@inject Services.CompanySettings setting
+
+<input hidden type="number" id="nav_theme" asp-for="@banner.Theme" />
 <div class="bim-page">
     <div class="banner">
-        <h2 class="title padding">Công nghệ bim</h2>
-        <img src="/assets/images/banner_project.jpg">
-    </div>
+        @*<a href="/bim" class="hv_normal">
+            <h2 class="title padding">@localizer.Get("Công nghệ bim")</h2>
+            </a>*@
+            <img src="@banner.Banner">
+</div>
     <div class="wrapper">
         <div class="top-filter-list new padding">
             <div class="left">
-                <div class="label">Bộ lọc tin tức: </div>
+                <div class="label">@localizer.Get("Bộ lọc tin tức"): </div>
                 <div class="options">
-                    <a class="option active" href="#">
-                        Tất cả
+                    <a class="option @(Model.SelectedCate == null ? "active" : "")" href="/bim">
+                        @localizer.Get("Tất cả")
                     </a>
-                    <a class="option" href="#">
-                        Bim
-                    </a>
-                    <a class="option" href="#">
-                        Revit
-                    </a>
+                    @foreach (var x in Model.Categories)
+                    {
+                        <a class="option @(Model.SelectedCate == x.Id ? "active" : "")" href="/bim?cate=@x.Id">
+                            @x.Name
+                        </a>
+                    }
+
                 </div>
             </div>
-            <button>+</button>
+            <button><span>+</span></button>
         </div>
 
         <div class="padding">
             <div class="filters">
                 <div class="left">
                     <div class="option">
-                        <div class="label">Tìm kiếm tin tức:</div>
-                        <form class="search_form">
-                            <input type="text" class="search" placeholder="Nhập từ khóa tìm kiếm...">
+                        <div class="label">@localizer.Get("Tìm kiếm tin tức"):</div>
+                        <form class="search_form" method="get">
+                            <input type="text" name="textSearch" class="search" placeholder="@localizer.Get("Nhập từ khóa tìm kiếm")...">
                             <img src="/assets/icons/search.svg" class="input_icon">
                         </form>
                     </div>
@@ -42,187 +50,99 @@
                 </div>
                 <div class="right">
                     <div class="option">
-                        <div class="label">Sắp xếp</div>
-                        <div>
+                        <div class="label">@localizer.Get("Sắp xếp")</div>
+                        <form id="order_form">
                             <select>
-                                <option value="1">A - Z</option>
-                                <option value="2">Z - A</option>
+                                @if (Model.OrderBy == 0)
+                                {
+                                    <option value="0" selected>@localizer.Get("Mặc định")</option>
+                                    <option value="1">@localizer.Get("Ngày đăng")</option>
+                                    <option value="2">A-Z</option>
+                                }
+                                else if (Model.OrderBy == 1)
+                                {
+                                    <option value="0">@localizer.Get("Mặc định")</option>
+                                    <option value="1" selected>@localizer.Get("Ngày đăng")</option>
+                                    <option value="2">A-Z</option>
+                                }
+                                else if (Model.OrderBy == 2)
+                                {
+                                    <option value="0">@localizer.Get("Mặc định")</option>
+                                    <option value="1">@localizer.Get("Ngày đăng")</option>
+                                    <option value="2" selected>A-Z</option>
+                                }
+
                             </select>
-                        </div>
+                        </form>
                     </div>
 
                 </div>
             </div>
-            <div class="list_projects">
-                <div class="project_box">
-                    <div class="inside">
-                        <div class="img" style="background-image: url('/assets/images/bim/bim-mh-1.jpg');">
-
-                        </div>
-                        <div class="info">
-                            <div class="des">
-                                <div>
-                                    <span class="color_1 cate">Công nghệ bim </span> <span class="color_4">
-                                        -
-                                        17.05.2019
-                                    </span>
-                                </div>
-                                <div class="color_4">
-                                    <img src="/assets/icons/xem.svg" class="icon">
-                                    <span>102</span>
-                                </div>
-                            </div>
-                             <a class="title" href="/new/detail">
-                                Bim và Revit trong ngành xây dựng hiện nay
-                            </a>
-                            <a href="/new/detail" class="view_more">[ Xem thêm ]</a>
-                        </div>
-                    </div>
-
+            @{await Html.RenderPartialAsync("/Pages/Shared/_NewListPartial.cshtml", Model.ViewNewListItemModel);}
+            @if (Model.ViewNewListItemModel.Items.Count() == 0)
+            {
+                <div class="empty_list">
+                    <img src="/assets/images/empty.png" />
+                    <div class="title">@localizer.Get("Xin lỗi, không tìm thấy kết quả")</div>
+                    <a href="/bim" class="color_1">[ @localizer.Get("Quay lại danh sách") ]</a>
                 </div>
-                <div class="project_box">
-                    <div class="inside">
-                        <div class="img" style="background-image: url('/assets/images/bim/bim-mh-2.jpg');">
-
-                        </div>
-                        <div class="info">
-                            <div class="des">
-                                <div>
-                                    <span class="color_1 cate">Công nghệ bim </span> <span class="color_4">
-                                        -
-                                        17.05.2019
-                                    </span>
-                                </div>
-                                <div class="color_4">
-                                    <img src="/assets/icons/xem.svg" class="icon">
-                                    <span>102</span>
-                                </div>
-                            </div>
-                             <a class="title" href="/new/detail">
-                                Bim và Revit trong ngành xây dựng hiện nay
-                            </a>
-                            <a href="/new/detail" class="view_more">[ Xem thêm ]</a>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="project_box">
-                    <div class="inside">
-                        <div class="img" style="background-image: url('/assets/images/bim/bim-mh-3.jpg');">
-
-                        </div>
-                        <div class="info">
-                            <div class="des">
-                                <div>
-                                    <span class="color_1 cate">Công nghệ bim </span> <span class="color_4">
-                                        -
-                                        17.05.2019
-                                    </span>
-                                </div>
-                                <div class="color_4">
-                                    <img src="/assets/icons/xem.svg" class="icon">
-                                    <span>102</span>
-                                </div>
-                            </div>
-                             <a class="title" href="/new/detail">
-                                Bim và Revit trong ngành xây dựng hiện nay
-                            </a>
-                            <a href="/new/detail" class="view_more">[ Xem thêm ]</a>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="project_box">
-                    <div class="inside">
-                        <div class="img" style="background-image: url('/assets/images/bim/bim-mh-4.jpg');">
-
-                        </div>
-                        <div class="info">
-                            <div class="des">
-                                <div>
-                                    <span class="color_1 cate">Công nghệ bim </span> <span class="color_4">
-                                        -
-                                        17.05.2019
-                                    </span>
-                                </div>
-                                <div class="color_4">
-                                    <img src="/assets/icons/xem.svg" class="icon">
-                                    <span>102</span>
-                                </div>
-                            </div>
-                             <a class="title" href="/new/detail">
-                                Bim và Revit trong ngành xây dựng hiện nay
-                            </a>
-                            <a href="/new/detail" class="view_more">[ Xem thêm ]</a>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="project_box">
-                    <div class="inside">
-                        <div class="img" style="background-image: url('/assets/images/bim/bim-mh-5.jpg');">
-
-                        </div>
-                        <div class="info">
-                            <div class="des">
-                                <div>
-                                    <span class="color_1 cate">Công nghệ bim </span> <span class="color_4">
-                                        -
-                                        17.05.2019
-                                    </span>
-                                </div>
-                                <div class="color_4">
-                                    <img src="/assets/icons/xem.svg" class="icon">
-                                    <span>102</span>
-                                </div>
-                            </div>
-                             <a class="title" href="/new/detail">
-                                Bim và Revit trong ngành xây dựng hiện nay
-                            </a>
-                            <a href="/new/detail" class="view_more">[ Xem thêm ]</a>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="project_box">
-                    <div class="inside">
-                        <div class="img" style="background-image: url('/assets/images/bim/bim-mh-6.jpg');">
-
-                        </div>
-                        <div class="info">
-                            <div class="des">
-                                <div>
-                                    <span class="color_1 cate">Công nghệ bim </span> <span class="color_4">
-                                        -
-                                        17.05.2019
-                                    </span>
-                                </div>
-                                <div class="color_4">
-                                    <img src="/assets/icons/xem.svg" class="icon">
-                                    <span>102</span>
-                                </div>
-                            </div>
-                             <a class="title" href="/new/detail">
-                                Bim và Revit trong ngành xây dựng hiện nay
-                            </a>
-                            <a href="/new/detail" class="view_more">[ Xem thêm ]</a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="paginations">
-                <ul>
-                    <li><a href="#" class="active">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                </ul>
-            </div>
+            }
         </div>
     </div>
 </div>
+
 @section Styles{
-    <link href="~/css/filter-list.css" rel="stylesheet" />
     <link href="~/css/news.css" rel="stylesheet" />
+    <link href="~/css/filter-list.css" rel="stylesheet" />
+}
+@section Scripts{
+    <script>
+        $(function () {
+            $('form#order_form select').on('change', function () {
+                if (window.location.search.length > 0) {
+                    let _search_parmas = updateParams([{ name: 'orderby', value: $(this).val() }]);
+                    window.location.href = window.location.href.replace(window.location.search, '?' + _search_parmas);
+                }
+                else {
+                    window.location.href = window.location.href + '?orderby=' + $(this).val();
+                }
+
+                //if (urlParams.has('orderType')) {
+                //    updateParams([{ name: 'orderType', value: $(this).val() }])
+                //}
+                //else {
+                //    history.pushState(null, null, '?' + _search_parmas);
+                //}
+            });
+            $('.paginations li a').on('click', function (e) {
+                e.preventDefault();
+                if (window.location.search.length > 0) {
+                    var urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.has('p')) urlParams.set('p', $(this).attr('data-id'));
+                    else urlParams.append('p', $(this).attr('data-id'));
+                    window.location.href = window.location.href.replace(window.location.search, '?' + urlParams.toString());
+                }
+                else {
+                    window.location.href = window.location.href + '?p=' + $(this).attr('data-id');
+                }
+
+            });
+            function updateParams(params) {
+                if (params.length == 0) return "";
+                var urlParams = new URLSearchParams(window.location.search);
+                params.forEach((item) => {
+                    if ((item.value.length == 0) || (!item.value)) urlParams.delete(item.name);
+                    else if (urlParams.has(item.name)) urlParams.set(item.name, item.value);
+                    else urlParams.append(item.name, item.value);
+                })
+                return getParams(urlParams);
+            }
+            function getParams(urlParams) {
+                // var urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has('p')) urlParams.delete('p');
+                if (urlParams.has('ps')) urlParams.delete('ps');
+                return urlParams.toString();
+            }
+        });
+    </script>
 }

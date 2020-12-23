@@ -1,0 +1,267 @@
+﻿@page
+@inject CommonLocalizationService localizer
+@model BaseProjectWebRazor.Pages.Project.ListModel
+@{
+    ViewData["Title"] = "Dự án";
+    var banner = await setting.GetBanner(BannerType.Project);
+}
+@inject Services.CompanySettings setting
+
+<input hidden type="number" id="nav_theme" asp-for="@banner.Theme" />
+<div class="projects-page">
+    <div class="banner">
+        <a class="hv_normal" href="/project/list"><h2 class="title padding">@localizer.Get("Dự án")</h2></a>
+        <img src="@banner.Banner">
+    </div>
+    <div class="wrapper">
+        <div class="top-filter-list padding">
+            <div class="left">
+                <div class="label">@localizer.Get("Bộ lọc dự án"): </div>
+                <form class="options" method="get">
+                    <div class="option">
+                        <select name="cate">
+                            <option value="">@localizer.Get("Tất cả loại hình") +</option>
+                            @foreach (var x in Model.Categories)
+                            {
+                                @if (x.Selected)
+                                {
+                                    <option selected value="@x.Id">@x.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@x.Id">@x.Name</option>
+                                }
+
+                            }
+
+                        </select>
+                    </div>
+                    <div class="option">
+                        <select name="field">
+                            <option value="">@localizer.Get("Tất cả lĩnh vực") +</option>
+                            @foreach (var x in Model.Fields)
+                            {
+                                @if (x.Selected)
+                                {
+                                    <option selected value="@x.Id">@x.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@x.Id">@x.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="option">
+                        <select name="location">
+                            <option value="">@localizer.Get("Tất cả khu vực") +</option>
+                            @foreach (var x in Model.Locations)
+                            {
+                                @if (x.Selected)
+                                {
+                                    <option selected value="@x.Id">@x.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@x.Id">@x.Name</option>
+                                }
+                            }
+                        </select>
+
+                    </div>
+                </form>
+            </div>
+            <button><span></span></button>
+        </div>
+
+        <div class="padding">
+            <div class="filters">
+                <div class="left">
+                    <div class="option">
+                        <div class="label"> @localizer.Get("Tìm kiếm dự án")</div>
+                        <form class="search_form" method="get">
+                            <input type="text" name="textSearch" class="search" placeholder="@localizer.Get("Nhập từ khóa tìm kiếm")...">
+                            <img src="/assets/icons/search.svg" class="input_icon">
+                        </form>
+                    </div>
+
+
+                </div>
+                <div class="right">
+                    <div class="option">
+                        <div class="label">@localizer.Get("Sắp xếp")</div>
+                        <form id="order_form">
+                            <select name="orderby">
+                                @if (Model.OrderBy == 0)
+                                {
+                                    <option value="0" selected>@localizer.Get("Mặc định")</option>
+                                    <option value="1">@localizer.Get("Ngày đăng")</option>
+                                    <option value="2">A-Z</option>
+                                }
+                                else if (Model.OrderBy == 1)
+                                {
+                                    <option value="0">@localizer.Get("Mặc định")</option>
+                                    <option value="1" selected>@localizer.Get("Ngày đăng")</option>
+                                    <option value="2">A-Z</option>
+                                }
+                                else if (Model.OrderBy == 2)
+                                {
+                                    <option value="0">@localizer.Get("Mặc định")</option>
+                                    <option value="1">@localizer.Get("Ngày đăng")</option>
+                                    <option value="2" selected>A-Z</option>
+                                }
+
+                            </select>
+                        </form>
+                    </div>
+                    <div class="option" id="type_views">
+                        <div class="label">@localizer.Get("Hiển thị")</div>
+                        <div class="buttons">
+                            <a href="/project" class="view_grid">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28"
+                                     height="28" viewBox="0 0 28 28" style="opacity:.1">
+                                    <g transform="translate(18469 -1284.908)">
+                                        <g>
+                                            <g transform="translate(-18469 1284.908)">
+                                                <g>
+                                                    <g transform="translate(25.143)">
+                                                        <rect width="5" height="5" transform="translate(-2.143)" />
+                                                        <rect width="5" height="5"
+                                                              transform="translate(-2.143 12)" />
+                                                        <rect width="5" height="5"
+                                                              transform="translate(-2.143 23)" />
+                                                    </g>
+                                                    <g transform="translate(13.571)">
+                                                        <rect width="5" height="5" transform="translate(-1.571)" />
+                                                        <rect width="5" height="5"
+                                                              transform="translate(-1.571 12)" />
+                                                        <rect width="5" height="5"
+                                                              transform="translate(-1.571 23)" />
+                                                    </g>
+                                                    <g>
+                                                        <rect width="5" height="5" transform="translate(0)" />
+                                                        <rect width="5" height="5" transform="translate(0 12)" />
+                                                        <rect width="5" height="5" transform="translate(0 23)" />
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </a>
+                            <a href="/project/list" class="view_list active">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+                                    <g transform="translate(18395 -1284.908)">
+                                        <g transform="translate(-18395 1284.908)">
+                                            <g>
+                                                <g>
+                                                    <rect width="28" height="5" />
+                                                    <rect width="28" height="5" transform="translate(0 12)" />
+                                                    <rect width="28" height="5" transform="translate(0 23)" />
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="list_table_projects">
+
+            <table class="table">
+                <tbody>
+                    @foreach (var project in Model.Projects)
+                    {
+                        <tr data-toggle="popover-hover" data-img="@project.Thumbnail">
+                            <td class="t_bold padding_left"><a href="/project/detail/@project.Id" class="color_4" title="@project.Title">@project.Title</a></td>
+                            <td>@project.Field</td>
+                            <td>@project.Category</td>
+                            <td>@project.Location</td>
+                            <td class="padding_right text-right">@project.Year</td>
+                        </tr>
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <div class="paginations padding">
+            <ul>
+                @for (var i = 1; i <= Model.PagingInfo.TotalPages; i++)
+                {
+                    <li><a data-id="@i" asp-page="/Project/Index" asp-route-p="@i" class="@(i == Model.CurrentPage ? "active" : "")">@i</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+@section Styles{
+    <link href="~/css/filter-list.css" rel="stylesheet" />
+    <link href="~/css/projects.css" rel="stylesheet" />
+}
+@section Scripts{
+    <script>
+        $(function () {
+            $('form.options select').on('change', function () {
+                $(this).closest('form').submit();
+            });
+            $('form#order_form select').on('change', function () {
+                if (window.location.search.length > 0) {
+                    let _search_parmas = updateParams([{ name: 'orderby', value: $(this).val() }]);
+                    window.location.href = window.location.href.replace(window.location.search, '?' + _search_parmas);
+                }
+                else {
+                    window.location.href = window.location.href + '?orderby=' + $(this).val();
+                }
+
+                //if (urlParams.has('orderType')) {
+                //    updateParams([{ name: 'orderType', value: $(this).val() }])
+                //}
+                //else {
+                //    history.pushState(null, null, '?' + _search_parmas);
+                //}
+            });
+            $('.paginations li a').on('click', function (e) {
+                e.preventDefault();
+                if (window.location.search.length > 0) {
+                    var urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.has('p')) urlParams.set('p', $(this).attr('data-id'));
+                    else urlParams.append('p', $(this).attr('data-id'));
+                    window.location.href = window.location.href.replace(window.location.search, '?' + urlParams.toString());
+                }
+                else {
+                    window.location.href = window.location.href + '?p=' + $(this).attr('data-id');
+                }
+
+            });
+            function updateParams(params) {
+                if (params.length == 0) return "";
+                var urlParams = new URLSearchParams(window.location.search);
+                params.forEach((item) => {
+                    if ((item.value.length == 0) || (!item.value)) urlParams.delete(item.name);
+                    else if (urlParams.has(item.name)) urlParams.set(item.name, item.value);
+                    else urlParams.append(item.name, item.value);
+                })
+                return getParams(urlParams);
+            }
+            function getParams(urlParams) {
+                // var urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has('p')) urlParams.delete('p');
+                if (urlParams.has('ps')) urlParams.delete('ps');
+                return urlParams.toString();
+            }
+
+            $('[data-toggle="popover-hover"]').popover({
+                html: true,
+                trigger: 'hover',
+                placement: 'bottom',
+                content: function () { return '<img style="max-widht:150px" src="' + $(this).data('img') + '" />'; }
+            });
+        });
+    </script>
+}

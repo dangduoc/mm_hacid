@@ -19,7 +19,7 @@ namespace BaseProjectWebRazor.API.Extensions
         {
 
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
-           // services.AddSingleton<IUploadService, UploadService>();
+            services.AddSingleton<ICurrentRequestLanguageService, CurrentRequestLanguageService>();
             services.AddSingleton<ILocalUploadService, LocalUploadService>();
             #region Handlers
 

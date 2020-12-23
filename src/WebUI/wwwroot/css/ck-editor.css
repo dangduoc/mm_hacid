@@ -7,7 +7,7 @@
     margin-bottom: 0 !important;
  }
  .ck-content p strong{
-    font-family: saira_bold;
+    font-family: saira_semi_bold;
  }
  .ck-content .table {
     width: auto;
@@ -275,14 +275,17 @@
     user-select: none;
  }
  /* ckeditor5-horizontal-line/theme/horizontalline.css */
- .ck-content hr {
+.ck-content hr {
     border-width: 1px 0 0;
     border-style: solid;
-    border-color: hsl(0, 0%, 37%);
+    border-color: #2e9c93;
     margin: 0;
- }
- /* ckeditor5-code-block/theme/codeblock.css */
- .ck-content pre {
+}
+.ck-content .ck-horizontal-line {
+    clear:both;
+}
+/* ckeditor5-code-block/theme/codeblock.css */
+.ck-content pre {
     padding: 1em;
     color: #353535;
     background: hsla(0, 0%, 78%, 0.3);
@@ -294,7 +297,7 @@
     white-space: pre-wrap;
     font-style: normal;
     min-width: 200px;
- }
+}
  /* ckeditor5-code-block/theme/codeblock.css */
  .ck-content pre code {
     background: unset;

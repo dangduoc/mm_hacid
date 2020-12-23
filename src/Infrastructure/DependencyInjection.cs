@@ -18,7 +18,7 @@ namespace Infrastructure
                      options.UseSqlServer(
                          configuration.GetConnectionString("DefaultConnection"),
                          b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-            services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+         //   services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
             //    services.AddDefaultIdentity<ApplicationUser>()
@@ -30,16 +30,13 @@ namespace Infrastructure
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
    
             services.AddTransient<IDateTime, DateTimeService>();
-            services.AddTransient<IIdentityService, IdentityService>();
+            //services.AddTransient<IIdentityService, IdentityService>();
 
 
             //services.AddAuthentication()
             //    .AddIdentityServerJwt();
-
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookieOptions =>
-            {
-                cookieOptions.LoginPath = "/admin/login";
-            });
+           
+          
 
             return services;
         }

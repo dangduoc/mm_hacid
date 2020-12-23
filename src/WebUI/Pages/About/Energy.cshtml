@@ -1,129 +1,36 @@
 ﻿@page
+@inject CommonLocalizationService localizer
 @model BaseProjectWebRazor.Pages.About.energyModel
 @{
-    ViewData["Title"] = "Năng lực hiện tại";
+    ViewData["Title"] = localizer.Get("Năng lực hiện tại");
+    var banner = await setting.GetBanner(BannerType.About);
 }
+@inject Services.CompanySettings setting
+
+<input hidden type="number" id="nav_theme" asp-for="@banner.Theme"/>
+
 <div class="about-page about-energy">
     <div class="banner">
-        <h2 class="title padding">Hacid</h2>
-        <img src="/assets/images/about/banner_hacid.jpg">
+      
+        <img src="@banner.Banner">
     </div>
     <div class="intro padding">
         <div class="heading_area">
             <h3 class="heading">
-                Năng lực hiện tại
+                @localizer.Get("Năng lực hiện tại")
 
             </h3>
             <div class="share">
-                <span>CHIA SẺ :</span>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12.76" height="23.598"
-                         viewBox="0 0 12.76 23.598">
-                        <g id="fb" transform="translate(18755 -1229)">
-                            <g transform="translate(-18755 1229)">
-                                <g transform="translate(0 0)">
-                                    <path d="M34.355,0l-3.06,0c-3.438,0-5.66,2.279-5.66,5.807V8.485H22.558a.481.481,0,0,0-.481.481v3.88a.481.481,0,0,0,.481.481h3.077v9.789a.481.481,0,0,0,.481.481h4.014a.481.481,0,0,0,.481-.481V13.327h3.6a.481.481,0,0,0,.481-.481V8.967a.482.482,0,0,0-.481-.481h-3.6V6.215c0-1.091.26-1.645,1.681-1.645h2.061a.481.481,0,0,0,.481-.481V.486A.481.481,0,0,0,34.355,0Z"
-                                          transform="translate(-22.077)" fill="#89a3a3" />
-                                </g>
-                            </g>
-                        </g>
-                    </svg>
-
-                </a>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22.836" height="22.551"
-                         viewBox="0 0 22.836 22.551">
-                        <g transform="translate(18705.822 -1229)">
-                            <g transform="translate(-18705.822 1229)">
-                                <g transform="translate(0 0)">
-                                    <g transform="translate(0 6.851)">
-                                        <g>
-                                            <rect width="5.107" height="15.7" fill="#89a3a3" />
-                                        </g>
-                                    </g>
-                                    <g transform="translate(7.136 6.851)">
-                                        <g>
-                                            <path id="Path_8" data-name="Path 8"
-                                                  d="M171.881,160.184c-.054-.017-.106-.036-.163-.051s-.137-.029-.207-.04a4.575,4.575,0,0,0-.916-.093,7.1,7.1,0,0,0-5.488,3v-3H160v15.7h5.107v-8.564s3.859-5.375,5.488-1.427V175.7H175.7V165.105A5.092,5.092,0,0,0,171.881,160.184Z"
-                                                  transform="translate(-160 -160)" fill="#89a3a3" />
-                                        </g>
-                                    </g>
-                                    <g transform="translate(0.269)">
-                                        <g>
-                                            <ellipse cx="2.394" cy="2.394" rx="2.394" ry="2.394" fill="#89a3a3" />
-                                        </g>
-                                    </g>
-                                </g>
-                            </g>
-                        </g>
-                    </svg>
-
-                </a>
+                <div class="fb-share-button" data-href="https://hacid.vn/about/energy" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
         </div>
         <div class="ck-content">
-            <figure class="table">
-                <table>
-                    <td style="width:33.33%;padding-right: 20px;">
-                        <p>
-                            <strong>
-                                LOREM IPSUM DOLOR SIT, AMET CONSECTETUR ADIPISICING ELIT.CONSEQUATUR
-                                QUASI SINT, QUAE
-                                MAGNI
-                                EXCEPTURI EUM ALIQUID PARIATUR QUAERAT EOS REPREHENDERIT CORRUPTI ISTE AD MAGNAM
-                                SIMILIQUE
-                                DOLORIBUS FACERE PROVIDENT EA FUGIAT.
-                            </strong>
-                        </p>
-                    </td>
-                    <td style="width:33.33%;padding-right: 10px;padding-left:10px">
-                        <p>
-                            <strong>
-                                LOREM IPSUM DOLOR SIT, AMET CONSECTETUR ADIPISICING ELIT.CONSEQUATUR QUASI SINT,
-                                QUAE MAGNI
-                            </strong>
-                        </p>
-                        <br />
-                        <p>
-
-
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur quasi sint, quae
-                            magni
-                            excepturi eum aliquid pariatur quaerat eos reprehenderit corrupti iste ad magnam
-                            similique
-                            doloribus facere provident ea fugiat.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste soluta tempore quo?
-                            Cumque, nisi quos tempora voluptate veniam voluptatum. Placeat voluptates distinctio
-                            quibusdam sint inventore ex minima ipsa laudantium recusandae.
-                        </p>
-                    </td>
-                    <td style="width:33.33%;padding-left:20px">
-                        <p><strong>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</strong></p>
-                        <br />
-                        <p>
-                            Consequatur quasi sint, quae magni
-                            excepturi eum aliquid pariatur quaerat eos reprehenderit corrupti iste ad magnam
-                            similique
-                            doloribus facere provident ea fugiat.
-                        </p>
-                        <br />
-                        <p><strong>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</strong></p>
-                        <br />
-                        <p>
-                            Consequatur quasi sint, quae magni
-                            excepturi eum aliquid pariatur quaerat eos reprehenderit corrupti iste ad magnam
-                            similique
-                            doloribus facere provident ea fugiat.
-                        </p>
-                    </td>
-                </table>
-            </figure>
-
+            @Html.Raw(Model.Article)
         </div>
     </div>
-    <div class="history padding">
+    <div class="history padding" style="display:none">
         <div class="timeline">
             <div class="line">
                 <div class="year">Năm 1980</div>
@@ -193,15 +100,17 @@
             </div>
         </div>
     </div>
+
     <div class="links">
-        <a class="title_card bg_color_1 padding" href="#">
-            <div class="text">Kinh nghiệm chuyên môn</div>
+        <a class="title_card bg_color_1 padding hv_color_2" href="/about">
+            <div class="text">@localizer.Get("Giới thiệu chung")</div>
         </a>
-        <a class="title_card bg_color_2 padding" href="#">
-            <div class="text">Năng lực hiện tại</div>
+        <a class="title_card bg_color_2 padding" href="/about/specialist">
+            <div class="text">@localizer.Get("Kinh nghiệm chuyên môn")</div>
         </a>
-        <a class="title_card bg_color_1 padding" href="#">
-            <div class="text">Khách hàng - đối tác</div>
+
+        <a class="title_card bg_color_1 padding hv_color_2" href="/about/partners">
+            <div class="text">@localizer.Get("Khách hàng - đối tác")</div>
         </a>
     </div>
 

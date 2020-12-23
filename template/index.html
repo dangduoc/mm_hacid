@@ -361,7 +361,7 @@
     </nav>
     <div id="banner">
         <div class="slide-banner">
-            <div class="item">
+            <div class="item" data-id="0">
                 <div class="bg_item" style="background-image: url('/assets/images/home/slides/1.jpg');">
                 </div>
                 <div class="title_card_banner">
@@ -393,7 +393,7 @@
                     Xem chi tiết <span>+</span>
                 </a>
             </div>
-            <div class="item">
+            <div class="item" data-id="1">
                 <div class="bg_item" style="background-image: url('/assets/images/home/slides/2.jpg');"></div>
                 <div class="title_card_banner">
                     <div class="wrap_text">
@@ -424,7 +424,7 @@
                     Xem chi tiết <span>+</span>
                 </a>
             </div>
-            <div class="item">
+            <div class="item" data-id="1">
                 <div class="bg_item" style="background-image: url('/assets/images/home/slides/3.jpg');"></div>
                 <div class="title_card_banner">
                     <div class="wrap_text">
@@ -590,7 +590,8 @@
                 $('#banner .indicators .line').addClass('active');
             });
             $('#banner .slide-banner').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
-                if (nextSlide == 1) {
+               let theme=$(slick.$slides[nextSlide]).attr('data-id');
+                if (theme == 1) {
                     $('#banner .item .info_card').addClass('text_dark');
                     $("#menu").addClass('dark');
                 }
