@@ -55,7 +55,15 @@
                                     </g>
                                     <text class="fill" transform="translate(1565 65)" font-size="14"
                                           font-family="Saira-Medium, Saira" font-weight="500">
-                                        <tspan x="-18.704" y="0">@item.Value.ToUpper()</tspan>
+                                        @if (item.Value == "en")
+                                        {
+                                            <tspan x="-18.704" y="0">EN</tspan>
+                                        }
+                                        else
+                                        {
+                                            <tspan x="-15.704" y="0">VI</tspan>
+                                        }
+
                                     </text>
                                 </g>
 

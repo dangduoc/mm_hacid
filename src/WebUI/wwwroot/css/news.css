@@ -214,8 +214,8 @@
 }
 
 .bim-page .wrapper .list_projects .project_box .inside:hover {
-  -webkit-box-shadow: 0 0 2px 1px #d9d9d9;
-          box-shadow: 0 0 2px 1px #d9d9d9;
+  -webkit-box-shadow: 0 0 2px 3px #d9d9d9;
+          box-shadow: 0 0 2px 3px #d9d9d9;
 }
 
 .bim-page .wrapper .list_projects .project_box .inside .img {
@@ -272,8 +272,11 @@
     -webkit-line-clamp: 2;
     line-height: 24px;
     height: 48px;
+    transition:color .5s;
 }
-
+.bim-page .wrapper .list_projects .project_box .inside .info a.title:hover{
+    color:#ecc43b;
+}
 .bim-page .wrapper .list_projects .project_box .inside .info a.view_more {
   display: block;
   color: #1a4a8d;

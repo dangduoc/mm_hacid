@@ -22,7 +22,9 @@ namespace BaseProjectWebRazor.Services
         {
             var entity= await _context.SiteSetting.FirstOrDefaultAsync();
             entity.Address = _languageService.IsDefault ? entity.Address : entity.AddressEn;
-            entity.Address = _languageService.IsDefault ? entity.CompanyName : entity.CompanyNameEn;
+       
+
+            entity.CompanyName = _languageService.IsDefault ? entity.CompanyName : entity.CompanyNameEn;
             return entity;
         }
         public async Task<string> MapImage()

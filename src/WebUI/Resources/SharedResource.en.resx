@@ -121,10 +121,13 @@
     <value>Map</value>
   </data>
   <data name="Bộ lọc dự án" xml:space="preserve">
-    <value>Project Filter</value>
+    <value>Filter</value>
+  </data>
+  <data name="Bộ lọc khách hàng" xml:space="preserve">
+    <value>Filter</value>
   </data>
   <data name="Bộ lọc tin tức" xml:space="preserve">
-    <value>News Filter</value>
+    <value>Filter</value>
   </data>
   <data name="Chia sẻ" xml:space="preserve">
     <value>Share</value>
@@ -133,13 +136,13 @@
     <value>Bim technology introduction</value>
   </data>
   <data name="Công trình áp dụng revit" xml:space="preserve">
-    <value>Projects Design with revit</value>
+    <value>Revit Applied Buildings</value>
   </data>
-  <data name="CÔNG TY CP TƯ VẤN ĐẦU TƯ XÂY DỰNG VÀ PHÁT TRIỂN ĐÔ THỊ HÀ NỘI" xml:space="preserve">
-    <value>HA NOI CONSTRUCTION CONSULTANT AND URBAN DEVELOPMENT INVESTMENT.,JSC – HACID</value>
+  <data name="CÔNG TY CỔ PHẦN TƯ VẤN ĐẦU TƯ XÂY DỰNG PHÁT TRIỂN ĐÔ THỊ HÀ NỘI - HACID" xml:space="preserve">
+    <value>HANOI CONSTRUCTION CONSULTANT &amp; URBAN DEVELOPMENT INVESTMENT JOINT STOCK COMPANY</value>
   </data>
   <data name="Dự án" xml:space="preserve">
-    <value>Project</value>
+    <value>Projects</value>
   </data>
   <data name="Dự án đầu tư" xml:space="preserve">
     <value>Investment</value>
@@ -148,19 +151,19 @@
     <value>General Introduction</value>
   </data>
   <data name="Hiển thị" xml:space="preserve">
-    <value>Display</value>
+    <value>Show</value>
   </data>
-  <data name="Khách hàng - đối tác" xml:space="preserve">
-    <value>Customers and Partners</value>
+  <data name="Khách hàng - đối tác tiêu biểu" xml:space="preserve">
+    <value>Typical Clients and Partners</value>
   </data>
   <data name="Kinh nghiệm chuyên môn" xml:space="preserve">
-    <value>Experiences</value>
+    <value>Professional Experience</value>
   </data>
   <data name="Liên hệ" xml:space="preserve">
     <value>Contact</value>
   </data>
   <data name="Lĩnh vực hoạt động chính" xml:space="preserve">
-    <value>Main Project Fields</value>
+    <value>Business Activities</value>
   </data>
   <data name="Lịch sử công ty" xml:space="preserve">
     <value>Company History</value>
@@ -169,22 +172,25 @@
     <value>Default</value>
   </data>
   <data name="Ngày đăng" xml:space="preserve">
-    <value>Date</value>
+    <value>Released</value>
   </data>
   <data name="Nhập từ khóa tìm kiếm" xml:space="preserve">
-    <value>Input here</value>
+    <value>Key words</value>
+  </data>
+  <data name="Những tin liên quan" xml:space="preserve">
+    <value>Related News</value>
   </data>
   <data name="Năm" xml:space="preserve">
     <value>Year</value>
   </data>
   <data name="Năng lực hiện tại" xml:space="preserve">
-    <value>Present Capabilities</value>
+    <value>Current Capacity</value>
   </data>
   <data name="Quay lại danh sách" xml:space="preserve">
     <value>Back to list</value>
   </data>
   <data name="Sắp xếp" xml:space="preserve">
-    <value>Order by</value>
+    <value>Sort</value>
   </data>
   <data name="Thông tin liên hệ" xml:space="preserve">
     <value>Contact info</value>
@@ -196,10 +202,10 @@
     <value>Home</value>
   </data>
   <data name="Tìm kiếm dự án" xml:space="preserve">
-    <value>Search for projects</value>
+    <value>Search</value>
   </data>
   <data name="Tìm kiếm tin tức" xml:space="preserve">
-    <value>Search for news</value>
+    <value>Search</value>
   </data>
   <data name="Tư vấn xây dựng" xml:space="preserve">
     <value>Construction Consultant</value>
@@ -223,10 +229,10 @@
     <value>About us</value>
   </data>
   <data name="Xem chi tiết" xml:space="preserve">
-    <value>View detail</value>
+    <value>More details</value>
   </data>
   <data name="Xem thêm" xml:space="preserve">
-    <value>View more</value>
+    <value>Read more</value>
   </data>
   <data name="Xin lỗi, không tìm thấy kết quả" xml:space="preserve">
     <value>Sorry, no results were found</value>

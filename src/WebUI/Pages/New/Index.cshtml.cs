@@ -76,6 +76,7 @@ namespace BaseProjectWebRazor.Pages.New
                 .Select(c => new NewListItemModel
                 {
                     Id = c.Id,
+                    CateogryId = c.CategoryId,
                     Category = _languageService.IsDefault ? c.Category.Name : c.Category.NameEn,
                     Thumbnail = c.Thumbnail,
                     Title = _languageService.IsDefault ? c.Title : c.TitleEn,

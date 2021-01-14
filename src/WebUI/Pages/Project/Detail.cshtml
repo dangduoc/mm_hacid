@@ -2,23 +2,30 @@
 @model BaseProjectWebRazor.Pages.ProjectPage.DetailModel
 @{
     ViewData["Title"] = Model.Detail.Title;
+    string og_image = Model.Detail.Banners.Split(",")[0];
+}
+@section metas{
+    <meta property="og:title" content="@Model.Detail.Title" />
+    <meta property="og:image" content="@og_image" />
+    <meta property="og:description" content="@Model.Detail.Title" />
 }
 <input hidden type="number" id="nav_theme" asp-for="@Model.Detail.Theme" />
 <div class="project-detail-page">
     <div id="banner_slides">
         @foreach (var item in Model.Detail.Banners.Split(","))
         {
-        <div class="item" style="background-image: url('@item');">
-            <div class="title_card_banner">
-                <div class="wrap_text">
-                    <div class="text">
-                        @Model.Detail.Title / @Model.Detail.Year | @Model.Detail.Location
+            <div class="item" style="background-image: url('@item');">
+                <div class="title_card_banner">
+                    <div class="wrap_text">
+                        <div class="text">
+                            @Model.Detail.Title 
+                        </div>
+                        <div class="description">@Model.Detail.Year | @Model.Detail.Location</div>
                     </div>
+
                 </div>
 
             </div>
-           
-        </div>
         }
     </div>
     <div class="wrap_project_detail padding">
@@ -61,16 +68,21 @@
             </div>
             <div class="col-lg-8 brd">
                 <div class="article">
+                    <div class="share-alone">
+                        <div class="fb-share-button" data-href="https://hacid.vn/new/detail/@Model.Detail.Id" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                        <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+                        <script type="IN/Share" data-url="https://www.linkedin.com"></script>
+     
+                    </div>
                     <div class="heading_area">
+
                         <h3 class="heading">
                             @Model.Detail.Title
 
                         </h3>
-                        <div class="share">
-                            <div class="fb-share-button" data-href="https://hacid.vn/project/detail/@Model.Detail.Id" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-                            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
-                            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                        </div>
+
                     </div>
                     <div class="ck-content">
                         @Html.Raw(Model.Detail.HtmlContent)
@@ -91,6 +103,7 @@
     <link href="~/lib/slick/slick-theme.css" rel="stylesheet" />
     <link href="~/css/projects.css" rel="stylesheet" />
     <link href="~/css/project.css" rel="stylesheet" />
+
 }
 @section Scripts{
     <script src="~/lib/slick/slick.min.js"></script>

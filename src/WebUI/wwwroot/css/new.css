@@ -292,10 +292,13 @@
   }
   .wrap_new_detai .heading_area {
     margin-bottom: 15px;
+    flex-wrap:wrap;
   }
-  .wrap_new_detai .heading_area .share {
-    display: none;
-  }
+    .wrap_new_detai .heading_area .share {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 15px;
+    }
   .wrap_new_detai .sub_info {
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;

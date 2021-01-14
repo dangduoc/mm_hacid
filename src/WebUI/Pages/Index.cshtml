@@ -5,6 +5,11 @@
     ViewData["Title"] = localizer.Get("Trang chủ");
     var banners = await setting.GetBannerHome();
 }
+@section metas{
+    <meta property="og:title" content="Hacid" />
+    <meta property="og:image" content="https://hacid.vn/upload/images/about/ca15b4ea-0eb3-4bd0-8f9e-30a5b1664ce4.jpg" />
+    <meta property="og:description" content="Công ty Cổ phần Tư vấn Đầu tư xây dựng Phát triển đô thị Hà Nội [HACID] là doanh nghiệp tư vấn thiết kế hạng một, là thành viên của Tổng Công ty Đầu tư Phát triển nhà Hà Nội [HANDICO]." />
+}
 @inject Services.CompanySettings setting
 
 <div id="banner">
@@ -12,7 +17,7 @@
         @for (int i = 0; i < Model.Slides.Count; i++)
         {
             var item = Model.Slides[i];
-            <div class="item @(i==0?"animated":"")" data-id="@Model.Slides[i].Theme" >
+            <div class="item @(i==0?"animated":"")" data-id="@Model.Slides[i].Theme">
                 <div class="bg_item" style="background-image: url('/upload/images/@item.Image');"></div>
                 <div class="title_card_banner">
                     <div class="wrap_text">
@@ -148,7 +153,7 @@
                     $('#banner .item .info_card').removeClass('text_dark');
                     $('nav.menu').removeClass('dark');
                 }
-                
+
                 setTimeout(function () {
                     $(slick.$slides[nextSlide]).addClass('animated');
                 }, 500);

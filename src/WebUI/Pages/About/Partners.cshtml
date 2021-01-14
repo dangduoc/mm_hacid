@@ -6,20 +6,24 @@
     var banner = await setting.GetBanner(BannerType.About);
 }
 @inject Services.CompanySettings setting
-
+@section metas{
+    <meta property="og:title" content="Khách hàng - đối tác" />
+    <meta property="og:image" content="https://hacid.vn/upload/images/about/ca15b4ea-0eb3-4bd0-8f9e-30a5b1664ce4.jpg" />
+    <meta property="og:description" content="Công ty Cổ phần Tư vấn Đầu tư xây dựng Phát triển đô thị Hà Nội [HACID] là doanh nghiệp tư vấn thiết kế hạng một, là thành viên của Tổng Công ty Đầu tư Phát triển nhà Hà Nội [HANDICO]." />
+}
 
 <input hidden type="number" id="nav_theme" asp-for="@banner.Theme" />
 <div class="about-page about-partners">
     <div class="banner">
-      
+
         <img src="@banner.Banner">
     </div>
     <div class="top-filter-list new padding">
         <div class="left">
-            <div class="label">Bộ lọc khách hàng: </div>
+            <div class="label">@localizer.Get("Bộ lọc khách hàng"): </div>
             <div class="options">
                 <a class="option @(Model.SelectedCate==null?"active":"")" href="/about/partners">
-                    Tất cả
+                    @localizer.Get("Tất cả")
                 </a>
                 @foreach (var x in Model.Categories)
                 {
@@ -37,13 +41,15 @@
     <div class="intro padding">
         <div class="heading_area">
             <h3 class="heading">
-                @localizer.Get("Khách hàng và đối tác")
+                @localizer.Get("Khách hàng - đối tác tiêu biểu")
 
             </h3>
             <div class="share">
                 <div class="fb-share-button" data-href="https://hacid.vn/about/partners" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+                <script type="IN/Share" data-url="https://www.linkedin.com"></script>
             </div>
         </div>
         <div class="partners_list">

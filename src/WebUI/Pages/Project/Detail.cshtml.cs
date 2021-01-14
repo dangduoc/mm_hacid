@@ -29,7 +29,7 @@ namespace BaseProjectWebRazor.Pages.ProjectPage
                 .SingleOrDefaultAsync(c => c.Id == Id);
             if (entity == null) return NotFound();
             if (entity.Status == -1) return NotFound();
-            if ((bool)entity.IsEnglishIncluded && !_languageService.IsDefault) return NotFound();
+            if ((bool)entity.IsEnglishIncluded==false && !_languageService.IsDefault) return NotFound();
             Detail = new ProjectDetail
             {
                 Id = entity.Id,

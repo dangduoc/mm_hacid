@@ -16,13 +16,14 @@
     @*<link rel="icon" type="image/png" href="~/icon.png" />*@
     <meta name="Description" content="Công ty Cổ phần Tư vấn Đầu tư xây dựng Phát triển đô thị Hà Nội [HACID] là doanh nghiệp tư vấn thiết kế hạng một, là thành viên của Tổng Công ty Đầu tư Phát triển nhà Hà Nội [HANDICO].">
     <meta name="robots" content="noindex,nofollow">
-    <meta property="og:url" content="https://hacid.vn" />
+   
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Công ty Cổ phần Tư vấn Đầu tư xây dựng Phát triển đô thị Hà Nội [HACID]" />
-    <meta property="og:description" content="Công ty Cổ phần Tư vấn Đầu tư xây dựng Phát triển đô thị Hà Nội [HACID] là doanh nghiệp tư vấn thiết kế hạng một, là thành viên của Tổng Công ty Đầu tư Phát triển nhà Hà Nội [HANDICO]." />
-    <meta property="og:image" content="/assets/home/slides/1.jpg" />
+   
+    
+    @RenderSection("metas", required: false)
     <link href="~/css/ck-editor.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
+   
     <style>
         .ck-content .custom-block-indent-a {
             margin-left: 10%;
@@ -165,7 +166,7 @@
                             <a href="/about/energy">@localizer.Get("Năng lực hiện tại")</a>
                         </li>
                         <li>
-                            <a href="/about/partners">@localizer.Get("Khách hàng - đối tác")</a>
+                            <a href="/about/partners">@localizer.Get("Khách hàng - đối tác tiêu biểu")</a>
                         </li>
                     </ul>
                 </div>
@@ -461,7 +462,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
     <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v9.0&appId=219237851782524&autoLogAppEvents=1" nonce="0fogS1LJ"></script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_EN/sdk.js#xfbml=1&version=v9.0&appId=219237851782524&autoLogAppEvents=1" nonce="0fogS1LJ"></script>
 
 </body>
 

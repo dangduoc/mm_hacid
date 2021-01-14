@@ -3,6 +3,12 @@
 @inject CommonLocalizationService localizer
 @{
     ViewData["Title"] = Model.Detail.Title;
+    string og_image = Model.Detail.Banners.Split(",")[0];
+}
+@section metas{
+    <meta property="og:title" content="@Model.Detail.Title" />
+    <meta property="og:image" content="@og_image" />
+    <meta property="og:description" content="@Model.Detail.Title" />
 }
 <div class="new-page">
     <div id="banner_slides">
@@ -13,31 +19,33 @@
         }
     </div>
     <div class="wrap_new_detai padding">
+        <div class="share-alone">
+            <div class="fb-share-button" data-href="https://hacid.vn/new/detail/@Model.Detail.Id" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+            <script type="IN/Share" data-url="https://www.linkedin.com"></script>
+            @*<span style="text-transform:uppercase">@localizer.Get("Chia sẻ") :</span>
+            <a href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12.76" height="23.598"
+                     viewBox="0 0 12.76 23.598">
+                    <g id="fb" transform="translate(18755 -1229)">
+                        <g transform="translate(-18755 1229)">
+                            <g transform="translate(0 0)">
+                                <path d="M34.355,0l-3.06,0c-3.438,0-5.66,2.279-5.66,5.807V8.485H22.558a.481.481,0,0,0-.481.481v3.88a.481.481,0,0,0,.481.481h3.077v9.789a.481.481,0,0,0,.481.481h4.014a.481.481,0,0,0,.481-.481V13.327h3.6a.481.481,0,0,0,.481-.481V8.967a.482.482,0,0,0-.481-.481h-3.6V6.215c0-1.091.26-1.645,1.681-1.645h2.061a.481.481,0,0,0,.481-.481V.486A.481.481,0,0,0,34.355,0Z"
+                                      transform="translate(-22.077)" fill="#89a3a3" />
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+
+            </a>*@
+        </div>
         <div class="heading_area">
             <h3 class="heading">
                 @Model.Detail.Title
             </h3>
-            <div class="share">
-                <div class="fb-share-button" data-href="https://hacid.vn/new/detail/@Model.Detail.Id" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
-                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-                @*<span style="text-transform:uppercase">@localizer.Get("Chia sẻ") :</span>
-        <a href="#">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12.76" height="23.598"
-                 viewBox="0 0 12.76 23.598">
-                <g id="fb" transform="translate(18755 -1229)">
-                    <g transform="translate(-18755 1229)">
-                        <g transform="translate(0 0)">
-                            <path d="M34.355,0l-3.06,0c-3.438,0-5.66,2.279-5.66,5.807V8.485H22.558a.481.481,0,0,0-.481.481v3.88a.481.481,0,0,0,.481.481h3.077v9.789a.481.481,0,0,0,.481.481h4.014a.481.481,0,0,0,.481-.481V13.327h3.6a.481.481,0,0,0,.481-.481V8.967a.482.482,0,0,0-.481-.481h-3.6V6.215c0-1.091.26-1.645,1.681-1.645h2.061a.481.481,0,0,0,.481-.481V.486A.481.481,0,0,0,34.355,0Z"
-                                  transform="translate(-22.077)" fill="#89a3a3" />
-                        </g>
-                    </g>
-                </g>
-            </svg>
-
-        </a>*@
-            </div>
         </div>
         <div class="sub_info">
             <div>
@@ -47,9 +55,9 @@
                 </span>
             </div>
             @*<div class="color_4 view">
-                    <img src="/assets/icons/xem.svg" class="icon">
-                    <span>@Model.Detail.TotalViews</span>
-                </div>*@
+                <img src="/assets/icons/xem.svg" class="icon">
+                <span>@Model.Detail.TotalViews</span>
+            </div>*@
         </div>
         <div class="ck-content">
             @Html.Raw(Model.Detail.HtmlContent)
@@ -59,18 +67,18 @@
     <div class="padding">
         <div class="divider"></div>
     </div>
-    <div class="bottom_detail padding">
+    @*<div class="bottom_detail padding">
 
         <div class="left share bottom_share">
             <div class="fb-share-button" data-href="https://hacid.vn/new/detail/@Model.Detail.Id" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-          
+
         </div>
 
-    </div>
+    </div>*@
     <div class="related_news_area padding">
         <div class="heading_area">
             <h3 class="heading">
-                Những tin liên quan
+                @localizer.Get("Những tin liên quan")
             </h3>
             <div class="slide_arrows">
                 <button class="prev">←</button>
@@ -81,7 +89,7 @@
             @foreach (var item in Model.RelatedNews)
             {
                 <div class="item">
-                    <a class="project_box"  href="/new/detail/@item.Id" title="@item.Title">
+                    <a class="project_box" href="/new/detail/@item.Id" title="@item.Title">
                         <div class="inside">
                             <div class="img" style="background-image: url('@item.Thumbnail');">
 
@@ -94,12 +102,12 @@
                                             @item.PublishedDate
                                         </span>
                                     </div>
-                                   
+
                                 </div>
-                                <div class="title color_4" >
+                                <div class="title color_4">
                                     @item.Title
                                 </div>
-                                <div class="view_more">[ Xem thêm ]</div>
+                                <div class="view_more">[ @localizer.Get("Xem thêm") ]</div>
                             </div>
                         </div>
 
