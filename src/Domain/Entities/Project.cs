@@ -17,17 +17,16 @@ namespace Domain.Entities
         public string Banners { get; set; }
         public string Thumbnail { get; set; }
         public int LocationId { get; set; }
-        public int ProjectFieldId { get; set; }
-        public int CategoryId { get; set; }
         public string Investor { get; set; }
+        public string InvestorEn { get; set; }
         public int Year { get; set; }
         public int Index { get; set; }
         public bool? IsEnglishIncluded { get; set; }
         public int Status { get; set; }
         public int Theme { get; set; }
         public Location Location { get; set; }
-        public ProjectField ProjectField { get; set; }
-        public ProjectCategory Category { get; set; }
+        public List<ProjectFieldRelation> ProjectFieldRelations { get; set; }
+        public List<ProjectCategoryRelation> ProjectCategoryRelations { get; set; }
         
     }
 }

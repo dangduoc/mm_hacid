@@ -64,7 +64,11 @@ namespace BaseProjectWebRazor.Pages.Project
         {
             OrderBy = orderby;
             await LoadCategories(cate, field, location);
-            IEnumerable<domain.Project> full_query = await _context.Project.Where(c => c.Status == 1).OrderByDescending(c=>c.Index).Include(c => c.Category).Include(c => c.ProjectField).Include(c => c.Location).ToListAsync();
+            var full_query = _context.Project
+                   .Include(c => c.ProjectCategoryRelations)
+                .Include(c => c.ProjectFieldRelations)
+                .Include(c => c.Location).Where(c => c.Status == 1);
+
             if (!_languageService.IsDefault)
             {
                 full_query = full_query.Where(c => c.IsEnglishIncluded == true);
@@ -72,11 +76,11 @@ namespace BaseProjectWebRazor.Pages.Project
 
             if (cate.HasValue)
             {
-                full_query = full_query.Where(p => p.CategoryId == cate.Value);
+                full_query = full_query.Where(p => p.ProjectCategoryRelations.Select(x => x.CategoryId).Contains(cate.Value));
             }
             if (field.HasValue)
             {
-                full_query = full_query.Where(p => p.ProjectFieldId == field.Value);
+                full_query = full_query.Where(p => p.ProjectFieldRelations.Select(x => x.ProjectFieldId).Contains(field.Value));
             }
             if (location.HasValue)
             {
@@ -101,13 +105,13 @@ namespace BaseProjectWebRazor.Pages.Project
                 CurrentPage = p
             };
             CurrentPage = p;
-            Projects = full_query
-                .Skip((p - 1) * ps).Take(ps)
+            Projects = (await full_query.OrderByDescending(x=>x.Index)
+                .Skip((p - 1) * ps).Take(ps).ToListAsync())
                 .Select(c => new ProjectListItem
                 {
                     Id = c.Id,
-                    Category = _languageService.IsDefault ? c.Category.Name : c.Category.NameEn,
-                    Field = _languageService.IsDefault ? c.ProjectField.Name : c.ProjectField.NameEn,
+                    Category = _languageService.IsDefault ? BuildName(c.ProjectCategoryRelations.Select(x => x.ProjectCategory.Name)) : BuildName(c.ProjectCategoryRelations.Select(x => x.ProjectCategory.NameEn)),
+                    Field = _languageService.IsDefault ? BuildName(c.ProjectFieldRelations.Select(x => x.ProjectField.Name)) : BuildName(c.ProjectFieldRelations.Select(x => x.ProjectField.NameEn)),
                     Location = _languageService.IsDefault ? c.Location.Name : c.Location.NameEn,
                     Thumbnail = c.Thumbnail,
                     Title = _languageService.IsDefault ? c.Title : c.TitleEn,
@@ -115,6 +119,7 @@ namespace BaseProjectWebRazor.Pages.Project
                 }).ToList();
             return Page();
         }
+        private string BuildName(IEnumerable<string> str) => string.Join(",", str);
     }
     public class SelectOption
     {

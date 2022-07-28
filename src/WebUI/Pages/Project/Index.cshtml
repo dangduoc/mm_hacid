@@ -175,7 +175,12 @@
                     <div class="project_box">
                         <div class="img" style="background-image: url('@project.Thumbnail');">
                             <a class="info" href="/project/detail/@project.Id" title="@project.Title">
-                                <div class="cate">@project.Category</div>
+                                <div class="cate">
+                                    @foreach (var item in @project.Category.Split(","))
+                                    {
+                                        <div>@item</div>
+                                    }
+                                </div>
                                 <div class="title" href="/project/detail">
                                     @project.Title
                                 </div>

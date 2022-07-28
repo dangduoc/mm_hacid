@@ -40,6 +40,9 @@
         a {
             cursor: pointer
         }
+        #example2 td a, #example2 td button {
+            font-size: 16px;
+        }
     </style>
 }
 <section class="content-header">
@@ -74,7 +77,7 @@
                         <th style="width:120px">Thể loại</th>
                         <th style="width:120px">Trạng thái</th>
                         <th style="width:120px">Ngày tạo</th>
-                        <th style="width:180px"></th>
+                        <th style="width:240px"></th>
                     </tr>
                 </thead>
             </table>
@@ -90,7 +93,7 @@
     <script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
     <script>
         $(function () {
-
+            var pageLength = 25;
             var table = $('#example2').DataTable({
                 "paging": true,
                 "ordering": false,
@@ -100,6 +103,7 @@
                 "autoWidth": false,
                 "serverSide": true,
                 "processing": true,
+                "pageLength": pageLength,
                 "ajax": {
                     url: '/admin/news?handler=data',
                     data: function (d) {
@@ -293,7 +297,14 @@
             });
             $('div.dataTables_filter').appendTo('#filter_search');
             function swapDataTableRows(row1Index, row2Index) {
-
+                if (row1Index == pageLength - 1) {
+                    table.ajax.reload();
+                    return;
+                }
+                else if (row1Index == 0) {
+                    table.ajax.reload();
+                    return;
+                }
                 //var rows = datatable.rows().data();
                 var row1Data = table.row(row1Index).data();
                 var row2Data = table.row(row2Index).data();

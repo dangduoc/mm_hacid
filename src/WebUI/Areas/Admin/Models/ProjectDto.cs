@@ -17,14 +17,17 @@ namespace BaseProjectWebRazor.Areas.Admin.Models
         public string Banners { get; set; }
         public string Thumbnail { get; set; }
         public int LocationId { get; set; }
-        public int ProjectFieldId { get; set; }
-        public int CategoryId { get; set; }
         public string Investor { get; set; }
+        public string InvestorEn { get; set; }
         public int Year { get; set; }
         public int Index { get; set; }
         public bool IsEnglishIncluded { get; set; }
         public int Status { get; set; }
         public int Theme { get; set; }
+
+        public List<int> Categories { get; set; }
+        public List<int> Fields { get; set; }
+
         public string CreatedByUserId { get; set; }
   
         public DateTime CreatedOnDate { get; set; }

@@ -63,13 +63,22 @@ namespace BaseProjectWebRazor.Areas.Admin.Pages.Home.Slide
                     Id=1,Status=1
                 };
                 var last = await _context.HomeSlide.OrderByDescending(c => c.Id).FirstOrDefaultAsync();
+                var lastIndex = await _context.HomeSlide.OrderByDescending(c => c.Index).FirstOrDefaultAsync();
                 if (last != null)
                 {
 
                     entity.Id = last.Id + 1;
                    
                 }
-                entity.Index = entity.Id;
+                if (lastIndex != null)
+                {
+                    entity.Index = lastIndex.Index + 1;
+                }
+                else
+                {
+                    entity.Index = await _context.HomeSlide.CountAsync() +1;
+                }
+                
                 if ((Upload != null) && (Upload.Length > 0))
                 {
                     var uploadResult = await _uploadService.UploadImage(Upload, @"home/slide", null, null, false);

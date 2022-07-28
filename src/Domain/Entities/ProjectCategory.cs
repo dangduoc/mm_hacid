@@ -9,6 +9,6 @@ namespace Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string NameEn { get; set; }
-        public ICollection<Project> Projects { get; set; }
+        public List<ProjectCategoryRelation> ProjectCategoryRelations { get; set; }
     }
 }

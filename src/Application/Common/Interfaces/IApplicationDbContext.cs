@@ -23,7 +23,9 @@ namespace Application.Common.Interfaces
         public DbSet<HomeSlide> HomeSlide { get; set; }
         public DbSet<AboutProjectField> AboutProjectField { get; set; }
         public DbSet<CompanyHistory> CompanyHistory { get; set; }
-       public DbSet<BannerSetting> BannerSetting { get; set; }
+        public DbSet<BannerSetting> BannerSetting { get; set; }
+        public DbSet<ProjectCategoryRelation> ProjectCategoryRelation { get; set; }
+        public DbSet<ProjectFieldRelation> ProjectFieldRelation { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken=new CancellationToken());
     }
 }

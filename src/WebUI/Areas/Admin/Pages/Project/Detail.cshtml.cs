@@ -27,9 +27,9 @@ namespace BaseProjectWebRazor.Areas.Admin.Pages.Project
             _mapper = mapper;
             _context = context;
         }
-        public SelectList Categories { get; set; }
+        public MultiSelectList Categories { get; set; }
         public SelectList Locations { get; set; }
-        public SelectList ProjectFields { get; set; }
+        public MultiSelectList ProjectFields { get; set; }
         [BindProperty]
         public ProjectDto MainModel { get; set; }
         public SelectList Themes { get; set; }
@@ -48,19 +48,57 @@ namespace BaseProjectWebRazor.Areas.Admin.Pages.Project
             });
 
             Themes = new SelectList(list, "Id", "Name", 0);
-            Categories = new SelectList(await _context.ProjectCategory.ToListAsync(), "Id", "Name");
+            Categories = new MultiSelectList(await _context.ProjectCategory.ToListAsync(), "Id", "Name");
             Locations = new SelectList(await _context.Location.ToListAsync(), "Id", "Name");
-            ProjectFields = new SelectList(await _context.ProjectField.ToListAsync(), "Id", "Name");
-            var entity = await _context.Project.FindAsync(Id);
+            ProjectFields = new MultiSelectList(await _context.ProjectField.ToListAsync(), "Id", "Name");
+            var entity = await _context.Project.Include(x => x.ProjectCategoryRelations).Include(x => x.ProjectFieldRelations).FirstOrDefaultAsync(x => x.Id == Id);
             if (entity == null) return NotFound();
+            
             MainModel = _mapper.Map<ProjectDto>(entity);
+            MainModel.Fields = entity.ProjectFieldRelations.Select(x => x.ProjectFieldId).ToList();
+            MainModel.Categories = entity.ProjectCategoryRelations.Select(x => x.CategoryId).ToList();
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()
         {
             try
             {
-                _context.Project.Update(_mapper.Map<domain.Project>(MainModel));
+
+
+
+                domain.Project entity=_mapper.Map<domain.Project>(MainModel);
+                foreach (var item in _context.ProjectCategoryRelation.Where(x => x.ProjectId == MainModel.Id))
+                {
+                    _context.ProjectCategoryRelation.Remove(item);
+                }
+                foreach (var item in _context.ProjectFieldRelation.Where(x => x.ProjectId == MainModel.Id))
+                {
+                    _context.ProjectFieldRelation.Remove(item);
+                }
+
+
+                foreach (var item in MainModel.Categories)
+                {
+                    _context.ProjectCategoryRelation.Add(new domain.ProjectCategoryRelation
+                    {
+                        ProjectId = MainModel.Id,
+                        CategoryId = Convert.ToInt32(item)
+                    });
+                }
+                foreach (var item in MainModel.Fields)
+                {
+                    _context.ProjectFieldRelation.Add(new domain.ProjectFieldRelation
+                    {
+                        ProjectId = MainModel.Id,
+                        ProjectFieldId = Convert.ToInt32(item)
+                    });
+                }
+
+
+                _context.Project.Update(entity);
+
+
+               
 
                 if (await _context.SaveChangesAsync(CancellationToken.None)>=1)
                 {

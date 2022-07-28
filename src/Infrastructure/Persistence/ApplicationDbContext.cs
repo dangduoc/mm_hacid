@@ -43,6 +43,8 @@ namespace Infrastructure.Persistence
         public DbSet<HomeSlide> HomeSlide { get; set; }
         public DbSet<CompanyHistory> CompanyHistory { get; set; }
         public DbSet<BannerSetting> BannerSetting { get; set; }
+        public DbSet<ProjectCategoryRelation> ProjectCategoryRelation { get; set; }
+        public DbSet<ProjectFieldRelation> ProjectFieldRelation { get; set; }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (var entry in ChangeTracker.Entries<AuditableEntity>())

@@ -44,20 +44,20 @@
                        
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label asp-for="MainModel.CategoryId">Thể loại dự án</label>
-                                <select asp-for="MainModel.CategoryId" asp-items="Model.Categories" class="form-control" required>
+                                <label asp-for="MainModel.Categories">Thể loại dự án</label>
+                                <select asp-for="MainModel.Categories" multiple="multiple" class="selectpicker form-control" asp-items="Model.SelectedCategories">
                                     <option value=""></option>
                                 </select>
-                                <span class="text-danger" asp-validation-for="MainModel.CategoryId"></span>
+                                <span asp-validation-for="MainModel.Categories" class="text-danger"></span>
                             </div>
 
                             
                             <div class="col-lg-6">
-                                <label asp-for="MainModel.ProjectFieldId">Lĩnh vực</label>
-                                <select asp-for="MainModel.ProjectFieldId" asp-items="Model.ProjectFields" class="form-control" required>
+                                <label asp-for="MainModel.Fields">Lĩnh vực</label>
+                                <select asp-for="MainModel.Fields" asp-items="Model.SelectedFields" multiple="multiple" class="selectpicker form-control" required>
                                     <option value=""></option>
                                 </select>
-                                <span class="text-danger" asp-validation-for="MainModel.ProjectFieldId"></span>
+                                <span class="text-danger" asp-validation-for="MainModel.Fields"></span>
                             </div>
                         </div>
                         
@@ -79,6 +79,11 @@
                                 <label asp-for="MainModel.Investor">Chủ đầu tư</label>
                                 <input asp-for="MainModel.Investor" class="form-control" required />
                                 <span class="text-danger" asp-validation-for="MainModel.Investor"></span>
+                            </div>
+                            <div class="col-lg-6">
+                                <label asp-for="MainModel.InvestorEn">Chủ đầu tư (En)</label>
+                                <input asp-for="MainModel.InvestorEn" class="form-control" required />
+                                <span class="text-danger" asp-validation-for="MainModel.InvestorEn"></span>
                             </div>
                             <div class="col-lg-6">
                                 <label asp-for="MainModel.Theme">Màu menu <span class="red">(*)</span></label>

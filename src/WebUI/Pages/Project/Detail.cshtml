@@ -1,5 +1,6 @@
 ﻿@page "{Id}"
 @model BaseProjectWebRazor.Pages.ProjectPage.DetailModel
+@inject CommonLocalizationService localizer
 @{
     ViewData["Title"] = Model.Detail.Title;
     string og_image = Model.Detail.Banners.Split(",")[0];
@@ -18,7 +19,7 @@
                 <div class="title_card_banner">
                     <div class="wrap_text">
                         <div class="text">
-                            @Model.Detail.Title 
+                            @Model.Detail.Title
                         </div>
                         <div class="description">@Model.Detail.Year | @Model.Detail.Location</div>
                     </div>
@@ -34,33 +35,48 @@
                 <div class="info">
                     <div class="heading_area">
                         <h3 class="heading">
-                            Thông tin dự án
+                            @localizer.Get("Thông tin dự án")
 
                         </h3>
                     </div>
                     <div class="list-info">
                         <div class="line">
-                            <div class="label">Tên công trình</div>
+                            <div class="label">@localizer.Get("Tên công trình")</div>
                             <div class="text">@Model.Detail.Title</div>
                         </div>
                         <div class="line">
-                            <div class="label">Địa điểm</div>
+                            <div class="label">@localizer.Get("Địa điểm")</div>
                             <div class="text">@Model.Detail.Location</div>
                         </div>
                         <div class="line">
-                            <div class="label">Chủ đầu tư</div>
+                            <div class="label">@localizer.Get("Chủ đầu tư")</div>
                             <div class="text">@Model.Detail.Investor</div>
                         </div>
                         <div class="line">
-                            <div class="label">Thể loại</div>
-                            <div class="text">@Model.Detail.Category</div>
+                            <div class="label">@localizer.Get("Thể loại")</div>
+
+                            <div class="text">
+                                @for (int i = 0; i < Model.Detail.Categories.Count; i++)
+                                {
+                                    <div>@Model.Detail.Categories[i].Name</div>
+                                }
+                            </div>
+
+
                         </div>
                         <div class="line">
-                            <div class="label">Lĩnh vực</div>
-                            <div class="text">@Model.Detail.Field</div>
+                            <div class="label">@localizer.Get("Lĩnh vực")</div>
+                            <div class="text">
+                                @for (int i = 0; i < Model.Detail.Fields.Count; i++)
+                                {
+                                    <div class="text">@Model.Detail.Fields[i].Name</div>
+                                }
+                            </div>
+
+
                         </div>
                         <div class="line">
-                            <div class="label">Thời gian</div>
+                            <div class="label">@localizer.Get("Thời gian")</div>
                             <div class="text">@Model.Detail.Year</div>
                         </div>
                     </div>
@@ -69,12 +85,12 @@
             <div class="col-lg-8 brd">
                 <div class="article">
                     <div class="share-alone">
-                        <div class="fb-share-button" data-href="https://hacid.vn/new/detail/@Model.Detail.Id" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                        <div class="fb-share-button" data-href="https://hacid.vn/project/detail/@Model.Detail.Id" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
                         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
                         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                         <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
                         <script type="IN/Share" data-url="https://www.linkedin.com"></script>
-     
+
                     </div>
                     <div class="heading_area">
 
@@ -95,7 +111,7 @@
 
     </div>
     <div class="title_card bg_color_2">
-        <a href="/project" class="back_to_list">[ Quay trở lại danh sách dự án ]</a>
+        <a href="/project" class="back_to_list">[ @localizer.Get("Quay trở lại danh sách dự án") ]</a>
     </div>
 </div>
 @section Styles{

@@ -698,6 +698,9 @@ nav.menu.bg_color_1:not(.open):not(.fixed) {
     background: transparent;
     top: 0 !important;
 }
+footer .footer-info .copyright {
+    max-width: 200px;
+}
 @media all and (min-width: 1200px) {
     .padding {
         padding-left: 100px;
@@ -709,6 +712,9 @@ nav.menu.bg_color_1:not(.open):not(.fixed) {
     }
     nav#menu .sub-menu{
         height:auto;
+    }
+    footer .footer-info .copyright{
+        max-width:unset;
     }
 }
 @media all and (min-width:1600px){
@@ -781,9 +787,7 @@ nav.menu.bg_color_1:not(.open):not(.fixed) {
     footer .footer-info ul.footer-menu a {
         margin: 0 8px;
     }
-    footer .footer-info .copyright{
-        max-width:200px;
-    }
+   
     footer .footer-info ul.footer-menu li:first-child {
         display: none;
     }

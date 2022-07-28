@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210114060147_alter project tb")]
+    partial class alterprojecttb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -432,6 +434,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("varchar(max)")
                         .IsUnicode(false);
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CreatedByUserId")
                         .HasColumnType("nvarchar(max)");
 
@@ -451,15 +456,12 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Investor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200)
-                        .IsUnicode(true);
-
-                    b.Property<string>("InvestorEn")
                         .HasColumnType("varchar(200)")
                         .HasMaxLength(200)
                         .IsUnicode(false);
+
+                    b.Property<string>("InvestorEn")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsEnglishIncluded")
                         .HasColumnType("bit");
@@ -471,6 +473,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectFieldId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -503,7 +508,11 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.HasIndex("LocationId");
+
+                    b.HasIndex("ProjectFieldId");
 
                     b.ToTable("Project");
                 });
@@ -530,21 +539,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("ProjectCategory");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ProjectCategoryRelation", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoryId", "ProjectId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("ProjectCategoryRelation");
-                });
-
             modelBuilder.Entity("Domain.Entities.ProjectField", b =>
                 {
                     b.Property<int>("Id")
@@ -565,21 +559,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProjectField");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ProjectFieldRelation", b =>
-                {
-                    b.Property<int>("ProjectFieldId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProjectFieldId", "ProjectId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("ProjectFieldRelation");
                 });
 
             modelBuilder.Entity("Domain.Entities.SiteSetting", b =>
@@ -672,39 +651,21 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Project", b =>
                 {
+                    b.HasOne("Domain.Entities.ProjectCategory", "Category")
+                        .WithMany("Projects")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.Location", "Location")
                         .WithMany("Projects")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Domain.Entities.ProjectCategoryRelation", b =>
-                {
-                    b.HasOne("Domain.Entities.ProjectCategory", "ProjectCategory")
-                        .WithMany("ProjectCategoryRelations")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Project", "Project")
-                        .WithMany("ProjectCategoryRelations")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.ProjectFieldRelation", b =>
-                {
                     b.HasOne("Domain.Entities.ProjectField", "ProjectField")
-                        .WithMany("ProjectFieldRelations")
+                        .WithMany("Projects")
                         .HasForeignKey("ProjectFieldId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Project", "Project")
-                        .WithMany("ProjectFieldRelations")
-                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

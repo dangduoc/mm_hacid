@@ -179,8 +179,18 @@
                     {
                         <tr data-toggle="popover-hover" data-img="@project.Thumbnail">
                             <td class="t_bold padding_left"><a href="/project/detail/@project.Id" class="color_4" title="@project.Title">@project.Title</a></td>
-                            <td>@project.Field</td>
-                            <td>@project.Category</td>
+                            <td>
+                                @foreach(var item in project.Category.Split(","))
+                                {
+                                    <div>. @item</div>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var item in project.Field.Split(","))
+                                {
+                                    <div>. @item</div>
+                                }
+                            </td>
                             <td>@project.Location</td>
                             <td class="padding_right text-right">@project.Year</td>
                         </tr>

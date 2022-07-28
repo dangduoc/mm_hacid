@@ -132,11 +132,14 @@
   <data name="Chia sẻ" xml:space="preserve">
     <value>Share</value>
   </data>
+  <data name="Chủ đầu tư" xml:space="preserve">
+    <value>Client</value>
+  </data>
   <data name="Công nghệ bim" xml:space="preserve">
     <value>Bim technology introduction</value>
   </data>
-  <data name="Công trình áp dụng revit" xml:space="preserve">
-    <value>Revit Applied Buildings</value>
+  <data name="Công trình áp dụng BIM" xml:space="preserve">
+    <value>BIM Applied Buildings</value>
   </data>
   <data name="CÔNG TY CỔ PHẦN TƯ VẤN ĐẦU TƯ XÂY DỰNG PHÁT TRIỂN ĐÔ THỊ HÀ NỘI - HACID" xml:space="preserve">
     <value>HANOI CONSTRUCTION CONSULTANT &amp; URBAN DEVELOPMENT INVESTMENT JOINT STOCK COMPANY</value>
@@ -161,6 +164,9 @@
   </data>
   <data name="Liên hệ" xml:space="preserve">
     <value>Contact</value>
+  </data>
+  <data name="Lĩnh vực" xml:space="preserve">
+    <value>Field</value>
   </data>
   <data name="Lĩnh vực hoạt động chính" xml:space="preserve">
     <value>Business Activities</value>
@@ -189,17 +195,32 @@
   <data name="Quay lại danh sách" xml:space="preserve">
     <value>Back to list</value>
   </data>
+  <data name="Quay trở lại danh sách dự án" xml:space="preserve">
+    <value>Back to project list</value>
+  </data>
   <data name="Sắp xếp" xml:space="preserve">
     <value>Sort</value>
   </data>
+  <data name="Thông tin dự án" xml:space="preserve">
+    <value>Project Information</value>
+  </data>
   <data name="Thông tin liên hệ" xml:space="preserve">
     <value>Contact info</value>
+  </data>
+  <data name="Thể loại" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Thời gian" xml:space="preserve">
+    <value>Time</value>
   </data>
   <data name="Tin tức" xml:space="preserve">
     <value>News</value>
   </data>
   <data name="Trang chủ" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="Tên công trình" xml:space="preserve">
+    <value>Project name</value>
   </data>
   <data name="Tìm kiếm dự án" xml:space="preserve">
     <value>Search</value>
@@ -236,5 +257,8 @@
   </data>
   <data name="Xin lỗi, không tìm thấy kết quả" xml:space="preserve">
     <value>Sorry, no results were found</value>
+  </data>
+  <data name="Địa điểm" xml:space="preserve">
+    <value>Location</value>
   </data>
 </root>

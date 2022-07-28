@@ -64,6 +64,8 @@
                         <label asp-for="Upload">Ảnh nền</label>
                         <input type="file" asp-for="Upload" />
                         <br />
+                        <input id="thumbnail_input" asp-for="MainModel.Banner" hidden required />
+                        <span class="text-danger" asp-validation-for="MainModel.Banner"></span>
                         <div>
                             <img style="max-width:200px" src="/upload/images/@Model.MainModel.Banner" />
                         </div>

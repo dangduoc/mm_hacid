@@ -29,16 +29,17 @@ namespace Infrastructure.Persistence.Configurations
             builder.Property(c => c.Theme).IsRequired();
             builder.Property(c => c.Thumbnail).IsUnicode(false).IsRequired().HasMaxLength(100);
             builder.Property(c => c.LocationId).IsRequired();
-            builder.Property(c => c.ProjectFieldId).IsRequired();
-            builder.Property(c => c.CategoryId).IsRequired();
+     
             builder.Property(c => c.Investor).IsUnicode(true).HasMaxLength(200).IsRequired();
+            builder.Property(c => c.InvestorEn).IsUnicode(false).HasMaxLength(200).IsRequired(false);
             builder.Property(c => c.Year).IsRequired();
             builder.Property(c => c.Status).IsRequired().HasDefaultValue(1);
-            builder.HasOne(c => c.Category).WithMany(c => c.Projects).HasForeignKey(c => c.CategoryId).IsRequired();
-            builder.HasOne(c => c.ProjectField).WithMany(c => c.Projects).HasForeignKey(c => c.ProjectFieldId).IsRequired();
+           
             builder.HasOne(c => c.Location).WithMany(c => c.Projects).HasForeignKey(c => c.LocationId).IsRequired();
 
             builder.Property(c => c.Index).IsRequired();
+
+
 
 
         }

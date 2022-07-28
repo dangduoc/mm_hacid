@@ -53,6 +53,73 @@
         .table td, .table th {
             vertical-align: middle;
         }
+
+        .draggable-table {
+            border-collapse: collapse;
+            background: white;
+        }
+
+        #table td a, #table td button {
+            font-size: 16px;
+        }
+
+        .draggable-table .draggable-table__drag {
+            /*  font-size: 0.95em;
+                font-weight: lighter;
+                text-transform: capitalize;*/
+            position: absolute;
+            width: 100%;
+            border: 1px solid #f1f1f1;
+            z-index: 10;
+            cursor: grabbing;
+            -webkit-box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05);
+            box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05);
+            opacity: 1;
+        }
+
+            .draggable-table .draggable-table__drag .td-flex {
+                display: none;
+            }
+
+        .draggable-table thead th {
+        }
+
+        .draggable-table tbody tr {
+            cursor: grabbing;
+        }
+
+            .draggable-table tbody tr td {
+                user-select: none;
+            }
+
+            .draggable-table tbody tr:nth-child(even) {
+                background-color: #f7f7f7;
+            }
+
+            .draggable-table tbody tr:nth-child(odd) {
+                background-color: #fff;
+            }
+
+            .draggable-table tbody tr.is-dragging {
+                background: #f1c40f;
+            }
+
+                .draggable-table tbody tr.is-dragging td {
+                    color: #ffe683;
+                }
+
+                    .draggable-table tbody tr.is-dragging td .td-flex {
+                        display: none;
+                    }
+
+        .td-flex {
+            display: flex;
+            align-items: center;
+        }
+
+            .td-flex a {
+                margin: 0 3px;
+            }
     </style>
 }
 <section class="content-header">
@@ -107,12 +174,13 @@
                     <div class="card-header actions_card_header">
 
                         <a class="create_btn btn btn-success" asp-page="/Home/Slide/Create"><i class="fas fa-plus-circle"></i> Thêm slide</a>
+                        <a id="save_indexes" style="color:#fff" class="save_btn btn btn-success"><i class="fas fa-sync-alt"></i> Khởi tạo lại thứ tự</a>
                     </div>
                     <div class="card-body">
                         <div class="row">
 
                             <div class="col-12 col-xl-12">
-                                <table class="table table-bordered table-hover" id="table">
+                                <table class="table table-bordered table-hover draggable-table" id="table">
                                     <thead>
                                         <tr>
 
@@ -123,19 +191,19 @@
                                             <th style="width:150px">Ảnh slide</th>
                                             <th style="width:150px">Theme</th>
                                             <th style="width:150px">Trạng thái</th>
-                                            <th style="width:200px"></th>
+                                            <th style="width:160px"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach (var item in Model.Slides)
                                         {
-                                            <tr>
+                                            <tr data-id="@item.Id">
 
                                                 <td>@item.Id</td>
                                                 <td class="title">@item.Title</td>
                                                 <td class="banner"><a target="_blank" href="/upload/images/@item.Image">Click để xem</a></td>
                                                 <td class="theme" data-id="@item.Theme">@(item.Theme==0?"Sáng":"Tối")</td>
-                                                <td class="index" >
+                                                <td class="index">
                                                     @if (item.Status == 1)
                                                     {
                                                         <button data-id="@item.Id" title="Click để đổi trạng thái" class="row_status btn btn-success"><i class="far fa-eye"></i> Hiển thị</button>
@@ -146,8 +214,8 @@
                                                     }
                                                 </td>
                                                 <td>
-                                                    <a data-id="@item.Id" class="row_down btn btn-success"><i class="fas fa-arrow-down"></i></a>
-                                                    <a data-id="@item.Id" class="row_up btn btn-success"><i class="fas fa-arrow-up"></i></a>
+                                                    @*<a data-id="@item.Id" class="row_down btn btn-success"><i class="fas fa-arrow-down"></i></a>
+                                                    <a data-id="@item.Id" class="row_up btn btn-success"><i class="fas fa-arrow-up"></i></a>*@
                                                     <a href="/admin/home/slide/detail/@item.Id" class="row_edit btn btn-warning"><i class="fas fa-edit"></i></a>
                                                     <a data-id="@item.Id" class="row_delete btn btn-danger"><i class="far fa-trash-alt"></i></a>
                                                 </td>
@@ -173,7 +241,7 @@
     <script src="~/lib/jquery-confirm/jquery-confirm.min.js"></script>
     <script>
         $(function () {
-       
+
             $('#table').on('click', '.row_delete', function (e) {
                 e.preventDefault();
                 let id = parseInt($(this).attr('data-id'));
@@ -213,75 +281,75 @@
 
 
             });
-            $('#table').on('click', '.row_up', function (e) {
-                e.preventDefault();
-                if (confirm("Bạn chắc chắn muốn đổi vị trí slide này?")) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/home/slide?handler=ChangeIndex&Id=' + $(this).attr("data-id"),
-                        contentType: false,
-                        processData: false,
-                        beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
-                    }).done(function (res) {
-                        if (res.status) {
-                            location.reload();
-                        }
-                        else {
-                            $.toast({
-                                heading: 'Error',
-                                text: res.message,
-                                icon: 'error',
-                                position: 'bottom-right'
-                            });
-                        }
+            //$('#table').on('click', '.row_up', function (e) {
+            //    e.preventDefault();
+            //    if (confirm("Bạn chắc chắn muốn đổi vị trí slide này?")) {
+            //        $.ajax({
+            //            type: 'POST',
+            //            url: '/admin/home/slide?handler=ChangeIndex&Id=' + $(this).attr("data-id"),
+            //            contentType: false,
+            //            processData: false,
+            //            beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+            //        }).done(function (res) {
+            //            if (res.status) {
+            //                location.reload();
+            //            }
+            //            else {
+            //                $.toast({
+            //                    heading: 'Error',
+            //                    text: res.message,
+            //                    icon: 'error',
+            //                    position: 'bottom-right'
+            //                });
+            //            }
 
-                    }).fail(function () {
-                        $.toast({
-                            heading: 'Error',
-                            text: 'Thao tác không thành công',
-                            icon: 'error',
-                            position: 'bottom-right'
-                        });
-                    });
-                }
-                //window.location.href = "/admin/news/detail/" + data.id;
-            });
-            $('#table').on('click', '.row_down', function (e) {
-                e.preventDefault();
-                if (confirm("Bạn chắc chắn muốn đổi vị trí slide này?")) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/home/slide?handler=ChangeIndex&Id=' + $(this).attr("data-id")+'&moveUp=false',
-                        contentType: false,
-                        processData: false,
-                        beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
-                    }).done(function (res) {
-                        if (res.status) {
-                            location.reload();
-                        }
-                        else {
-                            $.toast({
-                                heading: 'Error',
-                                text: res.message,
-                                icon: 'error',
-                                position: 'bottom-right'
-                            });
-                        }
+            //        }).fail(function () {
+            //            $.toast({
+            //                heading: 'Error',
+            //                text: 'Thao tác không thành công',
+            //                icon: 'error',
+            //                position: 'bottom-right'
+            //            });
+            //        });
+            //    }
+            //    //window.location.href = "/admin/news/detail/" + data.id;
+            //});
+            //$('#table').on('click', '.row_down', function (e) {
+            //    e.preventDefault();
+            //    if (confirm("Bạn chắc chắn muốn đổi vị trí slide này?")) {
+            //        $.ajax({
+            //            type: 'POST',
+            //            url: '/admin/home/slide?handler=ChangeIndex&Id=' + $(this).attr("data-id")+'&moveUp=false',
+            //            contentType: false,
+            //            processData: false,
+            //            beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+            //        }).done(function (res) {
+            //            if (res.status) {
+            //                location.reload();
+            //            }
+            //            else {
+            //                $.toast({
+            //                    heading: 'Error',
+            //                    text: res.message,
+            //                    icon: 'error',
+            //                    position: 'bottom-right'
+            //                });
+            //            }
 
-                    }).fail(function () {
-                        $.toast({
-                            heading: 'Error',
-                            text: 'Thao tác không thành công',
-                            icon: 'error',
-                            position: 'bottom-right'
-                        });
-                    });
-                }
-                //window.location.href = "/admin/news/detail/" + data.id;
-            });
+            //        }).fail(function () {
+            //            $.toast({
+            //                heading: 'Error',
+            //                text: 'Thao tác không thành công',
+            //                icon: 'error',
+            //                position: 'bottom-right'
+            //            });
+            //        });
+            //    }
+            //    //window.location.href = "/admin/news/detail/" + data.id;
+            //});
             $('#table').on('click', '.row_status', function (e) {
                 e.preventDefault();
-               
+
                 if (confirm('Bạn chắc chắn muốn đổi trạng thái slide này chứ?')) {
                     $.ajax({
                         type: 'POST',
@@ -303,6 +371,234 @@
                 }
 
             });
+            $('#save_indexes').on("click", function (e) {
+                e.preventDefault();
+              
+                //  let id = parseInt($(this).attr('data-id'));
+                // let row = $(this).closest('tr');
+                //let ids = [];
+                //$("#table tbody tr").each(function () {
+                //    ids.push($(this).attr("data-id"));
+                //});
+
+                $.confirm({
+                    title: 'Khởi tạo lại thứ tự các slides',
+                    content: 'Sử dụng khi việc đổi thứ tự thường xuyên bị lỗi.',
+                    type: 'red',
+                    buttons: {
+                        confirm: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/admin/home/slide?handler=InitIndexes',
+                                dataType: 'json',
+                                //contentType: false,
+                                //processData: false,
+                                beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                            }).done(function (res) {
+                                // $(row).remove();
+                                $.toast({
+                                    heading: 'Success',
+                                    text: 'Thay đổi thứ tự thành công',
+                                    icon: 'success',
+                                    position: 'bottom-right'
+                                });
+                              
+                            }).fail(function () {
+                                $.dialog({
+                                    title: 'Error',
+                                    content: 'Thao tác không thành công'
+                                });
+                            });
+                        },
+                        cancel: function () {
+
+                        },
+                    }
+                });
+            });
         })
     </script>
+    <script>
+        (function () {
+            "use strict";
+
+            const table = document.getElementById('table');
+            const tbody = table.querySelector('tbody');
+
+            var currRow = null,
+                dragElem = null,
+                dropedElem = null,
+                mouseDownX = 0,
+                mouseDownY = 0,
+                mouseX = 0,
+                mouseY = 0,
+                mouseDrag = false;
+
+            function init() {
+                bindMouse();
+            }
+
+            function bindMouse() {
+                document.addEventListener('mousedown', (event) => {
+                    if (event.button != 0) return true;
+
+                    let target = getTargetRow(event.target);
+                    if (target) {
+                        currRow = target;
+                        addDraggableRow(target);
+                        currRow.classList.add('is-dragging');
+
+
+                        let coords = getMouseCoords(event);
+                        mouseDownX = coords.x;
+                        mouseDownY = coords.y;
+
+                        mouseDrag = true;
+                    }
+                });
+
+                document.addEventListener('mousemove', (event) => {
+                    if (!mouseDrag) return;
+
+                    let coords = getMouseCoords(event);
+                    mouseX = coords.x - mouseDownX;
+                    mouseY = coords.y - mouseDownY;
+
+                    moveRow(mouseX, mouseY);
+                });
+
+                document.addEventListener('mouseup', (event) => {
+                    if (!mouseDrag) return;
+                    //console.log($(dragElem).attr("data-index"));
+                    //console.log($(dropedElem).attr("data-index"));
+
+                    currRow.classList.remove('is-dragging');
+                    table.removeChild(dragElem);
+                    sendSwapRowsRequest($(dragElem).attr("data-id"), $(dropedElem).attr("data-id"));
+                    dragElem = null;
+                    dropedElem = null;
+                    mouseDrag = false;
+                });
+            }
+
+            function sendSwapRowsRequest(id1, id2) {
+                if (id1 == undefined || id2 == undefined) return;
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/home/slide?handler=RowSwap',
+                    data: {
+                        ids: [id1, id2]
+                    },
+                    dataType: 'json',
+                    //contentType: false,
+                    //processData: false,
+                    beforeSend: function (xhr) { xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val()); },
+                }).done(function (res) {
+                    // $(row).remove();
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Thay đổi thứ tự thành công',
+                        icon: 'success',
+                        position: 'bottom-right'
+                    });
+                }).fail(function () {
+                    $.dialog({
+                        title: 'Error',
+                        content: 'Thao tác không thành công'
+                    });
+                });
+            }
+
+            function swapRow(row, index) {
+
+                let currIndex = Array.from(tbody.children).indexOf(currRow),
+                    row1 = currIndex > index ? currRow : row,
+                    row2 = currIndex > index ? row : currRow;
+                dropedElem = row;
+                tbody.insertBefore(row1, row2);
+            }
+
+            function moveRow(x, y) {
+                dragElem.style.transform = "translate3d(" + x + "px, " + y + "px, 0)";
+
+                let dPos = dragElem.getBoundingClientRect(),
+                    currStartY = dPos.y, currEndY = currStartY + dPos.height,
+                    rows = getRows();
+
+                for (var i = 0; i < rows.length; i++) {
+                    let rowElem = rows[i],
+                        rowSize = rowElem.getBoundingClientRect(),
+                        rowStartY = rowSize.y, rowEndY = rowStartY + rowSize.height;
+
+                    if (currRow !== rowElem && isIntersecting(currStartY, currEndY, rowStartY, rowEndY)) {
+                        if (Math.abs(currStartY - rowStartY) < rowSize.height / 2)
+                            swapRow(rowElem, i);
+                    }
+                }
+            }
+
+            function addDraggableRow(target) {
+                dragElem = target.cloneNode(true);
+                dragElem.classList.add('draggable-table__drag');
+                dragElem.style.height = getStyle(target, 'height');
+                dragElem.style.background = getStyle(target, 'backgroundColor');
+                for (var i = 0; i < target.children.length; i++) {
+                    let oldTD = target.children[i],
+                        newTD = dragElem.children[i];
+                    newTD.style.width = getStyle(oldTD, 'width');
+                    newTD.style.height = getStyle(oldTD, 'height');
+                    newTD.style.padding = getStyle(oldTD, 'padding');
+                    newTD.style.margin = getStyle(oldTD, 'margin');
+                }
+
+                table.appendChild(dragElem);
+
+
+                let tPos = target.getBoundingClientRect(),
+                    dPos = dragElem.getBoundingClientRect();
+                dragElem.style.bottom = ((dPos.y - tPos.y) - tPos.height) + "px";
+                dragElem.style.left = "-1px";
+
+                document.dispatchEvent(new MouseEvent('mousemove',
+                    { view: window, cancelable: true, bubbles: true }
+                ));
+            }
+
+            function getRows() {
+                return table.querySelectorAll('tbody tr');
+            }
+
+            function getTargetRow(target) {
+                let elemName = target.tagName.toLowerCase();
+
+                if (elemName == 'tr') return target;
+                if (elemName == 'td') return target.closest('tr');
+            }
+
+            function getMouseCoords(event) {
+                return {
+                    x: event.clientX,
+                    y: event.clientY
+                };
+            }
+
+            function getStyle(target, styleName) {
+                let compStyle = getComputedStyle(target),
+                    style = compStyle[styleName];
+
+                return style ? style : null;
+            }
+
+            function isIntersecting(min0, max0, min1, max1) {
+                return Math.max(min0, max0) >= Math.min(min1, max1) &&
+                    Math.min(min0, max0) <= Math.max(min1, max1);
+            }
+
+
+
+            init();
+
+        })();
+    </script>
+
 }
